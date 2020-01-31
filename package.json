@@ -1,0 +1,31 @@
+{
+  "name": "wineInventory",
+  "version": "1.0.0",
+  "description": "Cellar Tracker Wine Inventory Assistant",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dynak",
+  "license": "ISC",
+  "dependencies": {
+    "@angular/common": "^4.2.4",
+    "@angular/compiler": "^4.2.4",
+    "@angular/core": "^4.2.4",
+    "angular": "^1.6.4",
+    "angular-animate": "^1.6.4",
+    "angular-location-update": "0.0.2",
+    "angular-messages": "^1.6.5",
+    "angular-route": "^1.6.4",
+    "angular-touch": "^1.6.4",
+    "angular-ui-bootstrap": "^2.5.6",
+    "angular-ui-grid": "^4.0.6",
+    "bootstrap": "^3.3.7",
+    "xlsx": "^0.11.17",
+    "jquery": "^3.2.1",
+    "ods": "^1.1.7",
+    "pdfmake": "^0.1.35",
+    "rxjs": "^5.4.1",
+    "zone.js": "^0.8.12"
+  }
+}
