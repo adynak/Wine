@@ -106,11 +106,11 @@ wineInventory.controller('ViewInventoryController',
 
         function rowSelectCallbck(row,col) { 
           // clicking the checkbox first toggles the checkbox then calls this callback
-          // the checkbox column coes not have this element
+          // the checkbox column does not have outerText
           // so the toggle only gets called once
-          // if (col.toElement.firstChild){
+          if (col.currentTarget.outerText.length){
             row.entity.inStock = !row.entity.inStock;
-          // }
+          }
 
         };
 
