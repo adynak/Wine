@@ -18,6 +18,7 @@ wineInventory.directive("filelistBind", [ 'Data',
                 var data = evt.target.result;
                 var workbook = XLSX.read(data, {type: 'binary'});
                 var excelFileName = changeEvent.target.files[0].name;
+                var excelDateStamp = changeEvent.target.files[0].lastModified;
 
                 excelSheetCount = workbook.SheetNames.length;
 
@@ -62,6 +63,8 @@ wineInventory.directive("filelistBind", [ 'Data',
                 excel.filename = excelFileName;
                 excel.sheetNames = workbook.SheetNames;
                 excel.sheets = sheets;
+                excel.dateStamp = moment(excelDateStamp).format("MM-DD-YYYY h:mm:ss A");
+                debugger;
                 Data.setExcel(excel);
                 $elm.val(null);
               });
