@@ -2,13 +2,21 @@
   <div class="container-fluid">
 
     <span class="navbar-brand">
-      <span ng-click="startOver()" style="position:absolute;left:20px; top:2px;">
+      <span ng-click="startOver()" class="logo">
         <img src="resources/images/ct_logo.png">
       </span>
     </span>
 
-    <span class="pull-right navbar-brand" style="color: {{prompts.fontColor}}; font-weight: bold;">
-      {{prompts.brandName}}
-    </span>
+    <div class="pull-right" style="font-weight:bold;">
+      <span class="navbar-brand moveUp" style="color: {{prompts.fontColor}};">
+        {{prompts.brandName}}
+      </span>
+    </div>
+    <br><br>
+    <div class="pull-right" style="font-weight:bold;">
+      <span class="navbar-brand" style="margin-top : -25px; color: {{prompts.fontColor}};">
+        {{AsOfDate.getAsOfDate()}}
+      </span>
+    </div>
   </div>
 </nav>

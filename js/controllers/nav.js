@@ -6,10 +6,11 @@ wineInventory.controller('NavigationController',
 		'Data', 
 		'$rootScope', 
 		'$routeParams', 
-
-    function($scope, $http, $location, Data, $rootScope, $routeParams) {
+		'AsOfDate',
+    function($scope, $http, $location, Data, $rootScope, $routeParams, AsOfDate) {
 
 		$scope.prompts = txtNavigation;
+		$scope.AsOfDate = AsOfDate;
 
 		$scope.startOver = function() {
 // TODO how about an "are you sure" dialog here?			

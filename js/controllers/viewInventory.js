@@ -7,14 +7,17 @@ wineInventory.controller('ViewInventoryController',
         '$window', 
         '$routeParams',
         '$filter',
+        'AsOfDate',
         'uiGridGroupingConstants',
 
-    function($scope, $uibModal, $location, Data, $window, $routeParams, $filter) {
+    function($scope, $uibModal, $location, Data, $window, $routeParams, $filter, AsOfDate) {
 
 
         $scope.prompts = txtCommon;
 
         var spreadsheet = Data.getExcel();
+        AsOfDate.setAsOfDate(spreadsheet.dateStamp);
+
 
         var excelData = spreadsheet.sheets[0];
         
@@ -100,11 +103,11 @@ wineInventory.controller('ViewInventoryController',
             ],
             onRegisterApi: function( gridApi ) { 
               $scope.gridApi = gridApi; 
-              gridApi.selection.on.rowSelectionChanged($scope,rowSelectCallbck);
+              $scope.gridApi.selection.on.rowSelectionChanged($scope,rowSelectCallbck);
             }            
         };
 
-        function rowSelectCallbck(row,col) { 
+        function rowSelectCallbck(row,col,$event) { 
           // clicking the checkbox first toggles the checkbox then calls this callback
           // the checkbox column does not have outerText
           // so the toggle only gets called once

@@ -48,3 +48,20 @@ wineInventory.factory("Data",
         };
     }
 );
+
+wineInventory.factory('AsOfDate', function(){
+  var asOfDate = 'xx';
+
+  var getAsOfDate = function(){
+    return asOfDate;
+  }
+
+  var setAsOfDate = function(newAsOfDate){
+    asOfDate = newAsOfDate;
+  }
+
+  return {
+    getAsOfDate: getAsOfDate,
+    setAsOfDate: setAsOfDate
+  };
+});
