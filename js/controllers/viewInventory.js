@@ -89,6 +89,7 @@ wineInventory.controller('ViewInventoryController',
               {
                 field: 'Wine',
                 displayName: $scope.prompts.columnBottles,
+                cellTemplate: '<span>{{row.entity.Vintage}} {{row.entity.Wine}}</span>',
                 width: "50%",
                 enableCellEdit: false,
                 enableColumnMenu: false,

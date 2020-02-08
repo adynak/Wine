@@ -1,7 +1,8 @@
 var txtNavigation = {
     brandName: 'Wine Inventory Assistant',
     bgColor: "#E2E0D7",
-    fontColor: "#196A90"
+    fontColor: "#196A90",
+    confirm: "Done Already?"
 };
 
 var txtSideMenu = {
@@ -18,3 +19,12 @@ var txtCommon = {
     columnBottles: "Bottles",
     columnInStock: "In Stock"
 };
+
+var txtModal = {
+    bgColor: "#E2E0D7",
+    confirm: "Done Already?",
+    btnOK: "OK",
+    btnCancel: "Cancel",
+    messageBody: ["Choose OK to begin with a new download.",
+        "Choose Cancel to continue with the current download."]
+}

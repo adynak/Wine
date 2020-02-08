@@ -1,82 +1,100 @@
-wineInventory.controller('ViewMissingInventoryController', 
-  [
-    '$scope', 
-    '$http', 
-    '$location', 
-    'Data', 
-    '$rootScope', 
-    '$routeParams', 
+wineInventory.controller('ViewMissingInventoryController',
+    [
+        '$scope',
+        '$http',
+        '$location',
+        'Data',
+        '$rootScope',
+        '$routeParams',
+        '$uibModal',
 
-    function($scope, $http, $location, Data, $rootScope, $routeParams) {
+        function($scope, $http, $location, Data, $rootScope, $routeParams, $uibModal) {
 
-        $scope.prompts = txtCommon;
+            $scope.prompts = txtCommon;
 
-        var missingBottles = Data.getMissingBottles();
+            var missingBottles = Data.getMissingBottles();
 
-        if ((missingBottles.length) > 0){
-            missingBottles.forEach(function (arrayItem) {
-                arrayItem.url = txtCommon.cellartrackerURL + arrayItem.barcode;
-            });
-        } else {
-            var nothingHere = {
-                location: "All",
-                bin: "All",
-                bottle: "There are no missing bottles"};
-            missingBottles.push(nothingHere);
-        }
+            if ((missingBottles.length) > 0) {
+                missingBottles.forEach(function(arrayItem) {
+                    arrayItem.url = txtCommon.cellartrackerURL + arrayItem.barcode;
+                });
+            } else {
+                var nothingHere = {
+                    location: "All",
+                    bin: "All",
+                    bottle: "There are no missing bottles"
+                };
+                missingBottles.push(nothingHere);
+            }
 
-        $scope.gridMissingBottles = {
-            enableGridMenu: false,
-            enableSorting : false,
-            enableRowSelection: true,
-            enableRowHeaderSelection: false, 
-            multiSelect: false,
-            exporterMenuPdf: false,
-            exporterMenuCsv: false,
-            data: missingBottles,
-            columnDefs: 
-            [
-              {
-                name: 'Location',
-                field: 'location',
-                width: "15%",
-                enableCellEdit: false,
-                enableColumnMenu: false,
-                grouping: {
-                  groupPriority: 0
-                },
-                cellTemplate: 'views/hideGridDetailRowTemplate.html'
-              },
-              {
-                name: 'Bins',
-                field: 'bin',
-                width: "15%",
-                enableCellEdit: false,
-                enableColumnMenu: false,
-                grouping: {
-                    groupPriority: 1
-                },
-                cellTemplate: 'views/hideGridDetailRowTemplate.html'                
-              },
-              {
-                name: 'Bottles',
-                field: 'bottle',
-                enableCellEdit: false,
-                enableColumnMenu: false,
-                cellTemplate: 'views/fixMissingInventoryTemplate.html'                
-              }            
-            ]
-        };
-
-        $scope.startOver = function() {
-            var resetExcel = {
-                sheetName: null,
-                columnDefs: null,
-                gridData: null
+            $scope.gridMissingBottles = {
+                enableGridMenu: false,
+                enableSorting: false,
+                enableRowSelection: true,
+                enableRowHeaderSelection: false,
+                multiSelect: false,
+                exporterMenuPdf: false,
+                exporterMenuCsv: false,
+                data: missingBottles,
+                columnDefs: [{
+                        name: 'Location',
+                        field: 'location',
+                        width: "15%",
+                        enableCellEdit: false,
+                        enableColumnMenu: false,
+                        grouping: {
+                            groupPriority: 0
+                        },
+                        cellTemplate: 'views/hideGridDetailRowTemplate.html'
+                    },
+                    {
+                        name: 'Bins',
+                        field: 'bin',
+                        width: "15%",
+                        enableCellEdit: false,
+                        enableColumnMenu: false,
+                        grouping: {
+                            groupPriority: 1
+                        },
+                        cellTemplate: 'views/hideGridDetailRowTemplate.html'
+                    },
+                    {
+                        name: 'Bottles',
+                        field: 'bottle',
+                        enableCellEdit: false,
+                        enableColumnMenu: false,
+                        cellTemplate: 'views/fixMissingInventoryTemplate.html'
+                    }
+                ]
             };
-            Data.setExcel(resetExcel);
-            $location.path("/home");
-        };
 
-    }
-]);
+            $scope.startOver = function() {
+
+                $uibModal.open({
+                    templateUrl: 'views/modal.html',
+                    controller: function($scope, $uibModalInstance) {
+                        $scope.prompts = txtModal;
+
+                        $scope.ok = function() {
+                            var resetExcel = {
+                                sheetName: null,
+                                columnDefs: null,
+                                gridData: null
+                            };
+                            Data.setExcel(resetExcel);
+                            $uibModalInstance.close();
+                            $location.path("/home");
+                        };
+
+                        $scope.cancel = function() {
+                            $uibModalInstance.close();
+                            $location.path("/home");
+                        };
+                    }
+
+                });
+
+            };
+
+        }
+    ]);

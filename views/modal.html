@@ -1,0 +1,16 @@
+<div class="modal-header" style="background-color: {{prompts.bgColor}}">
+    <h3>{{prompts.confirm}}</h3>
+</div>
+
+<div class="modal-body">
+	<ul>
+		<li class="item" ng-repeat="txt in prompts.messageBody">
+			<strong>{{ txt }}</strong>
+		</li>
+	</ul>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-success active" type="button" ng-click="ok()">{{prompts.btnOK}}</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">{{prompts.btnCancel}}</button>
+</div>
