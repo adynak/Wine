@@ -36,6 +36,7 @@ wineInventory.controller('ViewInventoryController',
                       temp.bin = $scope.gridOptions.data[i].Bin;
                       temp.bottle = $scope.gridOptions.data[i].Wine;
                       temp.barcode = $scope.gridOptions.data[i].Barcode;
+                      temp.vintage = $scope.gridOptions.data[i].Vintage;
                       missingBottles.push(temp);
                   }
           }
