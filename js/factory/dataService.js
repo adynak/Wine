@@ -50,7 +50,7 @@ wineInventory.factory("Data",
 );
 
 wineInventory.factory('AsOfDate', function(){
-  var asOfDate = 'xx';
+  var asOfDate = '';
 
   var getAsOfDate = function(){
     return asOfDate;
