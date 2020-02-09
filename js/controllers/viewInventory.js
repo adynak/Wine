@@ -56,11 +56,13 @@ wineInventory.controller('ViewInventoryController',
             enableGridMenu: false,
             enableSorting : false,
             enableRowSelection: true,
-            enableRowHeaderSelection: false, 
+            enableRowHeaderSelection: false,
             enableColumnMenus: false,
             multiSelect: false,
             exporterMenuPdf: false,
             exporterMenuCsv: false,
+            showGridFooter: false,
+            gridFooterTemplate: 'views/viewInventoryFooter.html',
             data: gridData,
             // showGridFooter: true,
             columnDefs: 
@@ -104,12 +106,26 @@ wineInventory.controller('ViewInventoryController',
               }
             ],
             onRegisterApi: function( gridApi ) { 
-              $scope.gridApi = gridApi; 
+              $scope.gridApi = gridApi;
               $scope.gridApi.selection.on.rowSelectionChanged($scope,rowSelectCallbck);
+              $scope.gridApi.selection.on.rowFocusChanged($scope,selectChildren);
             }            
         };
 
-        function rowSelectCallbck(row,col,$event) { 
+        function selectChildren(row,col){
+          var bottles;
+          if (row.treeNode.parentRow == null){
+
+          } else {
+            bottles = $scope.gridApi.treeBase.getRowChildren(row);
+            bottles.forEach(function(bottle) {
+              bottle.entity.inStock = !bottle.entity.inStock;
+            });
+
+          }
+        };
+
+        function rowSelectCallbck(row,col) { 
           // clicking the checkbox first toggles the checkbox then calls this callback
           // the checkbox column does not have outerText
           // so the toggle only gets called once

@@ -11,6 +11,11 @@
 </div>
 
 <div class="modal-footer">
-    <button class="btn btn-success active" type="button" ng-click="ok()">{{prompts.btnOK}}</button>
+    <button class="btn btn-success active" 
+    		type="button" 
+    		ng-enter="ok()" 
+    		ng-click="ok()">
+    		{{prompts.btnOK}}
+    </button>
     <button class="btn btn-warning" type="button" ng-click="cancel()">{{prompts.btnCancel}}</button>
 </div>

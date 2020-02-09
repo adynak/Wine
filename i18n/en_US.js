@@ -17,7 +17,8 @@ var txtCommon = {
     columnLocation: "Location",
     columnBins: "Bins",
     columnBottles: "Bottles",
-    columnInStock: "In Stock"
+    columnInStock: "In Stock",
+    totalBottles: "Total Bottles: "
 };
 
 var txtModal = {

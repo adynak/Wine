@@ -291,6 +291,13 @@ body  {
   width: auto;
 }
 
+.txtFooter{
+  color:#196A90;
+  font-weight: bold;
+  font-size: 1.125em;
+  padding-left: 5px;  
+}
+
 .txtSheet{
   color:#01A2FE;
   font-weight: bold;
@@ -311,7 +318,7 @@ body  {
 }
 
 .grid {
-  height: 65vh;
+  height: 66vh;
       /*width:80%;*/
     /*height:100%;*/
 }
@@ -354,4 +361,8 @@ input[type=checkbox]
   position: absolute;
   left: 20px; 
   top: 10px;
+}
+
+.ui-grid-top-panel {
+  height: 30px !important;
 }
