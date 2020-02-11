@@ -49,10 +49,10 @@ wineInventory.factory("Data",
         var locationBin = function(row){
 
             var temp, locations = Array();
-            debugger;
-            for (var x = 0 ; x < row.entity.Location.length; x++){
+
+            for (var x = 0 ; x < row.entity.LocationAsArray.length; x++){
                 temp = {
-                    whereItIs: row.entity.Location[x] + " - Bin " + row.entity.Bin[x]
+                    whereItIs: row.entity.LocationAsArray[x] + " - Bin " + row.entity.BinAsArray[x]
                 }
                 locations.push(temp);
             }

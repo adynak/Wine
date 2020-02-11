@@ -51,6 +51,7 @@ wineInventory.controller('ViewVarietalController',
 
 
         var excelData = spreadsheet.sheets[0];
+
         var bottles = excelData.gridData;
 // sort them for this view
         bottles.sort(function(wine1, wine2) {
@@ -66,8 +67,8 @@ wineInventory.controller('ViewVarietalController',
         });
 // change Location and Bin into arrays
         bottles.forEach(function(row) {
-            row.Location = [row.Location];
-            row.Bin = [row.Bin];
+            row.LocationAsArray = [row.Location];
+            row.BinAsArray = [row.Bin];
         });
 
 // remove duplicate rows
@@ -87,8 +88,8 @@ wineInventory.controller('ViewVarietalController',
                     if (bottles[i-row].isDuplicate){
 
                     } else {
-                        bottles[i-row].Location.push(bottles[i].Location[0]);
-                        bottles[i-row].Bin.push(bottles[i].Bin[0]);
+                        bottles[i-row].LocationAsArray.push(bottles[i].Location[0]);
+                        bottles[i-row].BinAsArray.push(bottles[i].Bin[0]);
                         done = true
                     }
                 }
@@ -163,7 +164,7 @@ wineInventory.controller('ViewVarietalController',
                 enableColumnMenu: false,
               },
               {
-                field: "Location",
+                field: "LocationAsArray",
                 displayName: $scope.prompts.columnInStock,
                 enableColumnMenu: false,
                 // cellTemplate: 'views/inStockTemplate.html',
