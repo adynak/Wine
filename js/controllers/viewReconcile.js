@@ -26,6 +26,16 @@ wineInventory.controller('ViewReconcileController',
 
         $scope.sheetName = excelData.sheetName;
 
+
+// sort them for this view
+        gridData.sort(function(wine1, wine2) {
+            if (wine1.Location > wine2.Location) return 1;
+            if (wine1.Location < wine2.Location) return -1;
+
+            if (wine1.Bin < wine2.Bin) return -1;
+            if (wine1.Bin > wine2.Bin) return 1;
+        });
+
         $scope.btnDone = function() {
           var missingBottles = Array();
           for (i = 0; i < $scope.gridOptions.data.length; i++)

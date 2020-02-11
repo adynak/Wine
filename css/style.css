@@ -348,6 +348,13 @@ body  {
   margin-left: auto;
 }
 
+.gridByVarietal {
+  width: 70%;
+  height: 66vh;
+  margin-right: auto;
+  margin-left: auto;
+}
+
 .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
     background-color: #E2E0D7 !important;
     color: #196A90 !important;

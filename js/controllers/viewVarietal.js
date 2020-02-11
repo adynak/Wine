@@ -48,11 +48,12 @@ wineInventory.controller('ViewVarietalController',
 
         };
 
-
-
         var excelData = spreadsheet.sheets[0];
 
         var bottles = excelData.gridData;
+
+        var varietalCounts = Data.countVarietals(bottles);
+
 // sort them for this view
         bottles.sort(function(wine1, wine2) {
             if (wine1.Varietal > wine2.Varietal) return 1;
@@ -66,10 +67,14 @@ wineInventory.controller('ViewVarietalController',
 
         });
 // change Location and Bin into arrays
+// append concat of varietal and vintage for counting 
         bottles.forEach(function(row) {
             row.LocationAsArray = [row.Location];
             row.BinAsArray = [row.Bin];
+            row.VarietalVintage = row.Varietal + row.Vintage;
         });
+
+        var vintageCounts = Data.countVintages(bottles);
 
 // remove duplicate rows
         function checkDuplicate(bottle) {
@@ -88,8 +93,8 @@ wineInventory.controller('ViewVarietalController',
                     if (bottles[i-row].isDuplicate){
 
                     } else {
-                        bottles[i-row].LocationAsArray.push(bottles[i].Location[0]);
-                        bottles[i-row].BinAsArray.push(bottles[i].Bin[0]);
+                        bottles[i-row].LocationAsArray.push(bottles[i].Location);
+                        bottles[i-row].BinAsArray.push(bottles[i].Bin);
                         done = true
                     }
                 }
@@ -100,6 +105,7 @@ wineInventory.controller('ViewVarietalController',
                 bottles[i].isDuplicate = false;
             }
         }
+
         bottles = bottles.filter(checkDuplicate);
 
         var gridData  = bottles;
@@ -142,23 +148,24 @@ wineInventory.controller('ViewVarietalController',
                 grouping: {
                   groupPriority: 0
                 },
-                cellTemplate: 'views/hideGridDetailRowTemplate.html'
+                cellTemplate: 'views/varietalColumn.html'
               },
               {
                 field: 'Vintage',
                 displayName: $scope.prompts.columnVintage,
-                width: "15%",
+                width: "10%",
                 enableCellEdit: false,
                 enableColumnMenu: false,
                 grouping: {
                     groupPriority: 1
                 },
-                cellTemplate: 'views/hideGridDetailRowTemplate.html'                
+                cellTemplate: 'views/vintageColumn.html'                
               },
               {
                 field: 'Wine',
                 displayName: $scope.prompts.columnBottles,
-                    cellTemplate: '<div ng-click="grid.appScope.showMeTheBottles(row)" class="ui-grid-cell-contents">{{row.entity.Wine}}</div>',
+                // cellTemplate: '<div ng-click="grid.appScope.showMeTheBottles(row)" class="ui-grid-cell-contents">{{row.entity.LocationAsArray.length}} - {{row.entity.Wine}}</div>',
+                cellTemplate: "views/bottleColumn.html",
                 // width: "50%",
                 enableCellEdit: false,
                 enableColumnMenu: false,
@@ -201,6 +208,20 @@ wineInventory.controller('ViewVarietalController',
           }
 
         };
+
+        $scope.getCounts = function(fieldName,pattern){
+            var obj,searchFor;
+            switch (fieldName) {
+                case "varietal" :
+                    obj = varietalCounts.find(o => o.varietal === pattern);
+                    break;
+                case "vintage" :
+                    searchFor = pattern["0"].row.entity.Varietal + pattern["0"].row.entity.Vintage
+                    obj = vintageCounts.find(o => o.vintage === searchFor);
+
+            }
+            return "(" + obj.count + ")";
+        }
 
     }
 ]);

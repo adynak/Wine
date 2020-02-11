@@ -49,13 +49,13 @@ wineInventory.directive("filelistBind", ['Data',
                                     }
                                 });
 
-                                sheetData.sort(function(wine1, wine2) {
-                                    if (wine1.Location > wine2.Location) return 1;
-                                    if (wine1.Location < wine2.Location) return -1;
+                                // sheetData.sort(function(wine1, wine2) {
+                                //     if (wine1.Location > wine2.Location) return 1;
+                                //     if (wine1.Location < wine2.Location) return -1;
 
-                                    if (wine1.Bin < wine2.Bin) return -1;
-                                    if (wine1.Bin > wine2.Bin) return 1;
-                                });
+                                //     if (wine1.Bin < wine2.Bin) return -1;
+                                //     if (wine1.Bin > wine2.Bin) return 1;
+                                // });
 
                                 sheetData.forEach(function(row) {
                                     row.inStock = false;
