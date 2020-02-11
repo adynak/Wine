@@ -20,9 +20,17 @@ wineInventory.config(['$routeProvider', '$locationProvider', function($routeProv
         templateUrl: 'views/home.html',
         controller: 'HomeController'
     }).
-    when('/viewInventory', {
-        templateUrl: 'views/viewInventory.html',
-        controller: 'ViewInventoryController',
+    when('/viewVarietal', {
+        templateUrl: 'views/viewVarietal.html',
+        controller: 'ViewVarietalController',
+    }).
+    when('/viewProducer', {
+        templateUrl: 'views/viewProducer.html',
+        controller: 'ViewProducerController',
+    }).
+    when('/viewReconcile', {
+        templateUrl: 'views/viewReconcile.html',
+        controller: 'ViewReconcileController',
     }).
     when('/viewMissingInventory', {
         templateUrl: 'views/viewMissingInventory.html',

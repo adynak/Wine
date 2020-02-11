@@ -1,4 +1,4 @@
-wineInventory.controller('ViewInventoryController', 
+wineInventory.controller('ViewReconcileController', 
     [
         '$scope', 
         '$uibModal', 
@@ -17,6 +17,7 @@ wineInventory.controller('ViewInventoryController',
 
         var spreadsheet = Data.getExcel();
         AsOfDate.setAsOfDate(spreadsheet.dateStamp);
+        Data.setViewName(txtCommon.viewNameReconcileInventory);
 
 
         var excelData = spreadsheet.sheets[0];
@@ -62,7 +63,7 @@ wineInventory.controller('ViewInventoryController',
             exporterMenuPdf: false,
             exporterMenuCsv: false,
             showGridFooter: false,
-            gridFooterTemplate: 'views/viewInventoryFooter.html',
+            gridFooterTemplate: 'views/viewReconcileFooter.html',
             data: gridData,
             // showGridFooter: true,
             columnDefs: 

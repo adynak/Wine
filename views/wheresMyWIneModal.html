@@ -1,0 +1,29 @@
+<div class="modal-header" style="background-color: {{prompts.bgColor}}">
+    <h3>{{bottle.vintage}} {{bottle.wine}}</h3>
+</div>
+
+<div class="modal-body">
+	<ul>
+		<li class="item" ng-repeat="txt in bottle.location">
+			<strong>{{ txt.count }} 
+                <ng-pluralize count="txt.count"
+            when="{ 
+                    '1':     '{{bottle.plurals[0].tag}} {{txt.location}}',
+                    'other': '{{bottle.plurals[1].tag}} {{txt.location}}'
+            }">
+        </ng-pluralize>
+            
+            </strong>
+		</li>
+	</ul>
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-success active" 
+    		type="button" 
+    		ng-enter="ok()" 
+    		ng-click="ok()">
+    		{{prompts.btnOK}}
+    </button>
+
+</div>

@@ -1,16 +1,45 @@
 var txtNavigation = {
-    brandName: 'Wine Inventory Assistant',
+    brandName: 'Cellar Tracker Assistant',
     bgColor: "#E2E0D7",
     fontColor: "#196A90",
     confirm: "Done Already?"
 };
 
 var txtSideMenu = {
-    menuOpenFile: 'Choose Downloaded Inventory File'
+    brandName: 'Cellar Tracker Assistant',
+    menuOpenFile: 'Choose Downloaded Inventory File',
+    alwaysMenuOpenFile: 'Choose Downloaded Inventory File',
+    menuChooseAction: [
+        {
+            name: 'Wine by Varietal',
+            command: "viewVarietal",
+            icon: "glyphicon-tint",
+            color: "icon-grape"
+        },
+        {
+            name: 'Wine by Producer',
+            command: "viewProducer",
+            icon: "glyphicon-home",
+            color: "icon-home"
+        },
+        {
+            name: 'Reconcile Inventory',
+            command: "viewReconcile",
+            icon: "glyphicon-pencil",
+            color: "icon-pencil"
+        },
+        { 
+            name: 'Start Over',
+            command: "startOver",
+            icon: "glyphicon-refresh",
+            color: "icon-danger"
+        }
+    ]
 };
 
 var txtCommon = {
-    btnDone: 'View Missing Bottles',
+    btnViewMissingBottles: 'View Missing Bottles',
+    btnDone: "Done",
     sheetName: 'Worksheet',
     btnQuit: "Done",
     cellartrackerURL: "https://www.cellartracker.com/barcode.asp?AR=postlogin&iInventory=",
@@ -18,7 +47,16 @@ var txtCommon = {
     columnBins: "Bins",
     columnBottles: "Bottles",
     columnInStock: "In Stock",
-    totalBottles: "Total Bottles: "
+    columnVarietal: "Varietal",
+    columnVintage: "Vintage",
+    totalBottles: "Total Bottles: ",
+    viewNameReconcileInventory: "Reconcile Inventory from",
+    viewNameVarietal: "View By Varietal",
+    viewNameProducer: "View By Producer",
+    plurals: [
+        {tag: 'bottle in '},
+        {tag: 'bottles in'}
+    ]
 };
 
 var txtModal = {

@@ -38,13 +38,47 @@ wineInventory.factory("Data",
             $location.path("/home");
         }
 
+        var setViewName = function(viewName){
+            factoryVariables.viewName = viewName;
+        }
+
+        var getViewName = function(){
+            return factoryVariables.viewName;
+        }
+
+        var locationBin = function(row){
+
+            var temp, locations = Array();
+            debugger;
+            for (var x = 0 ; x < row.entity.Location.length; x++){
+                temp = {
+                    whereItIs: row.entity.Location[x] + " - Bin " + row.entity.Bin[x]
+                }
+                locations.push(temp);
+            }
+
+            let obj = {};
+
+            locations.forEach(entry => (obj[entry.whereItIs] = (obj[entry.whereItIs] || 0) + 1));
+            let locationBin = [];
+            for (whereItIs in obj) {
+                locationBin.push({
+                    location: whereItIs,
+                    count: obj[whereItIs]
+                });
+            }
+            return locationBin;
+        }
+
         return {
             setExcel:setExcel,
             getExcel:getExcel,
             setMissingBottles: setMissingBottles,
             getMissingBottles: getMissingBottles,
-            startOver: startOver
-
+            startOver: startOver,
+            setViewName: setViewName,
+            getViewName: getViewName,
+            locationBin: locationBin
         };
     }
 );

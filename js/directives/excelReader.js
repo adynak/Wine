@@ -59,6 +59,7 @@ wineInventory.directive("filelistBind", ['Data',
 
                                 sheetData.forEach(function(row) {
                                     row.inStock = false;
+                                    row.isDuplicate = false;
                                 });
 
                                 sheets.push({

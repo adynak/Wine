@@ -11,7 +11,10 @@ wineInventory.controller('NavigationController',
         function($scope, $http, $location, Data, $rootScope, $routeParams, AsOfDate, $uibModal) {
 
             $scope.prompts = txtNavigation;
+
+            Data.setViewName(txtNavigation.brandName);
             $scope.AsOfDate = AsOfDate;
+            $scope.Data = Data;
 
             $scope.startOver = function() {
 

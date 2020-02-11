@@ -30,7 +30,29 @@
 
             <li ng-show="menuShowFilename()">
             </li>
-            
+
+            <li ng-repeat="action in actions">
+
+              <button class="button" 
+                      type="button" 
+                      ng-click="runAction(action.command)">
+                      <span class="pull-left"></span>
+                        {{action.name}}
+              </button>
+
+<!--                <a href="#/viewSheet/{{action.command}}">
+                <span class="txtMenu">
+                  {{action.name}}
+                </span>
+
+                <span style="font-size:16px;"
+                      class="pull-left hidden-xs showopacity glyphicon {{action.icon}} {{action.color}}">
+                </span>
+              </a>
+ -->
+
+            </li>
+
           </ul>
         </div>
       </div>

@@ -184,6 +184,18 @@ section{
 .icon-cart {
   color: #FF8100;
 }
+
+.icon-grape {
+  color: #a846cf;
+}
+
+.icon-home {
+  color: #8a5b2c;
+}
+
+.icon-pencil {
+  color: #35CC4B;
+}
  
 .ingredientList {
   list-style-type:none;
@@ -305,6 +317,12 @@ body  {
   padding-left: 5px;  
 }
 
+.txtMenu{
+  font-weight: bold;
+  font-size: 1.125em;
+  padding-left: 15px;  
+}
+
 .center {
   text-align: center;
 }
@@ -325,7 +343,7 @@ body  {
 
 .gridMissing {
   width: 60%;
-  height:50%;
+  height: 66vh;
   margin-right: auto;
   margin-left: auto;
 }
@@ -365,4 +383,18 @@ input[type=checkbox]
 
 .ui-grid-top-panel {
   height: 30px !important;
+}
+
+.button {
+  background-color: #F8F8F8;
+  border: none;
+  padding: 10px 32px;
+  text-align: left;
+  display: inline-block;
+  font-size: 16px;
+  width: 100%;
+}
+
+button:hover {
+  background-color: #dedede;
 }
