@@ -8,7 +8,8 @@ var wineInventory = angular.module('wineInventory',
             'ngMessages', 
             'ui.grid.grouping', 
             'ui.bootstrap',
-            'ui.grid.selection'
+            'ui.grid.selection',
+            'ui.grid.resizeColumns'
         ]);
 
 wineInventory.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
