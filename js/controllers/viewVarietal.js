@@ -30,11 +30,12 @@ wineInventory.controller('ViewVarietalController',
                     vintage: row.entity.Vintage,
                     wine: row.entity.Wine,
                     location: locationBin,
-                    plurals: txtCommon.plurals
+                    plurals: txtCommon.plurals,
+                    wineType: ""
                 };
             $uibModal.open({
                 scope: modalScope,
-                templateUrl: 'views/wheresMyWIneModal.html',
+                templateUrl: 'views/wheresMyWineModal.html',
                 controller: function($scope, $uibModalInstance) {
                     $scope.prompts = txtModal;
 

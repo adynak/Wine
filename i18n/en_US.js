@@ -48,6 +48,7 @@ var txtCommon = {
     columnBottles: "Bottles",
     columnInStock: "In Stock",
     columnVarietal: "Varietal",
+    columnProducer: "Producer",
     columnVintage: "Vintage",
     totalBottles: "Total Bottles: ",
     viewNameReconcileInventory: "Reconcile Inventory from",

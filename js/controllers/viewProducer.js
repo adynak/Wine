@@ -15,7 +15,7 @@ wineInventory.controller('ViewProducerController',
 
         $scope.prompts = txtCommon;
 
-        var row, done;
+        var row, done,wineType;
         var spreadsheet = Data.getExcel();
         AsOfDate.setAsOfDate(spreadsheet.dateStamp);
         Data.setViewName(txtCommon.viewNameVarietal);
@@ -23,6 +23,12 @@ wineInventory.controller('ViewProducerController',
         $scope.showMeTheBottles = function(row) {
 
             var locationBin = Data.locationBin(row);
+             
+            if (row.entity.Wine.indexOf(row.entity.Varietal) >= 0){
+                wineType = "";
+            } else {
+                wineType = row.entity.Varietal;
+            }
 
             var modalScope = $rootScope.$new();
             modalScope.bottle = {
@@ -30,11 +36,12 @@ wineInventory.controller('ViewProducerController',
                     vintage: row.entity.Vintage,
                     wine: row.entity.Wine,
                     location: locationBin,
-                    plurals: txtCommon.plurals
+                    plurals: txtCommon.plurals,
+                    wineType: wineType
                 };
             $uibModal.open({
                 scope: modalScope,
-                templateUrl: 'views/wheresMyWIneModal.html',
+                templateUrl: 'views/wheresMyWineModal.html',
                 controller: function($scope, $uibModalInstance) {
                     $scope.prompts = txtModal;
 
@@ -56,11 +63,11 @@ wineInventory.controller('ViewProducerController',
 
 // sort them for this view
         bottles.sort(function(wine1, wine2) {
-            if (wine1.Varietal > wine2.Varietal) return 1;
-            if (wine1.Varietal < wine2.Varietal) return -1;
+            if (wine1.Producer > wine2.Producer) return 1;
+            if (wine1.Producer < wine2.Producer) return -1;
 
-            if (wine1.Vintage < wine2.Vintage) return -1;
-            if (wine1.Vintage > wine2.Vintage) return 1;
+            if (wine1.Varietal < wine2.Varietal) return -1;
+            if (wine1.Varietal > wine2.Varietal) return 1;
 
             if (wine1.iWine < wine2.iWine) return -1;
             if (wine1.iWine > wine2.iWine) return 1;
@@ -140,26 +147,26 @@ wineInventory.controller('ViewProducerController',
             columnDefs:
             [
               {
-                field: 'Varietal',
-                displayName: $scope.prompts.columnVarietal,
-                width: "25%",
+                field: 'Producer',
+                displayName: $scope.prompts.columnProducer,
+                width: "20%",
                 enableCellEdit: false,
                 enableColumnMenu: false,
                 grouping: {
                   groupPriority: 0
                 },
-                cellTemplate: 'views/varietalColumn.html'
+                cellTemplate: 'views/producerColumn.html'
               },
               {
-                field: 'Vintage',
-                displayName: $scope.prompts.columnVintage,
-                width: "10%",
+                field: 'Varietal',
+                displayName: $scope.prompts.columnVarietal,
+                width: "20%",
                 enableCellEdit: false,
                 enableColumnMenu: false,
                 grouping: {
                     groupPriority: 1
                 },
-                cellTemplate: 'views/vintageColumn.html'
+                cellTemplate: 'views/varietalColumn.html'
               },
               {
                 field: 'Wine',
