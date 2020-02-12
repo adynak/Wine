@@ -1,6 +1,6 @@
 var txtNavigation = {
-    brandName: 'Cellar Tracker Assistant',
-    bgColor: "#E2E0D7",
+    brandName: 'Wine Detective',
+    bgColor: "#F8F8F8",
     fontColor: "#196A90",
     confirm: "Done Already?"
 };
@@ -11,13 +11,13 @@ var txtSideMenu = {
     alwaysMenuOpenFile: 'Choose Downloaded Inventory File',
     menuChooseAction: [
         {
-            name: 'Wine by Varietal',
+            name: 'Wine by Varietal by Vintage',
             command: "viewVarietal",
             icon: "glyphicon-tint",
             color: "icon-grape"
         },
         {
-            name: 'Wine by Producer',
+            name: 'Wine by Producer by Varietal',
             command: "viewProducer",
             icon: "glyphicon-home",
             color: "icon-home"
@@ -28,7 +28,7 @@ var txtSideMenu = {
             icon: "glyphicon-pencil",
             color: "icon-pencil"
         },
-        { 
+        {
             name: 'Start Over',
             command: "startOver",
             icon: "glyphicon-refresh",

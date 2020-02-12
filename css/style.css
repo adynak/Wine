@@ -85,7 +85,7 @@ nav.sidebar, .main{
 
 
 /*small/medium side display*/
-/* make sidebar nav vertical */ 
+/* make sidebar nav vertical */
 @media (min-width: 768px) {
   .sidebar-nav .navbar .navbar-collapse {
     padding: 0;
@@ -114,7 +114,7 @@ nav.sidebar{
         z-index: 8000;
         margin-bottom: 0px;
     }
-  
+
 }
 
 @media (min-width: 1330px) {
@@ -196,7 +196,7 @@ section{
 .icon-pencil {
   color: #35CC4B;
 }
- 
+
 .ingredientList {
   list-style-type:none;
   position: relative;
@@ -224,7 +224,7 @@ section{
 }
 
 body  {
-    /*background-image: url("../resources/images/files.jpg");*/
+    background-image: url("../resources/images/wineCubes.jpg");
     background-size:100%;
     padding: 10px;
 
@@ -307,20 +307,20 @@ body  {
   color:#196A90;
   font-weight: bold;
   font-size: 1.125em;
-  padding-left: 5px;  
+  padding-left: 5px;
 }
 
 .txtSheet{
   color:#01A2FE;
   font-weight: bold;
   font-size: 1.125em;
-  padding-left: 5px;  
+  padding-left: 5px;
 }
 
 .txtMenu{
   font-weight: bold;
   font-size: 1.125em;
-  padding-left: 15px;  
+  padding-left: 15px;
 }
 
 .center {
@@ -384,8 +384,8 @@ input[type=checkbox]
 
 .logo {
   position: absolute;
-  left: 20px; 
-  top: 10px;
+  left: 20px;
+  top: 3px;
 }
 
 .ui-grid-top-panel {

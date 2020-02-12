@@ -1,4 +1,4 @@
-wineInventory.factory("Data", 
+wineInventory.factory("Data",
     function($http, $q, $rootScope) {
 
         var factoryVariables = {
@@ -26,7 +26,7 @@ wineInventory.factory("Data",
 
         var getMissingBottles = function(){
             return factoryVariables.missingBottles;
-        }  
+        }
 
         var startOver = function(){
             var resetExcel = {
@@ -43,7 +43,11 @@ wineInventory.factory("Data",
         }
 
         var getViewName = function(){
+          if (factoryVariables.viewName == "Wine Detective"){
+            return "";
+          } else {
             return factoryVariables.viewName;
+          }
         }
 
         var locationBin = function(row){

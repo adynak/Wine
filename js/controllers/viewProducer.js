@@ -1,29 +1,114 @@
-wineInventory.controller('ViewProducerController', 
+wineInventory.controller('ViewProducerController',
     [
-        '$scope', 
-        '$uibModal', 
+        '$scope',
+        '$rootScope',
+        '$uibModal',
         '$location',
-        'Data', 
-        '$window', 
+        'Data',
+        '$window',
         '$routeParams',
         '$filter',
         'AsOfDate',
         'uiGridGroupingConstants',
 
-    function($scope, $uibModal, $location, Data, $window, $routeParams, $filter, AsOfDate) {
+    function($scope, $rootScope, $uibModal, $location, Data, $window, $routeParams, $filter, AsOfDate) {
 
         $scope.prompts = txtCommon;
 
+        var row, done;
         var spreadsheet = Data.getExcel();
         AsOfDate.setAsOfDate(spreadsheet.dateStamp);
-        Data.setViewName(txtCommon.viewNameProducer);
+        Data.setViewName(txtCommon.viewNameVarietal);
+
+        $scope.showMeTheBottles = function(row) {
+
+            var locationBin = Data.locationBin(row);
+
+            var modalScope = $rootScope.$new();
+            modalScope.bottle = {
+                    bottleCount: row.entity.Location.length,
+                    vintage: row.entity.Vintage,
+                    wine: row.entity.Wine,
+                    location: locationBin,
+                    plurals: txtCommon.plurals
+                };
+            $uibModal.open({
+                scope: modalScope,
+                templateUrl: 'views/wheresMyWIneModal.html',
+                controller: function($scope, $uibModalInstance) {
+                    $scope.prompts = txtModal;
+
+                    $scope.ok = function() {
+                        $uibModalInstance.close();
+                    };
+
+                }
+
+            });
+
+        };
+
+        var excelData = spreadsheet.sheets[0];
+
+        var bottles = excelData.gridData;
+
+        var varietalCounts = Data.countVarietals(bottles);
+
+// sort them for this view
+        bottles.sort(function(wine1, wine2) {
+            if (wine1.Varietal > wine2.Varietal) return 1;
+            if (wine1.Varietal < wine2.Varietal) return -1;
+
+            if (wine1.Vintage < wine2.Vintage) return -1;
+            if (wine1.Vintage > wine2.Vintage) return 1;
+
+            if (wine1.iWine < wine2.iWine) return -1;
+            if (wine1.iWine > wine2.iWine) return 1;
+
+        });
+// change Location and Bin into arrays
+// append concat of varietal and vintage for counting
+        bottles.forEach(function(row) {
+            row.LocationAsArray = [row.Location];
+            row.BinAsArray = [row.Bin];
+            row.VarietalVintage = row.Varietal + row.Vintage;
+        });
+
+        var vintageCounts = Data.countVintages(bottles);
+
+// remove duplicate rows
+        function checkDuplicate(bottle) {
+          return bottle.isDuplicate == false;
+        }
+
+        for (i=1; i < bottles.length; ++i) {
+            if (bottles[i].iWine == bottles[i-1].iWine){
+                bottles[i].isDuplicate = true;
+
+// find the previous row that is NOT a duplicate
+                row = 0;
+                done = false;
+                do {
+                    row++;
+                    if (bottles[i-row].isDuplicate){
+
+                    } else {
+                        bottles[i-row].LocationAsArray.push(bottles[i].Location);
+                        bottles[i-row].BinAsArray.push(bottles[i].Bin);
+                        done = true
+                    }
+                }
+                while (done == false);
 
 
-        // var excelData = spreadsheet.sheets[0];
-        
-        // var gridData  = excelData.gridData;
+            } else {
+                bottles[i].isDuplicate = false;
+            }
+        }
 
-        // $scope.sheetName = excelData.sheetName;
+        bottles = bottles.filter(checkDuplicate);
+
+        var gridData  = bottles;
 
         $scope.btnDone = function() {
           $scope.prompts.menuOpenFile = txtSideMenu.alwaysMenuOpenFile;
@@ -37,66 +122,69 @@ wineInventory.controller('ViewProducerController',
         // };
 
 
-$scope.gridOptions = {};
-        // $scope.gridOptions = {
-        //     enableGridMenu: false,
-        //     enableSorting : false,
-        //     enableRowSelection: true,
-        //     enableRowHeaderSelection: false,
-        //     enableColumnMenus: false,
-        //     multiSelect: false,
-        //     exporterMenuPdf: false,
-        //     exporterMenuCsv: false,
-        //     showGridFooter: false,
-        //     gridFooterTemplate: 'views/viewReconcileFooter.html',
-        //     data: gridData,
-        //     // showGridFooter: true,
-        //     columnDefs: 
-        //     [
-        //       {
-        //         field: 'Location',
-        //         displayName: $scope.prompts.columnLocation,
-        //         width: "15%",
-        //         enableCellEdit: false,
-        //         enableColumnMenu: false,
-        //         grouping: {
-        //           groupPriority: 0
-        //         },
-        //         cellTemplate: 'views/hideGridDetailRowTemplate.html'
-        //       },
-        //       {
-        //         field: 'Bin',
-        //         displayName: $scope.prompts.columnBins,
-        //         width: "15%",
-        //         enableCellEdit: false,
-        //         enableColumnMenu: false,
-        //         grouping: {
-        //             groupPriority: 1
-        //         },
-        //         cellTemplate: 'views/hideGridDetailRowTemplate.html'                
-        //       },
-        //       {
-        //         field: 'Wine',
-        //         displayName: $scope.prompts.columnBottles,
-        //         cellTemplate: '<span>{{row.entity.Vintage}} {{row.entity.Wine}}</span>',
-        //         width: "50%",
-        //         enableCellEdit: false,
-        //         enableColumnMenu: false,
-        //       },
-        //       {
-        //         field: "inStock",
-        //         displayName: $scope.prompts.columnInStock,
-        //         enableColumnMenu: false,
-        //         cellTemplate: 'views/inStockTemplate.html',
-        //         headerCellClass: 'text-center'
-        //       }
-        //     ],
-        //     onRegisterApi: function( gridApi ) { 
-        //       $scope.gridApi = gridApi;
-        //       $scope.gridApi.selection.on.rowSelectionChanged($scope,rowSelectCallbck);
-        //       $scope.gridApi.selection.on.rowFocusChanged($scope,selectChildren);
-        //     }            
-        // };
+
+        $scope.gridOptions = {
+            enableGridMenu: false,
+            enableSorting : false,
+            enableRowSelection: true,
+            enableRowHeaderSelection: false,
+            enableColumnMenus: false,
+            multiSelect: false,
+            exporterMenuPdf: false,
+            exporterMenuCsv: false,
+            showGridFooter: false,
+            gridFooterTemplate: 'views/viewReconcileFooter.html',
+            groupingShowCounts: false,
+            data: gridData,
+            // showGridFooter: true,
+            columnDefs:
+            [
+              {
+                field: 'Varietal',
+                displayName: $scope.prompts.columnVarietal,
+                width: "25%",
+                enableCellEdit: false,
+                enableColumnMenu: false,
+                grouping: {
+                  groupPriority: 0
+                },
+                cellTemplate: 'views/varietalColumn.html'
+              },
+              {
+                field: 'Vintage',
+                displayName: $scope.prompts.columnVintage,
+                width: "10%",
+                enableCellEdit: false,
+                enableColumnMenu: false,
+                grouping: {
+                    groupPriority: 1
+                },
+                cellTemplate: 'views/vintageColumn.html'
+              },
+              {
+                field: 'Wine',
+                displayName: $scope.prompts.columnBottles,
+                // cellTemplate: '<div ng-click="grid.appScope.showMeTheBottles(row)" class="ui-grid-cell-contents">{{row.entity.LocationAsArray.length}} - {{row.entity.Wine}}</div>',
+                cellTemplate: "views/bottleColumn.html",
+                // width: "50%",
+                enableCellEdit: false,
+                enableColumnMenu: false,
+              },
+              {
+                field: "LocationAsArray",
+                displayName: $scope.prompts.columnInStock,
+                enableColumnMenu: false,
+                // cellTemplate: 'views/inStockTemplate.html',
+                headerCellClass: 'text-center',
+                visible: false
+              }
+            ],
+            onRegisterApi: function( gridApi ) {
+              $scope.gridApi = gridApi;
+              $scope.gridApi.selection.on.rowSelectionChanged($scope,rowSelectCallbck);
+              $scope.gridApi.selection.on.rowFocusChanged($scope,selectChildren);
+            }
+        };
 
         function selectChildren(row,col){
           var bottles;
@@ -111,7 +199,7 @@ $scope.gridOptions = {};
           }
         };
 
-        function rowSelectCallbck(row,col) { 
+        function rowSelectCallbck(row,col) {
           // clicking the checkbox first toggles the checkbox then calls this callback
           // the checkbox column does not have outerText
           // so the toggle only gets called once
@@ -120,6 +208,20 @@ $scope.gridOptions = {};
           }
 
         };
+
+        $scope.getCounts = function(fieldName,pattern){
+            var obj,searchFor;
+            switch (fieldName) {
+                case "varietal" :
+                    obj = varietalCounts.find(o => o.varietal === pattern);
+                    break;
+                case "vintage" :
+                    searchFor = pattern["0"].row.entity.Varietal + pattern["0"].row.entity.Vintage
+                    obj = vintageCounts.find(o => o.vintage === searchFor);
+
+            }
+            return "(" + obj.count + ")";
+        }
 
     }
 ]);

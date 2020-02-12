@@ -60,6 +60,7 @@ wineInventory.directive("filelistBind", ['Data',
                                 sheetData.forEach(function(row) {
                                     row.inStock = false;
                                     row.isDuplicate = false;
+                                    if (row.Vintage == 1001) row.Vintage = "NV";
                                 });
 
                                 sheets.push({
