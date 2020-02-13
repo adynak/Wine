@@ -1,11 +1,11 @@
-wineInventory.controller('ViewVarietalController', 
+wineInventory.controller('ViewVarietalController',
     [
-        '$scope', 
+        '$scope',
         '$rootScope',
-        '$uibModal', 
+        '$uibModal',
         '$location',
-        'Data', 
-        '$window', 
+        'Data',
+        '$window',
         '$routeParams',
         '$filter',
         'AsOfDate',
@@ -68,7 +68,7 @@ wineInventory.controller('ViewVarietalController',
 
         });
 // change Location and Bin into arrays
-// append concat of varietal and vintage for counting 
+// append concat of varietal and vintage for counting
         bottles.forEach(function(row) {
             row.LocationAsArray = [row.Location];
             row.BinAsArray = [row.Bin];
@@ -101,7 +101,7 @@ wineInventory.controller('ViewVarietalController',
                 }
                 while (done == false);
 
-                
+
             } else {
                 bottles[i].isDuplicate = false;
             }
@@ -138,36 +138,34 @@ wineInventory.controller('ViewVarietalController',
             groupingShowCounts: false,
             data: gridData,
             // showGridFooter: true,
-            columnDefs: 
+            columnDefs:
             [
               {
                 field: 'Varietal',
                 displayName: $scope.prompts.columnVarietal,
+                cellTemplate: 'views/gridVarietalVintage/varietalColumn.html',
                 width: "25%",
                 enableCellEdit: false,
                 enableColumnMenu: false,
                 grouping: {
                   groupPriority: 0
-                },
-                cellTemplate: 'views/varietalColumn.html'
+                }
               },
               {
                 field: 'Vintage',
                 displayName: $scope.prompts.columnVintage,
+                cellTemplate: 'views/gridVarietalVintage/vintageColumn.html',
                 width: "10%",
                 enableCellEdit: false,
                 enableColumnMenu: false,
                 grouping: {
                     groupPriority: 1
-                },
-                cellTemplate: 'views/vintageColumn.html'                
+                }
               },
               {
                 field: 'Wine',
                 displayName: $scope.prompts.columnBottles,
-                // cellTemplate: '<div ng-click="grid.appScope.showMeTheBottles(row)" class="ui-grid-cell-contents">{{row.entity.LocationAsArray.length}} - {{row.entity.Wine}}</div>',
-                cellTemplate: "views/bottleColumn.html",
-                // width: "50%",
+                cellTemplate: "views/gridVarietalVintage/bottleColumn.html",
                 enableCellEdit: false,
                 enableColumnMenu: false,
               },
@@ -180,11 +178,11 @@ wineInventory.controller('ViewVarietalController',
                 visible: false
               }
             ],
-            onRegisterApi: function( gridApi ) { 
+            onRegisterApi: function( gridApi ) {
               $scope.gridApi = gridApi;
               $scope.gridApi.selection.on.rowSelectionChanged($scope,rowSelectCallbck);
               $scope.gridApi.selection.on.rowFocusChanged($scope,selectChildren);
-            }            
+            }
         };
 
         function selectChildren(row,col){
@@ -200,7 +198,7 @@ wineInventory.controller('ViewVarietalController',
           }
         };
 
-        function rowSelectCallbck(row,col) { 
+        function rowSelectCallbck(row,col) {
           // clicking the checkbox first toggles the checkbox then calls this callback
           // the checkbox column does not have outerText
           // so the toggle only gets called once

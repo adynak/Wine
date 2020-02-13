@@ -1,10 +1,10 @@
-wineInventory.controller('ViewReconcileController', 
+wineInventory.controller('ViewReconcileController',
     [
-        '$scope', 
-        '$uibModal', 
+        '$scope',
+        '$uibModal',
         '$location',
-        'Data', 
-        '$window', 
+        'Data',
+        '$window',
         '$routeParams',
         '$filter',
         'AsOfDate',
@@ -21,7 +21,7 @@ wineInventory.controller('ViewReconcileController',
 
 
         var excelData = spreadsheet.sheets[0];
-        
+
         var gridData  = excelData.gridData;
 
         $scope.sheetName = excelData.sheetName;
@@ -76,7 +76,7 @@ wineInventory.controller('ViewReconcileController',
             gridFooterTemplate: 'views/viewReconcileFooter.html',
             data: gridData,
             // showGridFooter: true,
-            columnDefs: 
+            columnDefs:
             [
               {
                 field: 'Location',
@@ -87,7 +87,7 @@ wineInventory.controller('ViewReconcileController',
                 grouping: {
                   groupPriority: 0
                 },
-                cellTemplate: 'views/hideGridDetailRowTemplate.html'
+                cellTemplate: 'views/gridReconcileInventory/hideGridDetailRowTemplate.html'
               },
               {
                 field: 'Bin',
@@ -98,7 +98,7 @@ wineInventory.controller('ViewReconcileController',
                 grouping: {
                     groupPriority: 1
                 },
-                cellTemplate: 'views/hideGridDetailRowTemplate.html'                
+                cellTemplate: 'views/gridReconcileInventory/hideGridDetailRowTemplate.html'
               },
               {
                 field: 'Wine',
@@ -112,15 +112,15 @@ wineInventory.controller('ViewReconcileController',
                 field: "inStock",
                 displayName: $scope.prompts.columnInStock,
                 enableColumnMenu: false,
-                cellTemplate: 'views/inStockTemplate.html',
+                cellTemplate: 'views/gridReconcileInventory/inStockTemplate.html',
                 headerCellClass: 'text-center'
               }
             ],
-            onRegisterApi: function( gridApi ) { 
+            onRegisterApi: function( gridApi ) {
               $scope.gridApi = gridApi;
               $scope.gridApi.selection.on.rowSelectionChanged($scope,rowSelectCallbck);
               $scope.gridApi.selection.on.rowFocusChanged($scope,selectChildren);
-            }            
+            }
         };
 
         function selectChildren(row,col){
@@ -136,7 +136,7 @@ wineInventory.controller('ViewReconcileController',
           }
         };
 
-        function rowSelectCallbck(row,col) { 
+        function rowSelectCallbck(row,col) {
           // clicking the checkbox first toggles the checkbox then calls this callback
           // the checkbox column does not have outerText
           // so the toggle only gets called once

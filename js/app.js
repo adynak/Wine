@@ -1,20 +1,20 @@
-var wineInventory = angular.module('wineInventory', 
+var wineInventory = angular.module('wineInventory',
         [
-            'ngRoute', 
-            'ngAnimate', 
-            'ngTouch', 
-            'ui.grid', 
-            'ui.grid.edit', 
-            'ngMessages', 
-            'ui.grid.grouping', 
+            'ngRoute',
+            'ngAnimate',
+            'ngTouch',
+            'ui.grid',
+            'ui.grid.edit',
+            'ngMessages',
+            'ui.grid.grouping',
             'ui.bootstrap',
             'ui.grid.selection',
             'ui.grid.resizeColumns'
         ]);
 
 wineInventory.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
-    
-    $locationProvider.hashPrefix(''); 
+
+    $locationProvider.hashPrefix('');
 
     $routeProvider.
     when('/home', {
@@ -22,21 +22,21 @@ wineInventory.config(['$routeProvider', '$locationProvider', function($routeProv
         controller: 'HomeController'
     }).
     when('/viewVarietal', {
-        templateUrl: 'views/viewVarietal.html',
+        templateUrl: 'views/gridVarietalVintage/viewVarietal.html',
         controller: 'ViewVarietalController',
     }).
     when('/viewProducer', {
-        templateUrl: 'views/viewProducer.html',
+        templateUrl: 'views/gridProducerVarietal/viewProducer.html',
         controller: 'ViewProducerController',
     }).
     when('/viewReconcile', {
-        templateUrl: 'views/viewReconcile.html',
+        templateUrl: 'views/gridReconcileInventory/viewReconcile.html',
         controller: 'ViewReconcileController',
     }).
     when('/viewMissingInventory', {
-        templateUrl: 'views/viewMissingInventory.html',
+        templateUrl: 'views/gridMissingInventory/viewMissingInventory.html',
         controller: 'ViewMissingInventoryController',
-    }).    
+    }).
     otherwise({
         redirectTo: '/home'
     });
@@ -47,4 +47,3 @@ wineInventory.config(['$routeProvider', '$locationProvider', function($routeProv
         // thre is nothing special that we need to do here for this application
     });
 });
-

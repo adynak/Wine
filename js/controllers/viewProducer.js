@@ -23,7 +23,7 @@ wineInventory.controller('ViewProducerController',
         $scope.showMeTheBottles = function(row) {
 
             var locationBin = Data.locationBin(row);
-             
+
             if (row.entity.Wine.indexOf(row.entity.Varietal) >= 0){
                 wineType = "";
             } else {
@@ -59,7 +59,7 @@ wineInventory.controller('ViewProducerController',
 
         var bottles = excelData.gridData;
 
-        var varietalCounts = Data.countVarietals(bottles);
+        var producerCounts = Data.countProducers(bottles);
 
 // sort them for this view
         bottles.sort(function(wine1, wine2) {
@@ -78,10 +78,10 @@ wineInventory.controller('ViewProducerController',
         bottles.forEach(function(row) {
             row.LocationAsArray = [row.Location];
             row.BinAsArray = [row.Bin];
-            row.VarietalVintage = row.Varietal + row.Vintage;
+            row.ProducerVarietal = row.Producer + row.Varietal;
         });
 
-        var vintageCounts = Data.countVintages(bottles);
+        var producerVarietalCounts = Data.countProducerVaritals(bottles);
 
 // remove duplicate rows
         function checkDuplicate(bottle) {
@@ -149,31 +149,29 @@ wineInventory.controller('ViewProducerController',
               {
                 field: 'Producer',
                 displayName: $scope.prompts.columnProducer,
+                cellTemplate: 'views/gridProducerVarietal/producerColumn.html',
                 width: "20%",
                 enableCellEdit: false,
                 enableColumnMenu: false,
                 grouping: {
                   groupPriority: 0
-                },
-                cellTemplate: 'views/producerColumn.html'
+                }
               },
               {
                 field: 'Varietal',
                 displayName: $scope.prompts.columnVarietal,
+                cellTemplate: 'views/gridProducerVarietal/varietalColumn.html',
                 width: "20%",
                 enableCellEdit: false,
                 enableColumnMenu: false,
                 grouping: {
                     groupPriority: 1
-                },
-                cellTemplate: 'views/varietalColumn.html'
+                }
               },
               {
                 field: 'Wine',
                 displayName: $scope.prompts.columnBottles,
-                // cellTemplate: '<div ng-click="grid.appScope.showMeTheBottles(row)" class="ui-grid-cell-contents">{{row.entity.LocationAsArray.length}} - {{row.entity.Wine}}</div>',
-                cellTemplate: "views/bottleColumn.html",
-                // width: "50%",
+                cellTemplate: "views/gridProducerVarietal/bottleColumn.html",
                 enableCellEdit: false,
                 enableColumnMenu: false,
               },
@@ -215,17 +213,17 @@ wineInventory.controller('ViewProducerController',
           }
 
         };
-
+//TODO add field to make this work!
         $scope.getCounts = function(fieldName,pattern){
             var obj,searchFor;
             switch (fieldName) {
+                case "producer" :
+                  obj = producerCounts.find(o => o.producer === pattern);
+                  break;
                 case "varietal" :
-                    obj = varietalCounts.find(o => o.varietal === pattern);
+                    searchFor = pattern["0"].row.entity.Producer + pattern["0"].row.entity.Varietal;
+                    obj = producerVarietalCounts.find(o => o.varietal === searchFor);
                     break;
-                case "vintage" :
-                    searchFor = pattern["0"].row.entity.Varietal + pattern["0"].row.entity.Vintage
-                    obj = vintageCounts.find(o => o.vintage === searchFor);
-
             }
             return "(" + obj.count + ")";
         }

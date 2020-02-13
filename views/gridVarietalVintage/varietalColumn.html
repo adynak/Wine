@@ -1,7 +1,7 @@
 <div>
-	<div ng-if="!col.grouping || 
-		col.grouping.groupPriority === undefined || 
-		col.grouping.groupPriority === null || 
+	<div ng-if="!col.grouping ||
+		col.grouping.groupPriority === undefined ||
+		col.grouping.groupPriority === null ||
 		( row.groupHeader && col.grouping.groupPriority === row.treeLevel )"
 		class="ui-grid-cell-contents">
 		{{COL_FIELD}} {{grid.appScope.getCounts("varietal",COL_FIELD)}}

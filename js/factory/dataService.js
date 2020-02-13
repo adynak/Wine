@@ -106,6 +106,38 @@ wineInventory.factory("Data",
             return result;
         }
 
+        var countProducerVaritals = function(excelData){
+            let index = { };
+            let result = [ ];
+            excelData.forEach(point => {
+                let key = point.ProducerVarietal ;
+                if (key in index) {
+                    index[key].count++;
+                } else {
+                    let newEntry = { varietal: point.ProducerVarietal, count: 1 };
+                    index[key] = newEntry;
+                    result.push(newEntry);
+                }
+            });
+            return result;
+        }
+
+        var countProducers = function(excelData){
+            let index = { };
+            let result = [ ];
+            excelData.forEach(point => {
+                let key = point.Producer ;
+                if (key in index) {
+                    index[key].count++;
+                } else {
+                    let newEntry = { producer: point.Producer, count: 1 };
+                    index[key] = newEntry;
+                    result.push(newEntry);
+                }
+            });
+            return result;
+        }
+
         return {
             setExcel:setExcel,
             getExcel:getExcel,
@@ -116,7 +148,9 @@ wineInventory.factory("Data",
             getViewName: getViewName,
             locationBin: locationBin,
             countVarietals: countVarietals,
-            countVintages: countVintages
+            countVintages: countVintages,
+            countProducers: countProducers,
+            countProducerVaritals: countProducerVaritals
         };
     }
 );

@@ -45,7 +45,7 @@ wineInventory.controller('ViewMissingInventoryController',
                         grouping: {
                             groupPriority: 0
                         },
-                        cellTemplate: 'views/hideGridDetailRowTemplate.html'
+                        cellTemplate: 'views/gridMissingInventory/hideGridDetailRowTemplate.html'
                     },
                     {
                         name: 'Bins',
@@ -56,14 +56,14 @@ wineInventory.controller('ViewMissingInventoryController',
                         grouping: {
                             groupPriority: 1
                         },
-                        cellTemplate: 'views/hideGridDetailRowTemplate.html'
+                        cellTemplate: 'views/gridMissingInventory/hideGridDetailRowTemplate.html'
                     },
                     {
                         name: 'Bottles',
                         field: 'bottle',
                         enableCellEdit: false,
                         enableColumnMenu: false,
-                        cellTemplate: 'views/fixMissingInventoryTemplate.html'
+                        cellTemplate: 'views/gridMissingInventory/fixMissingInventoryTemplate.html'
                     }
                 ]
             };
