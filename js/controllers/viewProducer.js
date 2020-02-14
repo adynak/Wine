@@ -58,6 +58,7 @@ wineInventory.controller('ViewProducerController',
         var excelData = spreadsheet.sheets[0];
 
         var bottles = excelData.gridData;
+        Data.setViewName(txtCommon.viewNameProducer,bottles.length);        
 
         var producerCounts = Data.countProducers(bottles);
 

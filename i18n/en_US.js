@@ -51,7 +51,7 @@ var txtCommon = {
     columnProducer: "Producer",
     columnVintage: "Vintage",
     totalBottles: "Total Bottles: ",
-    viewNameReconcileInventory: "Reconcile Inventory from",
+    viewNameReconcileInventory: "Reconcile Inventory From",
     viewNameVarietal: "View By Varietal",
     viewNameProducer: "View By Producer",
     plurals: [

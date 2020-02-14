@@ -18,7 +18,6 @@ wineInventory.controller('ViewVarietalController',
         var row, done;
         var spreadsheet = Data.getExcel();
         AsOfDate.setAsOfDate(spreadsheet.dateStamp);
-        Data.setViewName(txtCommon.viewNameVarietal);
 
         $scope.showMeTheBottles = function(row) {
 
@@ -52,6 +51,7 @@ wineInventory.controller('ViewVarietalController',
         var excelData = spreadsheet.sheets[0];
 
         var bottles = excelData.gridData;
+        Data.setViewName(txtCommon.viewNameVarietal,bottles.length);
 
         var varietalCounts = Data.countVarietals(bottles);
 

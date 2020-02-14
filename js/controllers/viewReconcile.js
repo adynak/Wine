@@ -128,13 +128,25 @@ wineInventory.controller('ViewReconcileController',
           if (row.treeNode.parentRow == null){
 
           } else {
-            bottles = $scope.gridApi.treeBase.getRowChildren(row);
-            bottles.forEach(function(bottle) {
-              bottle.entity.inStock = !bottle.entity.inStock;
-            });
+            if (typeof(col.target.type) == "undefined"){
+
+            } else {
+              bottles = $scope.gridApi.treeBase.getRowChildren(row);
+              bottles.forEach(function(bottle) {
+                bottle.entity.inStock = !bottle.entity.inStock;
+              });
+            }
 
           }
         };
+
+        $scope.toggleRow = function(grid,row){
+            if (row.treeNode.state == "collapsed"){
+                grid.api.treeBase.expandRow(row);
+            } else {
+                grid.api.treeBase.collapseRow(row);
+            }
+        }        
 
         function rowSelectCallbck(row,col) {
           // clicking the checkbox first toggles the checkbox then calls this callback

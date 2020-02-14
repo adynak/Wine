@@ -38,8 +38,12 @@ wineInventory.factory("Data",
             $location.path("/home");
         }
 
-        var setViewName = function(viewName){
-            factoryVariables.viewName = viewName;
+        var setViewName = function(viewName,bottleCount){
+            if (typeof(bottleCount) == "undefined"){
+                factoryVariables.viewName = viewName
+            } else {
+                factoryVariables.viewName = viewName + " (" + bottleCount + ")";
+            }
         }
 
         var getViewName = function(){
