@@ -208,6 +208,14 @@ wineInventory.controller('ViewVarietalController',
 
         };
 
+        $scope.toggleRow = function(grid,row){
+            if (row.treeNode.state == "collapsed"){
+                grid.api.treeBase.expandRow(row);
+            } else {
+                grid.api.treeBase.collapseRow(row);
+            }
+        }
+
         $scope.getCounts = function(fieldName,pattern){
             var obj,searchFor;
             switch (fieldName) {
