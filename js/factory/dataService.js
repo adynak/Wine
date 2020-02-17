@@ -140,7 +140,35 @@ wineInventory.factory("Data",
                 }
             });
             return result;
-        }
+        };
+
+        var removeDuplicateRows = function(bottles){
+            for (i=1; i < bottles.length; ++i) {
+                if (bottles[i].iWine == bottles[i-1].iWine){
+                    bottles[i].isDuplicate = true;
+
+// find the previous row that is NOT a duplicate
+                    row = 0;
+                    done = false;
+                    do {
+                        row++;
+                        if (bottles[i-row].isDuplicate){
+
+                        } else {
+                            bottles[i-row].LocationAsArray.push(bottles[i].Location);
+                            bottles[i-row].BinAsArray.push(bottles[i].Bin);
+                            done = true
+                        }
+                    }
+                    while (done == false);
+
+                } else {
+                    bottles[i].isDuplicate = false;
+                }
+            }
+            return bottles;            
+
+        };
 
         return {
             setExcel:setExcel,
@@ -154,7 +182,8 @@ wineInventory.factory("Data",
             countVarietals: countVarietals,
             countVintages: countVintages,
             countProducers: countProducers,
-            countProducerVaritals: countProducerVaritals
+            countProducerVaritals: countProducerVaritals,
+            removeDuplicateRows: removeDuplicateRows
         };
     }
 );
@@ -175,3 +204,91 @@ wineInventory.factory('AsOfDate', function(){
     setAsOfDate: setAsOfDate
   };
 });
+
+wineInventory.factory('modalService', 
+    [
+        '$rootScope',
+        '$uibModal',
+        'Data',
+        '$location',
+
+        function($rootScope, $uibModal, Data, $location){
+
+            var showMeTheBottles = function(row){
+
+                var displayDrinkingWindow = "inline";
+
+                var locationBin = Data.locationBin(row);
+
+                if (row.entity.Wine.indexOf(row.entity.Varietal) >= 0){
+                    wineType = "";
+                } else {
+                    wineType = row.entity.Varietal;
+                }
+
+                if (row.entity.BeginConsume + row.entity.EndConsume == "99999999"){
+                    displayDrinkingWindow = "none";
+                }
+
+                var modalScope = $rootScope.$new();
+                modalScope.bottle = {
+                        bottleCount: row.entity.Location.length,
+                        vintage: row.entity.Vintage,
+                        wine: row.entity.Wine,
+                        location: locationBin,
+                        plurals: txtCommon.plurals,
+                        drinkingWindow: row.entity.BeginConsume + " - " + row.entity.EndConsume,
+                        displayDrinkingWindow: displayDrinkingWindow,
+                        wineType: wineType
+                    };
+                $uibModal.open({
+                    scope: modalScope,
+                    templateUrl: 'views/wheresMyWineModal.html',
+                    controller: function($scope, $uibModalInstance) {
+                        $scope.prompts = txtModal;
+
+                        $scope.ok = function() {
+                            $uibModalInstance.close();
+                        };
+
+                    }
+
+                });
+
+            };
+
+            var startOver = function(){
+                $uibModal.open({
+                    templateUrl: 'views/modal.html',
+                    controller: function($scope, $uibModalInstance) {
+                        $scope.prompts = txtModal;
+
+                        $scope.ok = function() {
+                            var resetExcel = {
+                                sheetName: null,
+                                columnDefs: null,
+                                gridData: null
+                            };
+                            Data.setExcel(resetExcel);
+                            $uibModalInstance.close();
+                            $location.path("/home");
+                        };
+
+                        $scope.cancel = function() {
+                            $uibModalInstance.close();
+                            $location.path("/home");
+                        };
+                    }
+
+                });
+
+            };
+
+            return {
+                showMeTheBottles:showMeTheBottles,
+                startOver: startOver
+
+            };
+        }
+    ]
+);

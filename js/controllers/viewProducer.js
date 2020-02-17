@@ -1,17 +1,14 @@
 wineInventory.controller('ViewProducerController',
     [
         '$scope',
-        '$rootScope',
-        '$uibModal',
+        'modalService',
         '$location',
         'Data',
-        '$window',
-        '$routeParams',
         '$filter',
         'AsOfDate',
         'uiGridGroupingConstants',
 
-    function($scope, $rootScope, $uibModal, $location, Data, $window, $routeParams, $filter, AsOfDate) {
+    function($scope, modalService, $location, Data, $filter, AsOfDate) {
 
         $scope.prompts = txtCommon;
 
@@ -19,41 +16,6 @@ wineInventory.controller('ViewProducerController',
         var spreadsheet = Data.getExcel();
         AsOfDate.setAsOfDate(spreadsheet.dateStamp);
         Data.setViewName(txtCommon.viewNameVarietal);
-
-        $scope.showMeTheBottles = function(row) {
-
-            var locationBin = Data.locationBin(row);
-
-            if (row.entity.Wine.indexOf(row.entity.Varietal) >= 0){
-                wineType = "";
-            } else {
-                wineType = row.entity.Varietal;
-            }
-
-            var modalScope = $rootScope.$new();
-            modalScope.bottle = {
-                    bottleCount: row.entity.Location.length,
-                    vintage: row.entity.Vintage,
-                    wine: row.entity.Wine,
-                    location: locationBin,
-                    plurals: txtCommon.plurals,
-                    wineType: wineType
-                };
-            $uibModal.open({
-                scope: modalScope,
-                templateUrl: 'views/wheresMyWineModal.html',
-                controller: function($scope, $uibModalInstance) {
-                    $scope.prompts = txtModal;
-
-                    $scope.ok = function() {
-                        $uibModalInstance.close();
-                    };
-
-                }
-
-            });
-
-        };
 
         var excelData = spreadsheet.sheets[0];
 
@@ -74,56 +36,13 @@ wineInventory.controller('ViewProducerController',
             if (wine1.iWine > wine2.iWine) return 1;
 
         });
-// change Location and Bin into arrays
-// append concat of varietal and vintage for counting
-        bottles.forEach(function(row) {
-            row.LocationAsArray = [row.Location];
-            row.BinAsArray = [row.Bin];
-            row.ProducerVarietal = row.Producer + row.Varietal;
-        });
 
         var producerVarietalCounts = Data.countProducerVaritals(bottles);
 
-// remove duplicate rows
-        function checkDuplicate(bottle) {
-          return bottle.isDuplicate == false;
-        }
-
-        for (i=1; i < bottles.length; ++i) {
-            if (bottles[i].iWine == bottles[i-1].iWine){
-                bottles[i].isDuplicate = true;
-
-// find the previous row that is NOT a duplicate
-                row = 0;
-                done = false;
-                do {
-                    row++;
-                    if (bottles[i-row].isDuplicate){
-
-                    } else {
-                        bottles[i-row].LocationAsArray.push(bottles[i].Location);
-                        bottles[i-row].BinAsArray.push(bottles[i].Bin);
-                        done = true
-                    }
-                }
-                while (done == false);
-
-
-            } else {
-                bottles[i].isDuplicate = false;
-            }
-        }
-
-        bottles = bottles.filter(checkDuplicate);
+        bottles = Data.removeDuplicateRows(bottles);
+        bottles = bottles.filter(filterDuplicate);
 
         var gridData  = bottles;
-
-        $scope.btnDone = function() {
-          $scope.prompts.menuOpenFile = txtSideMenu.alwaysMenuOpenFile;
-          Data.setViewName(txtSideMenu.brandName);
-          $scope.actions = "";
-          $location.path("/home");
-        }
 
         // $scope.searchGrid = function() {
         //     $scope.gridOptions.data = $filter('filter')(excelData.gridData , $scope.searchText, undefined);
@@ -215,6 +134,10 @@ wineInventory.controller('ViewProducerController',
 
         };
 
+        function filterDuplicate(bottle) {
+          return bottle.isDuplicate == false;
+        }
+
         $scope.toggleRow = function(grid,row){
           if (row.treeNode.state == "collapsed"){
             grid.api.treeBase.expandRow(row);
@@ -235,6 +158,17 @@ wineInventory.controller('ViewProducerController',
                     break;
             }
             return "(" + obj.count + ")";
+        }
+
+        $scope.showMeTheBottles = function(row) {
+            modalService.showMeTheBottles(row);
+        };
+
+        $scope.btnDone = function() {
+          $scope.prompts.menuOpenFile = txtSideMenu.alwaysMenuOpenFile;
+          Data.setViewName(txtSideMenu.brandName);
+          $scope.actions = "";
+          $location.path("/home");
         }
 
     }

@@ -64,6 +64,7 @@ var txtModal = {
     bgColor: "#E2E0D7",
     confirm: "Done Already?",
     btnOK: "OK",
+    drinkingWindow: "Drinking Window: ",
     btnCancel: "Cancel",
     messageBody: ["Choose OK to begin with a new download.",
         "Choose Cancel to continue with the current download."]

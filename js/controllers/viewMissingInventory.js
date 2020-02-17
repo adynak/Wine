@@ -1,14 +1,13 @@
 wineInventory.controller('ViewMissingInventoryController',
     [
         '$scope',
-        '$http',
         '$location',
         'Data',
         '$rootScope',
         '$routeParams',
-        '$uibModal',
+        'modalService',
 
-        function($scope, $http, $location, Data, $rootScope, $routeParams, $uibModal) {
+        function($scope, $location, Data, $rootScope, $routeParams, modalService) {
 
             $scope.prompts = txtCommon;
 
@@ -70,29 +69,31 @@ wineInventory.controller('ViewMissingInventoryController',
 
             $scope.startOver = function() {
 
-                $uibModal.open({
-                    templateUrl: 'views/modal.html',
-                    controller: function($scope, $uibModalInstance) {
-                        $scope.prompts = txtModal;
+                modalService.startOver();
 
-                        $scope.ok = function() {
-                            var resetExcel = {
-                                sheetName: null,
-                                columnDefs: null,
-                                gridData: null
-                            };
-                            Data.setExcel(resetExcel);
-                            $uibModalInstance.close();
-                            $location.path("/home");
-                        };
+                // $uibModal.open({
+                //     templateUrl: 'views/modal.html',
+                //     controller: function($scope, $uibModalInstance) {
+                //         $scope.prompts = txtModal;
 
-                        $scope.cancel = function() {
-                            $uibModalInstance.close();
-                            $location.path("/home");
-                        };
-                    }
+                //         $scope.ok = function() {
+                //             var resetExcel = {
+                //                 sheetName: null,
+                //                 columnDefs: null,
+                //                 gridData: null
+                //             };
+                //             Data.setExcel(resetExcel);
+                //             $uibModalInstance.close();
+                //             $location.path("/home");
+                //         };
 
-                });
+                //         $scope.cancel = function() {
+                //             $uibModalInstance.close();
+                //             $location.path("/home");
+                //         };
+                //     }
+
+                // });
 
             };
 
