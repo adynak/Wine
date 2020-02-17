@@ -57,6 +57,7 @@ wineInventory.directive("filelistBind", ['Data',
                                     row.BinAsArray = [row.Bin];
                                     row.ProducerVarietal = row.Producer + row.Varietal;
                                     row.VarietalVintage = row.Varietal + row.Vintage;
+                                    row.BarcodeAsArray = [row.Barcode];
                                 });
 
                                 sheets.push({

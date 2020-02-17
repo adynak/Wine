@@ -57,13 +57,15 @@ var txtCommon = {
     plurals: [
         {tag: 'bottle in '},
         {tag: 'bottles in'}
-    ]
+    ],
+    before: "before"
 };
 
 var txtModal = {
     bgColor: "#E2E0D7",
     confirm: "Done Already?",
     btnOK: "OK",
+    btnDrink : "Drink",
     drinkingWindow: "Drinking Window: ",
     btnCancel: "Cancel",
     messageBody: ["Choose OK to begin with a new download.",

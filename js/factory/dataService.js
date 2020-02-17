@@ -157,6 +157,7 @@ wineInventory.factory("Data",
                         } else {
                             bottles[i-row].LocationAsArray.push(bottles[i].Location);
                             bottles[i-row].BinAsArray.push(bottles[i].Bin);
+                            bottles[i-row].BarcodeAsArray.push(bottles[i].Barcode);
                             done = true
                         }
                     }
@@ -216,7 +217,7 @@ wineInventory.factory('modalService',
 
             var showMeTheBottles = function(row){
 
-                var displayDrinkingWindow = "inline";
+                var drinkingWindow, displayDrinkingWindow = "inline";
 
                 var locationBin = Data.locationBin(row);
 
@@ -230,6 +231,12 @@ wineInventory.factory('modalService',
                     displayDrinkingWindow = "none";
                 }
 
+                if (row.entity.BeginConsume == "9999" && row.entity.EndConsume !== "9999"){
+                    drinkingWindow = txtCommon.before + " " + row.entity.EndConsume ;
+                } else if (row.entity.BeginConsume !== "9999" && row.entity.EndConsume !== "9999"){
+                    drinkingWindow = row.entity.BeginConsume + " - " + row.entity.EndConsume;
+                }
+
                 var modalScope = $rootScope.$new();
                 modalScope.bottle = {
                         bottleCount: row.entity.Location.length,
@@ -237,12 +244,17 @@ wineInventory.factory('modalService',
                         wine: row.entity.Wine,
                         location: locationBin,
                         plurals: txtCommon.plurals,
-                        drinkingWindow: row.entity.BeginConsume + " - " + row.entity.EndConsume,
+                        drinkingWindow: drinkingWindow,
                         displayDrinkingWindow: displayDrinkingWindow,
-                        wineType: wineType
+                        wineType: wineType,
+                        locationsAsArray:row.entity.LocationAsArray,
+                        binAsArray:row.entity.BinAsArray,
+                        BarcodeAsArray:row.entity.BarcodeAsArray,
+                        displayCheckbox: "none"
                     };
                 $uibModal.open({
                     scope: modalScope,
+                    animation: true,
                     templateUrl: 'views/wheresMyWineModal.html',
                     controller: function($scope, $uibModalInstance) {
                         $scope.prompts = txtModal;
@@ -251,9 +263,22 @@ wineInventory.factory('modalService',
                             $uibModalInstance.close();
                         };
 
+                        $scope.drink = function(bottle) {
+                            if (bottle.displayCheckbox == "inline"){
+                                $uibModalInstance.close();    
+                            }
+                            bottle.displayCheckbox = "inline";
+                            for (var i = 0 ; i < bottle.locationsAsArray.length; i ++){
+                                console.log(bottle.locationsAsArray[i], bottle.binAsArray[i] ,bottle.BarcodeAsArray[i] )
+                            }
+
+
+                        };
+
                     }
 
                 });
+
 
             };
 

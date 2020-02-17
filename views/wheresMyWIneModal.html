@@ -23,7 +23,22 @@
 	</ul>
 </div>
 
+<div style="display:{{bottle.displayCheckbox}}">
+    Which bottles are you drinking?
+    <ul>
+        <li ng-repeat="n in bottle.locationsAsArray track by $index">
+            <strong>{{bottle.plurals[0].tag}} {{bottle.locationsAsArray[$index]}} Bin {{bottle.binAsArray[$index]}}</strong>
+        </li>
+    </ul>
+</div>
+
 <div class="modal-footer">
+    <button class="btn btn-primary active"
+            type="button"
+            ng-click="drink(bottle)">
+            {{prompts.btnDrink}}
+    </button>
+
     <button class="btn btn-success active"
     		type="button"
     		ng-enter="ok()"
