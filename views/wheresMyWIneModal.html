@@ -1,7 +1,7 @@
 <div class="modal-header" style="background-color: {{prompts.bgColor}}">
     <h3>{{bottle.vintage}} {{bottle.wine}}</h3>
     <div>
-      {{bottle.wineType}}
+        {{bottle.wineType}}
     </div>
     <div style="display:{{bottle.displayDrinkingWindow}}">
         {{prompts.drinkingWindow}}{{bottle.drinkingWindow}}
@@ -9,41 +9,46 @@
 </div>
 
 <div class="modal-body">
-	<ul>
-		<li class="item" ng-repeat="txt in bottle.location">
-			<strong>{{ txt.count }}
-        <ng-pluralize count="txt.count"
-            when="{
-                    '1':     '{{bottle.plurals[0].tag}} {{txt.location}}',
-                    'other': '{{bottle.plurals[1].tag}} {{txt.location}}'
-            }">
-        </ng-pluralize>
-      </strong>
-		</li>
-	</ul>
-</div>
-
-<div style="display:{{bottle.displayCheckbox}}">
-    Which bottles are you drinking?
     <ul>
-        <li ng-repeat="n in bottle.locationsAsArray track by $index">
-            <strong>{{bottle.plurals[0].tag}} {{bottle.locationsAsArray[$index]}} Bin {{bottle.binAsArray[$index]}}</strong>
+        <li class="item" ng-repeat="txt in bottle.location">
+            <strong>{{ txt.count }}
+                <ng-pluralize count="txt.count"
+                    when="{
+                            '1':     '{{bottle.plurals[0].tag}} {{txt.location}}',
+                            'other': '{{bottle.plurals[1].tag}} {{txt.location}}'
+                    }">
+                </ng-pluralize>
+            </strong>
         </li>
     </ul>
 </div>
 
+<div style="display:{{bottle.displayCheckbox}}">
+    <div class="modal-header" style="background-color: {{prompts.bgColor}}; 
+                                     padding-bottom:10px;
+                                     padding: 2px 2px 2px 15px !important;">
+        <h4>{{prompts.whichWine}}</h4>
+    </div>
+    <br>
+
+    <div class="checkboxWine col-sm-12" ng-repeat="n in bottle.locationsAsArray track by $index">
+        <input type="checkbox" name="bottle" id="{{bottle.BarcodeAsArray[$index]}}" ng-model="bottle.opened[$index]">
+        <label style="padding-left: 10px;" for="{{bottle.BarcodeAsArray[$index]}}">{{bottle.plurals[0].tag}} {{bottle.locationsAsArray[$index]}} Bin {{bottle.binAsArray[$index]}}</label>
+    </div>
+    <br>
+</div>
+<br>
+<br>
+<br>
+<br>
+
 <div class="modal-footer">
-    <button class="btn btn-primary active"
-            type="button"
-            ng-click="drink(bottle)">
-            {{prompts.btnDrink}}
+    <button class="btn btn-success active" type="button" ng-click="drink(bottle)">
+        {{prompts.btnDrink}}
     </button>
 
-    <button class="btn btn-success active"
-    		type="button"
-    		ng-enter="ok()"
-    		ng-click="ok()">
-    		{{prompts.btnOK}}
+    <button class="btn btn-cancel active" type="button" ng-enter="ok()" ng-click="ok()">
+        {{prompts.btnCancel}}
     </button>
 
 </div>

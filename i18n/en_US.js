@@ -63,11 +63,12 @@ var txtCommon = {
 
 var txtModal = {
     bgColor: "#E2E0D7",
-    confirm: "Done Already?",
     btnOK: "OK",
     btnDrink : "Drink",
-    drinkingWindow: "Drinking Window: ",
     btnCancel: "Cancel",
+    confirm: "Done Already?",
+    drinkingWindow: "Drinking Window: ",
+    whichWine: "Which bottle(s) are you opening?",
     messageBody: ["Choose OK to begin with a new download.",
         "Choose Cancel to continue with the current download."]
 }

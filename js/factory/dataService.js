@@ -218,6 +218,7 @@ wineInventory.factory('modalService',
             var showMeTheBottles = function(row){
 
                 var drinkingWindow, displayDrinkingWindow = "inline";
+                var opened = Array();
 
                 var locationBin = Data.locationBin(row);
 
@@ -237,6 +238,10 @@ wineInventory.factory('modalService',
                     drinkingWindow = row.entity.BeginConsume + " - " + row.entity.EndConsume;
                 }
 
+                for (var i = 0; i < row.entity.LocationAsArray.length; i++) {
+                    opened[i] = false;
+                }
+
                 var modalScope = $rootScope.$new();
                 modalScope.bottle = {
                         bottleCount: row.entity.Location.length,
@@ -250,7 +255,8 @@ wineInventory.factory('modalService',
                         locationsAsArray:row.entity.LocationAsArray,
                         binAsArray:row.entity.BinAsArray,
                         BarcodeAsArray:row.entity.BarcodeAsArray,
-                        displayCheckbox: "none"
+                        displayCheckbox: "none",
+                        opened: opened
                     };
                 $uibModal.open({
                     scope: modalScope,
@@ -265,14 +271,14 @@ wineInventory.factory('modalService',
 
                         $scope.drink = function(bottle) {
                             if (bottle.displayCheckbox == "inline"){
+                                for (var i = 0 ; i < bottle.locationsAsArray.length; i ++){
+                                    if (bottle.opened[i]){
+                                        console.log(bottle.locationsAsArray[i], bottle.binAsArray[i] ,bottle.BarcodeAsArray[i] )
+                                    }
+                                }
                                 $uibModalInstance.close();    
                             }
                             bottle.displayCheckbox = "inline";
-                            for (var i = 0 ; i < bottle.locationsAsArray.length; i ++){
-                                console.log(bottle.locationsAsArray[i], bottle.binAsArray[i] ,bottle.BarcodeAsArray[i] )
-                            }
-
-
                         };
 
                     }
