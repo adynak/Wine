@@ -143,6 +143,13 @@ wineInventory.factory("Data",
         };
 
         var removeDuplicateRows = function(bottles){
+            // reset these arrays to a single value
+            for (i=0; i < bottles.length; ++i) {
+                bottles[i].LocationAsArray = [bottles[i].Location];
+                bottles[i].BinAsArray = [bottles[i].Bin];
+                bottles[i].BarcodeAsArray = [bottles[i].Barcode];
+            }
+
             for (i=1; i < bottles.length; ++i) {
                 if (bottles[i].iWine == bottles[i-1].iWine){
                     bottles[i].isDuplicate = true;
