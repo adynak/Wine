@@ -36,6 +36,8 @@ wineInventory.controller('ViewVarietalController',
 
         });
 
+        var varietalVintageCounts = Data.countVaritalVintages(bottles);
+
         bottles = Data.removeDuplicateRows(bottles);
         bottles = bottles.filter(filterDuplicate);
 
@@ -148,9 +150,8 @@ wineInventory.controller('ViewVarietalController',
                     obj = varietalCounts.find(o => o.varietal === pattern);
                     break;
                 case "vintage" :
-                    var vintageCounts = Data.countVintages(bottles);
                     searchFor = pattern["0"].row.entity.Varietal + pattern["0"].row.entity.Vintage
-                    obj = vintageCounts.find(o => o.vintage === searchFor);
+                    obj = varietalVintageCounts.find(o => o.name === searchFor);
 
             }
             return "(" + obj.count + ")";

@@ -154,7 +154,7 @@ wineInventory.controller('ViewProducerController',
                   break;
                 case "varietal" :
                     searchFor = pattern["0"].row.entity.Producer + pattern["0"].row.entity.Varietal;
-                    obj = producerVarietalCounts.find(o => o.varietal === searchFor);
+                    obj = producerVarietalCounts.find(o => o.name === searchFor);
                     break;
             }
             return "(" + obj.count + ")";
