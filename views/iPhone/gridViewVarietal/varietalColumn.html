@@ -1,0 +1,10 @@
+<div>
+	<div ng-if="!col.grouping ||
+		col.grouping.groupPriority === undefined ||
+		col.grouping.groupPriority === null ||
+		( row.groupHeader && col.grouping.groupPriority === row.treeLevel )"
+		class="ui-grid-cell-contents"
+		ng-click="grid.appScope.toggleRow(grid,row,{{COL_FIELD}})">
+		{{COL_FIELD}}  {{grid.appScope.getCounts("varietal",COL_FIELD)}}
+	</div>
+</div>

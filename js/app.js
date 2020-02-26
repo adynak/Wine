@@ -9,7 +9,8 @@ var wineInventory = angular.module('wineInventory',
             'ui.grid.grouping',
             'ui.bootstrap',
             'ui.grid.selection',
-            'ui.grid.resizeColumns'
+            'ui.grid.resizeColumns',
+            'ui.grid.autoResize'
         ]);
 
 wineInventory.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
@@ -19,12 +20,25 @@ wineInventory.config(['$routeProvider', '$locationProvider', function($routeProv
     $routeProvider.
     when('/home', {
         templateUrl: 'views/home.html',
-        controller: 'HomeController'
+        controller: 'HomeController',
+        params: {name:"abc"}
     }).
     when('/viewVarietal', {
         templateUrl: 'views/gridVarietalVintage/viewVarietal.html',
         controller: 'ViewVarietalController',
     }).
+    when('/iphone/viewVarietal', {
+        templateUrl: 'views/iPhone/gridViewVarietal/viewVarietal.html',
+        controller: 'iPhoneViewVarietalController',
+    }).
+    when('/iphone/viewVintage', {
+        templateUrl: 'views/iPhone/gridViewVarietal/viewVarietal.html',
+        controller: 'iPhoneViewVintageController',
+    }).
+    when('/iphone/viewBottles', {
+        templateUrl: 'views/iPhone/gridViewVarietal/viewVarietal.html',
+        controller: 'iPhoneViewBottleController',
+    }).    
     when('/viewProducer', {
         templateUrl: 'views/gridProducerVarietal/viewProducer.html',
         controller: 'ViewProducerController',
@@ -42,16 +56,26 @@ wineInventory.config(['$routeProvider', '$locationProvider', function($routeProv
     });
 
 
-}]).run(function($rootScope, $location, Data) {
+}]).run(function($rootScope, $location, Data,$templateCache) {
+
+    Data.setGridHeight();
+
+    Data.setDeviceType(navigator.userAgent);
+    $templateCache.put('ui-grid/ui-grid-no-header',"<div></div>");
     $rootScope.$on("$routeChangeStart", function(event, next, current) {
+        // the back button eventually will take us here without changing the viewName correctly
+        if (next.templateUrl == "views/home.html"){
+            Data.setViewName(txtSideMenu.brandName);
+        }
         // thre is nothing special that we need to do here for this application
 
         //Bind the `$locationChangeSuccess` event on the rootScope, so that we dont need to
           //bind in induvidual controllers.
 //TODO track what to do if the user presses BACK
-          // $rootScope.$on('$locationChangeSuccess', function() {
-          //      $rootScope.actualLocation = $location.path();
-          //  });
+          // $rootScope.$on('$locationChangeSuccess', function($location) {
+          //   debugger;
+               // $rootScope.actualLocation = $location.path();
+           // });
           //
           // $rootScope.$watch(function () {return $location.path()}, function (newLocation, oldLocation) {
           //      if($rootScope.actualLocation === newLocation) {

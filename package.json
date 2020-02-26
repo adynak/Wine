@@ -22,6 +22,7 @@
     "angular-ui-grid": "^4.0.6",
     "bootstrap": "^3.4.1",
     "jquery": "^3.2.1",
+    "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "ods": "^1.1.7",
     "pdfmake": "^0.1.64",

@@ -15,5 +15,27 @@ wineInventory.controller('NavigationController',
             $scope.startOver = function() {
                 modalService.startOver();
             };
+
+            $scope.goBack = function() {
+                window.history.go(-1); 
+                return false;
+            };
+
+            $scope.isIphone = function(){
+                if (Data.getDeviceType() == "iPhone"){
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            $scope.isHomePage = function(){
+                if (Data.getViewName() == txtNavigation.brandName){
+                    action = true;
+                } else {
+                    action = false;
+                }
+                return action;
+            }
         }
     ]);

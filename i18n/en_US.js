@@ -6,7 +6,7 @@ var txtNavigation = {
 };
 
 var txtSideMenu = {
-    brandName: 'Cellar Tracker Assistant',
+    brandName: 'Wine Detective',
     menuOpenFile: 'Choose Downloaded Inventory File',
     alwaysMenuOpenFile: 'Choose Downloaded Inventory File',
     menuChooseAction: [
@@ -53,6 +53,8 @@ var txtCommon = {
     totalBottles: "Total Bottles: ",
     viewNameReconcileInventory: "Reconcile Inventory From",
     viewNameVarietal: "View By Varietal",
+    viewNameVarietalIphone: "Varietals",
+    viewNameVintageIphone: "Vintages",
     viewNameProducer: "View By Producer",
     plurals: [
         {tag: 'bottle in '},

@@ -29,17 +29,21 @@ wineInventory.controller('HomeController',
             var showFilename = false;
             if (typeof(spreadsheet.filename) != 'undefined'){
                 $scope.excelFilename = spreadsheet.filename;
-                // $scope.prompts.menuOpenFile = spreadsheet.dateStamp;
-                $scope.actions    = txtSideMenu.menuChooseAction;
+                $scope.actions = txtSideMenu.menuChooseAction;
                 showFilename = true;
             }
             return showFilename;
         }
 
         $scope.runAction = function(action){
+            var deviceType = Data.getDeviceType();
             switch(action){
                 case "viewVarietal" :
-                    $location.path("/viewVarietal");
+                    if(deviceType == "iPhone"){
+                        $location.path("/iphone/viewVarietal");
+                    } else {
+                        $location.path("/viewVarietal");
+                    }
                     break;
 
                 case "viewProducer" :

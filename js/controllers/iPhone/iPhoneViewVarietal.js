@@ -1,4 +1,4 @@
-wineInventory.controller('ViewVarietalController',
+wineInventory.controller('iPhoneViewVarietalController',
     [
         '$scope',
         'modalService',
@@ -19,9 +19,8 @@ wineInventory.controller('ViewVarietalController',
         var excelData = spreadsheet.sheets[0];
 
         var bottles = excelData.gridData;
-        Data.setViewName(txtCommon.viewNameVarietal,bottles.length);
-
         var varietalCounts = Data.countVarietals(bottles);
+        Data.setViewName(txtCommon.viewNameVarietalIphone,varietalCounts.length);
 
 // sort them for this view
         bottles.sort(function(wine1, wine2) {
@@ -31,8 +30,8 @@ wineInventory.controller('ViewVarietalController',
             if (wine1.Vintage < wine2.Vintage) return -1;
             if (wine1.Vintage > wine2.Vintage) return 1;
 
-            if (wine1.iWine < wine2.iWine) return -1;
-            if (wine1.iWine > wine2.iWine) return 1;
+            if (wine1.Producer < wine2.Producer) return -1;
+            if (wine1.Producer > wine2.Producer) return 1;
 
         });
 
@@ -47,7 +46,11 @@ wineInventory.controller('ViewVarietalController',
         //     $scope.gridOptions.data = $filter('filter')(excelData.gridData , $scope.searchText, undefined);
         // };
 
+
+        $scope.gridHeight = Data.getGridHeight();
+
         $scope.gridOptions = {
+            showHeader: false,
             enableGridMenu: false,
             enableSorting : false,
             enableRowSelection: true,
@@ -62,87 +65,37 @@ wineInventory.controller('ViewVarietalController',
             treeRowHeaderAlwaysVisible: false,
             showTreeRowHeader: false,
             data: gridData,
+            headerRowHeight: 0,
             // showGridFooter: true,
             columnDefs:
             [
               {
                 field: 'Varietal',
-                displayName: $scope.prompts.columnVarietal,
+                headerCellTemplate: '<div></div>',
+                // displayName: Data.getViewName(),
                 cellTemplate: 'views/gridVarietalVintage/varietalColumn.html',
-                width: "25%",
+                width: "100%",
                 enableCellEdit: false,
                 enableColumnMenu: false,
                 grouping: {
                   groupPriority: 0
                 }
-              },
-              {
-                field: 'Vintage',
-                displayName: $scope.prompts.columnVintage,
-                cellTemplate: 'views/gridVarietalVintage/vintageColumn.html',
-                width: "10%",
-                enableCellEdit: false,
-                enableColumnMenu: false,
-                grouping: {
-                    groupPriority: 1
-                }
-              },
-              {
-                field: 'Wine',
-                displayName: $scope.prompts.columnBottles,
-                cellTemplate: "views/gridVarietalVintage/bottleColumn.html",
-                enableCellEdit: false,
-                enableColumnMenu: false,
-              },
-              {
-                field: "LocationAsArray",
-                displayName: $scope.prompts.columnInStock,
-                enableColumnMenu: false,
-                // cellTemplate: 'views/inStockTemplate.html',
-                headerCellClass: 'text-center',
-                visible: false
               }
-            ],
-            onRegisterApi: function( gridApi ) {
-              $scope.gridApi = gridApi;
-              $scope.gridApi.selection.on.rowSelectionChanged($scope, rowSelectCallbck);
-              $scope.gridApi.selection.on.rowFocusChanged($scope, selectChildren);
-            }
-        };
-
-        function selectChildren(row,col){
-          var bottles;
-          if (row.treeNode.parentRow == null){
-
-          } else {
-            bottles = $scope.gridApi.treeBase.getRowChildren(row);
-            bottles.forEach(function(bottle) {
-              bottle.entity.inStock = !bottle.entity.inStock;
-            });
-
-          }
-        };
-
-        function rowSelectCallbck(row,col) {
-          // clicking the checkbox first toggles the checkbox then calls this callback
-          // the checkbox column does not have outerText
-          // so the toggle only gets called once
-          if (col.currentTarget.outerText.length){
-            row.entity.inStock = !row.entity.inStock;
-          }
-
+            ]
         };
 
         function filterDuplicate(bottle) {
           return bottle.isDuplicate == false;
         };
 
-        $scope.toggleRow = function(grid,row){
-            if (row.treeNode.state == "collapsed"){
-                grid.api.treeBase.expandRow(row);
-            } else {
-                grid.api.treeBase.collapseRow(row);
-            }
+        $scope.toggleRow = function(grid,row,colField){
+            var rowID = Object.keys(row.entity)[0];
+            var filteredData =  _.filter(excelData.gridData, { 'Varietal': row.entity[rowID].groupVal});
+
+            Data.setIphoneVarietals(filteredData);
+            Data.setViewName(row.entity[rowID].groupVal);
+            $location.path("/iphone/viewVintage");
+
         };
 
         $scope.getCounts = function(fieldName,pattern){
@@ -164,10 +117,6 @@ wineInventory.controller('ViewVarietalController',
           Data.setViewName(txtSideMenu.brandName);
           $scope.actions = "";
           $location.path("/home");
-        };
-
-        $scope.showMeTheBottles = function(row) {
-            modalService.showMeTheBottles(row);
         };
 
     }

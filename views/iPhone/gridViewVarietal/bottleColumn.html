@@ -1,0 +1,8 @@
+<div>
+	<div ng-if="row.entity.LocationAsArray.length>0"
+		 class="ui-grid-cell-contents"
+		 style="font-weight: bold;"
+		 ng-click="grid.appScope.showMeTheBottles(row)">
+		 {{row.entity.WineName}} ({{row.entity.LocationAsArray.length}})
+	</div>
+</div>

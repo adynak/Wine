@@ -58,6 +58,20 @@ wineInventory.directive("filelistBind", ['Data',
                                     row.ProducerVarietal = row.Producer + row.Varietal;
                                     row.VarietalVintage = row.Varietal + row.Vintage;
                                     row.BarcodeAsArray = [row.Barcode];
+                                    row.Designation = row.Designation.replace(row.Producer,"");
+
+                                    if (row.Designation == "Unknown" || (typeof(row.Designation) == "undefined")){
+                                        row.WineName = row.Producer;
+                                    } else {
+                                        row.WineName = row.Producer + " " + row.Designation;
+                                    }
+
+                                    if (row.Vineyard == "Unknown" || (typeof(row.Vineyard) == "undefined")){
+
+                                    } else {
+                                        row.WineName = row.WineName + " " + row.Vineyard;
+                                    }
+
                                 });
 
                                 sheets.push({

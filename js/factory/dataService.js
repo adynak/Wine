@@ -12,6 +12,17 @@ wineInventory.factory("Data",
             spreadsheet: {}
         };
 
+        var getGridHeight = function(){
+            return factoryVariables.gridHeight;
+        }
+
+        var setGridHeight = function(pixeks){
+            var ratio = window.devicePixelRatio || 1;
+            var w = screen.width * ratio;
+            var height = screen.height * ratio;
+            factoryVariables.gridHeight = Math.round(height * 0.382922) + "px";
+        }
+
         var setExcel= function(rawData){
             factoryVariables.spreadsheet = rawData;
         }
@@ -26,6 +37,27 @@ wineInventory.factory("Data",
 
         var getMissingBottles = function(){
             return factoryVariables.missingBottles;
+        }
+
+        var setDeviceType = function(userAgent){
+            var deviceType = "desktop";
+            userAgent = userAgent.toLowerCase();
+
+            if (userAgent.indexOf("iphone") != -1){
+                deviceType = "iPhone";
+            }
+            if (userAgent.indexOf("ipod") != -1){
+                deviceType = "iPod";
+            }
+            if (userAgent.indexOf("ipad") != -1){
+                deviceType = "iPad";
+            }
+            factoryVariables.deviceType = deviceType;
+        }
+
+        var getDeviceType = function(){
+            // return "iPhone";
+            return factoryVariables.deviceType;
         }
 
         var startOver = function(){
@@ -48,7 +80,11 @@ wineInventory.factory("Data",
 
         var getViewName = function(){
           if (factoryVariables.viewName == "Wine Detective"){
-            return "";
+            if (getDeviceType() == "iPhone"){
+                return factoryVariables.viewName;
+            } else {
+                return "";
+            }
           } else {
             return factoryVariables.viewName;
           }
@@ -158,6 +194,30 @@ wineInventory.factory("Data",
             return result;
         };
 
+        var setIphoneVintages = function(vintages){
+            factoryVariables.iPhoneVintages = vintages;
+        }
+
+        var getIphoneVintages = function(){
+            return factoryVariables.iPhoneVintages;
+        }
+
+        var setIphoneVarietals = function(varietals){
+            factoryVariables.iPhoneVarietals = varietals;
+        }
+
+        var getIphoneVarietals = function(){
+            return factoryVariables.iPhoneVarietals;
+        }
+
+        var setIphoneBottleList = function(bottleList){
+            factoryVariables.bottleList = bottleList;
+        }
+
+        var getIphoneBottleList = function(){
+            return factoryVariables.bottleList;
+        }
+
         var removeDuplicateRows = function(bottles){
             // reset these arrays to a single value
             for (i=0; i < bottles.length; ++i) {
@@ -208,13 +268,23 @@ wineInventory.factory("Data",
             countProducers: countProducers,
             countProducerVaritals: countProducerVaritals,
             removeDuplicateRows: removeDuplicateRows,
-            countVaritalVintages: countVaritalVintages
+            countVaritalVintages: countVaritalVintages,
+            setDeviceType: setDeviceType,
+            getDeviceType: getDeviceType,
+            setIphoneVintages: setIphoneVintages,
+            getIphoneVintages: getIphoneVintages,
+            setIphoneVarietals: setIphoneVarietals,
+            getIphoneVarietals: getIphoneVarietals,
+            setIphoneBottleList: setIphoneBottleList,
+            getIphoneBottleList: getIphoneBottleList,
+            getGridHeight: getGridHeight,
+            setGridHeight: setGridHeight
         };
     }
 );
 
-wineInventory.factory('AsOfDate', function(){
-  var asOfDate = '';
+wineInventory.factory("AsOfDate", function(){
+  var asOfDate = "";
 
   var getAsOfDate = function(){
     return asOfDate;
@@ -230,12 +300,12 @@ wineInventory.factory('AsOfDate', function(){
   };
 });
 
-wineInventory.factory('modalService', 
+wineInventory.factory("modalService", 
     [
-        '$rootScope',
-        '$uibModal',
-        'Data',
-        '$location',
+        "$rootScope",
+        "$uibModal",
+        "Data",
+        "$location",
 
         function($rootScope, $uibModal, Data, $location){
 
@@ -285,7 +355,7 @@ wineInventory.factory('modalService',
                 $uibModal.open({
                     scope: modalScope,
                     animation: true,
-                    templateUrl: 'views/wheresMyWineModal.html',
+                    templateUrl: "views/wheresMyWineModal.html",
                     controller: function($scope, $uibModalInstance) {
                         $scope.prompts = txtModal;
 
@@ -314,7 +384,7 @@ wineInventory.factory('modalService',
 
             var startOver = function(){
                 $uibModal.open({
-                    templateUrl: 'views/modal.html',
+                    templateUrl: "views/modal.html",
                     controller: function($scope, $uibModalInstance) {
                         $scope.prompts = txtModal;
 
