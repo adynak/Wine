@@ -1,4 +1,4 @@
-wineInventory.controller('ViewMissingInventoryController',
+wineInventory.controller('DesktopViewMissingInventoryController',
     [
         '$scope',
         '$location',
@@ -44,7 +44,7 @@ wineInventory.controller('ViewMissingInventoryController',
                         grouping: {
                             groupPriority: 0
                         },
-                        cellTemplate: 'views/gridMissingInventory/hideGridDetailRowTemplate.html'
+                        cellTemplate: 'views/desktop/gridMissingInventory/hideGridDetailRowTemplate.html'
                     },
                     {
                         name: 'Bins',
@@ -55,14 +55,14 @@ wineInventory.controller('ViewMissingInventoryController',
                         grouping: {
                             groupPriority: 1
                         },
-                        cellTemplate: 'views/gridMissingInventory/hideGridDetailRowTemplate.html'
+                        cellTemplate: 'views/desktop/gridMissingInventory/hideGridDetailRowTemplate.html'
                     },
                     {
                         name: 'Bottles',
                         field: 'bottle',
                         enableCellEdit: false,
                         enableColumnMenu: false,
-                        cellTemplate: 'views/gridMissingInventory/fixMissingInventoryTemplate.html'
+                        cellTemplate: 'views/desktop/gridMissingInventory/fixMissingInventoryTemplate.html'
                     }
                 ]
             };

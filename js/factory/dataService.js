@@ -56,6 +56,7 @@ wineInventory.factory("Data",
         }
 
         var getDeviceType = function(){
+            // debugger;
             // return "iPhone";
             return factoryVariables.deviceType;
         }

@@ -1,4 +1,4 @@
-wineInventory.controller('ViewReconcileController',
+wineInventory.controller('DesktopViewReconcileController',
     [
         '$scope',
         '$uibModal',
@@ -87,7 +87,7 @@ wineInventory.controller('ViewReconcileController',
                 grouping: {
                   groupPriority: 0
                 },
-                cellTemplate: 'views/gridReconcileInventory/hideGridDetailRowTemplate.html'
+                cellTemplate: 'views/desktop/gridReconcileInventory/hideGridDetailRowTemplate.html'
               },
               {
                 field: 'Bin',
@@ -98,7 +98,7 @@ wineInventory.controller('ViewReconcileController',
                 grouping: {
                     groupPriority: 1
                 },
-                cellTemplate: 'views/gridReconcileInventory/hideGridDetailRowTemplate.html'
+                cellTemplate: 'views/desktop/gridReconcileInventory/hideGridDetailRowTemplate.html'
               },
               {
                 field: 'Wine',
@@ -112,7 +112,7 @@ wineInventory.controller('ViewReconcileController',
                 field: "inStock",
                 displayName: $scope.prompts.columnInStock,
                 enableColumnMenu: false,
-                cellTemplate: 'views/gridReconcileInventory/inStockTemplate.html',
+                cellTemplate: 'views/desktop/gridReconcileInventory/inStockTemplate.html',
                 headerCellClass: 'text-center'
               }
             ],
