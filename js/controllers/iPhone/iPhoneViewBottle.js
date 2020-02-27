@@ -48,7 +48,7 @@ wineInventory.controller('iPhoneViewBottleController',
                 field: 'WineName',
                 headerCellClass: 'center',
                 displayName: Data.getViewName(),
-                cellTemplate: "views/iPhone/gridViewVarietal/bottleColumn.html",
+                cellTemplate: "views/iPhone/gridViewVarietalVintage/bottleColumn.html",
                 enableCellEdit: false,
                 enableColumnMenu: false,
                 visible: true

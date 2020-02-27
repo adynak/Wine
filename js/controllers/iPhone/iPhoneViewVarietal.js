@@ -73,7 +73,7 @@ wineInventory.controller('iPhoneViewVarietalController',
                 field: 'Varietal',
                 headerCellTemplate: '<div></div>',
                 // displayName: Data.getViewName(),
-                cellTemplate: 'views/gridVarietalVintage/varietalColumn.html',
+                cellTemplate: 'views/iPhone/gridViewVarietalVintage/varietalColumn.html',
                 width: "100%",
                 enableCellEdit: false,
                 enableColumnMenu: false,
@@ -88,13 +88,13 @@ wineInventory.controller('iPhoneViewVarietalController',
           return bottle.isDuplicate == false;
         };
 
-        $scope.toggleRow = function(grid,row,colField){
+        $scope.toggleRow = function(grid,row){
             var rowID = Object.keys(row.entity)[0];
             var filteredData =  _.filter(excelData.gridData, { 'Varietal': row.entity[rowID].groupVal});
 
             Data.setIphoneVarietals(filteredData);
             Data.setViewName(row.entity[rowID].groupVal);
-            $location.path("/iphone/viewVintage");
+            $location.path("/iphone/viewVarietalVintage/viewVintage");
 
         };
 

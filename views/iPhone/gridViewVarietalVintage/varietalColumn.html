@@ -4,7 +4,7 @@
 		col.grouping.groupPriority === null ||
 		( row.groupHeader && col.grouping.groupPriority === row.treeLevel )"
 		class="ui-grid-cell-contents"
-		ng-click="grid.appScope.toggleRow(grid,row,{{COL_FIELD}})">
+		ng-click="grid.appScope.toggleRow(grid,row)">
 		{{COL_FIELD}}  {{grid.appScope.getCounts("varietal",COL_FIELD)}}
 	</div>
 </div>

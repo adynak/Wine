@@ -39,16 +39,16 @@ wineInventory.config(['$routeProvider', '$locationProvider', function($routeProv
         templateUrl: 'views/desktop/gridMissingInventory/viewMissingInventory.html',
         controller: 'DesktopViewMissingInventoryController',
     }).
-    when('/iphone/viewVarietal', {
-        templateUrl: 'views/iPhone/gridViewVarietal/viewVarietal.html',
+    when('/iphone/viewVarietalVintage/home', {
+        templateUrl: 'views/iPhone/gridViewVarietalVintage/viewVarietal.html',
         controller: 'iPhoneViewVarietalController',
     }).
-    when('/iphone/viewVintage', {
-        templateUrl: 'views/iPhone/gridViewVarietal/viewVarietal.html',
+    when('/iphone/viewVarietalVintage/viewVintage', {
+        templateUrl: 'views/iPhone/gridViewVarietalVintage/viewVarietal.html',
         controller: 'iPhoneViewVintageController',
     }).
     when('/iphone/viewBottles', {
-        templateUrl: 'views/iPhone/gridViewVarietal/viewVarietal.html',
+        templateUrl: 'views/iPhone/gridViewVarietalVintage/viewVarietal.html',
         controller: 'iPhoneViewBottleController',
     }).
     otherwise({

@@ -56,7 +56,7 @@ wineInventory.controller('iPhoneViewVintageController',
                 headerCellClass: 'center',
                 // displayName: $scope.prompts.columnVintage,
                 displayName: Data.getViewName(),
-                cellTemplate: 'views/gridVarietalVintage/vintageColumn.html',
+                cellTemplate: 'views/iPhone/gridViewVarietalVintage/vintageColumn.html',
                 width: "100%",
                 enableCellEdit: false,
                 enableColumnMenu: false,
@@ -87,6 +87,7 @@ wineInventory.controller('iPhoneViewVintageController',
             Data.setIphoneBottleList(filteredData);
             var viewName = filteredData[0].Vintage + " " + filteredData[0].Varietal + " (" + countFilteredBottles(filteredData) + ")";
             Data.setViewName(viewName);
+            debugger;
             $location.path("/iphone/viewBottles");            
 
         };

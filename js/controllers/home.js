@@ -40,7 +40,7 @@ wineInventory.controller('HomeController',
             switch(action){
                 case "viewVarietal" :
                     if(deviceType == "iPhone"){
-                        $location.path("/iphone/viewVarietal");
+                        $location.path("/iphone/viewVarietalVintage/home");
                     } else {
                         $location.path("/desktop/viewVarietal");
                     }
