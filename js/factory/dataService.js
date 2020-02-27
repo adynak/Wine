@@ -16,11 +16,21 @@ wineInventory.factory("Data",
             return factoryVariables.gridHeight;
         }
 
-        var setGridHeight = function(pixeks){
+        var setGridHeight = function(){
+            var factor;
+            var deviceType = getDeviceType().toLowerCase();
+            switch (deviceType) {
+                case "iphone":
+                    factor = 0.382922;
+                    break
+                default:
+                    factor = 0.30;
+                    break;
+            }
             var ratio = window.devicePixelRatio || 1;
             var w = screen.width * ratio;
             var height = screen.height * ratio;
-            factoryVariables.gridHeight = Math.round(height * 0.382922) + "px";
+            factoryVariables.gridHeight = Math.round(height * factor) + "px";
         }
 
         var setExcel= function(rawData){

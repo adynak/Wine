@@ -170,7 +170,7 @@ section{
 }
 
 .icon-danger {
-  color: #FC635E;
+  color: #FA0800;
 }
 
 .icon-green {
@@ -186,11 +186,11 @@ section{
 }
 
 .icon-grape {
-  color: #a846cf;
+  color: #A846CF;
 }
 
 .icon-home {
-  color: #8a5b2c;
+  color: #8A5B2C;
 }
 
 .icon-pencil {
@@ -343,8 +343,7 @@ body  {
 */}
 
 .gridMissing {
-  width: 60%;
-  height: 66vh;
+  width: 80%;
   margin-right: auto;
   margin-left: auto;
 }

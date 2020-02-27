@@ -27,7 +27,7 @@ wineInventory.config(['$routeProvider', '$locationProvider', function($routeProv
         templateUrl: 'views/desktop/gridVarietalVintage/viewVarietal.html',
         controller: 'DesktopViewVarietalController',
     }).
-    when('/viewProducer', {
+    when('/desktop/viewProducer', {
         templateUrl: 'views/desktop/gridProducerVarietal/viewProducer.html',
         controller: 'DesktopViewProducerController',
     }).
@@ -70,9 +70,9 @@ wineInventory.config(['$routeProvider', '$locationProvider', function($routeProv
 
 }]).run(function($rootScope, $location, Data,$templateCache) {
 
+    Data.setDeviceType(navigator.userAgent);
     Data.setGridHeight();
 
-    Data.setDeviceType(navigator.userAgent);
     $templateCache.put('ui-grid/ui-grid-no-header',"<div></div>");
     $rootScope.$on("$routeChangeStart", function(event, next, current) {
         // the back button eventually will take us here without changing the viewName correctly

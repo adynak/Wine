@@ -25,6 +25,8 @@ wineInventory.controller('DesktopViewMissingInventoryController',
                 };
                 missingBottles.push(nothingHere);
             }
+            
+            $scope.gridHeight = Data.getGridHeight();            
 
             $scope.gridMissingBottles = {
                 enableGridMenu: false,

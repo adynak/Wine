@@ -11,22 +11,28 @@ var txtSideMenu = {
     alwaysMenuOpenFile: 'Choose Downloaded Inventory File',
     menuChooseAction: [
         {
-            name: 'Wine by Varietal by Vintage',
+            name: 'By Varietal Then Vintage',
             command: "viewVarietal",
             icon: "glyphicon-tint",
             color: "icon-grape"
         },
         {
-            name: 'Wine by Producer by Varietal',
+            name: 'By Producer Then Varietal',
             command: "viewProducer",
             icon: "glyphicon-home",
             color: "icon-home"
         },
         {
+            name: 'Ready To Drink',
+            command: "viewReadyToDrink",
+            icon: "glyphicon-glass",
+            color: "icon-pencil"
+        },
+        {
             name: 'Reconcile Inventory',
             command: "viewReconcile",
             icon: "glyphicon-pencil",
-            color: "icon-pencil"
+            color: "icon-cart"
         },
         {
             name: 'Start Over',

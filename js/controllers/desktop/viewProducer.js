@@ -48,7 +48,7 @@ wineInventory.controller('DesktopViewProducerController',
         //     $scope.gridOptions.data = $filter('filter')(excelData.gridData , $scope.searchText, undefined);
         // };
 
-
+        $scope.gridHeight = Data.getGridHeight();
 
         $scope.gridOptions = {
             enableGridMenu: false,
