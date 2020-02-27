@@ -441,10 +441,12 @@ button:hover {
   position: absolute;
 }
 
+/*
 .ui-grid-row:nth-child(odd) .ui-grid-cell {
   background-color: #e895e8;
-  /*color: white;*/
+  color: white;
 }
 .ui-grid-row:nth-child(even) .ui-grid-cell {
   background-color: #f3f3f3;
 }
+*/

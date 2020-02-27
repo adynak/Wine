@@ -16,7 +16,8 @@ wineInventory.controller('iPhoneViewVintageController',
         var spreadsheet = Data.getExcel();
         var excelData = spreadsheet.sheets[0];
         var bottles = Data.getIphoneVarietals();
-        Data.setViewName(txtCommon.viewNameVintageIphone,bottles.length);
+        var viewName = bottles[0].Varietal + " " + txtCommon.viewNameVintageIphone;
+        Data.setViewName(viewName,bottles.length);
 
         var varietalCounts = Data.countVarietals(bottles);
         var varietalVintageCounts = Data.countVaritalVintages(bottles);
@@ -87,7 +88,6 @@ wineInventory.controller('iPhoneViewVintageController',
             Data.setIphoneBottleList(filteredData);
             var viewName = filteredData[0].Vintage + " " + filteredData[0].Varietal + " (" + countFilteredBottles(filteredData) + ")";
             Data.setViewName(viewName);
-            debugger;
             $location.path("/iphone/viewBottles");            
 
         };

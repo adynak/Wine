@@ -54,6 +54,7 @@ var txtCommon = {
     viewNameReconcileInventory: "Reconcile Inventory From",
     viewNameVarietal: "View By Varietal",
     viewNameVarietalIphone: "Varietals",
+    viewNameProducerIphone: "Producers",
     viewNameVintageIphone: "Vintages",
     viewNameProducer: "View By Producer",
     plurals: [

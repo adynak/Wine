@@ -56,8 +56,6 @@ wineInventory.factory("Data",
         }
 
         var getDeviceType = function(){
-            // debugger;
-            // return "iPhone";
             return factoryVariables.deviceType;
         }
 
@@ -195,6 +193,14 @@ wineInventory.factory("Data",
             return result;
         };
 
+        var setIphoneProducers = function(producers){
+            factoryVariables.iPhoneProducers = producers;
+        }
+
+        var getIphoneProducers = function(){
+            return factoryVariables.iPhoneProducers;
+        }
+
         var setIphoneVintages = function(vintages){
             factoryVariables.iPhoneVintages = vintages;
         }
@@ -279,7 +285,9 @@ wineInventory.factory("Data",
             setIphoneBottleList: setIphoneBottleList,
             getIphoneBottleList: getIphoneBottleList,
             getGridHeight: getGridHeight,
-            setGridHeight: setGridHeight
+            setGridHeight: setGridHeight,
+            setIphoneProducers: setIphoneProducers,
+            getIphoneProducers: getIphoneProducers
         };
     }
 );
