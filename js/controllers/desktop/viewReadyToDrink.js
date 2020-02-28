@@ -1,4 +1,4 @@
-wineInventory.controller('DesktopViewProducerController',
+wineInventory.controller('DesktopViewReadyToDrinkController',
     [
         '$scope',
         'modalService',
@@ -12,37 +12,32 @@ wineInventory.controller('DesktopViewProducerController',
 
         $scope.prompts = txtCommon;
 
-        var row, done,wineType;
+        var row, done;
         var spreadsheet = Data.getExcel();
         AsOfDate.setAsOfDate(spreadsheet.dateStamp);
 
         var excelData = spreadsheet.sheets[0];
 
         var bottles = excelData.gridData;
+        Data.setViewName(txtCommon.viewNameReadyToDrink,bottles.length);
 
-        if ($location.path().search("viewMissingDrinkByDate") >= 0){
-          var bottles =  _.filter(bottles, { 'EndConsume': "unknown"});
-          Data.setViewName(txtCommon.viewNameMissingDrinkByDate,bottles.length);        
-        } else {
-          Data.setViewName(txtCommon.viewNameProducer,bottles.length);          
-        }
-
-        var producerCounts = Data.countProducers(bottles);
 
 // sort them for this view
         bottles.sort(function(wine1, wine2) {
-            if (wine1.Producer > wine2.Producer) return 1;
-            if (wine1.Producer < wine2.Producer) return -1;
+            if (wine1.EndConsume > wine2.EndConsume) return 1;
+            if (wine1.EndConsume < wine2.EndConsume) return -1;
 
             if (wine1.Varietal < wine2.Varietal) return -1;
             if (wine1.Varietal > wine2.Varietal) return 1;
 
-            if (wine1.iWine < wine2.iWine) return -1;
-            if (wine1.iWine > wine2.iWine) return 1;
+            if (wine1.Wine < wine2.Wine) return -1;
+            if (wine1.Wine > wine2.Wine) return 1;
 
         });
 
-        var producerVarietalCounts = Data.countProducerVaritals(bottles);
+        var readyToDrinkCounts = Data.countReadyToDrink(bottles);
+
+        var varietalVintageCounts = Data.countVaritalVintages(bottles);
 
         bottles = Data.removeDuplicateRows(bottles);
         bottles = bottles.filter(filterDuplicate);
@@ -74,10 +69,10 @@ wineInventory.controller('DesktopViewProducerController',
             columnDefs:
             [
               {
-                field: 'Producer',
-                displayName: $scope.prompts.columnProducer,
-                cellTemplate: 'views/desktop/gridProducerVarietal/producerColumn.html',
-                width: "20%",
+                field: 'EndConsume',
+                displayName: $scope.prompts.columnReadyToDrink,
+                cellTemplate: 'views/desktop/gridReadyToDrink/endConsumeColumn.html',
+                width: "25%",
                 enableCellEdit: false,
                 enableColumnMenu: false,
                 grouping: {
@@ -87,8 +82,8 @@ wineInventory.controller('DesktopViewProducerController',
               {
                 field: 'Varietal',
                 displayName: $scope.prompts.columnVarietal,
-                cellTemplate: 'views/desktop/gridProducerVarietal/varietalColumn.html',
-                width: "20%",
+                cellTemplate: 'views/desktop/gridReadyToDrink/varietalColumn.html',
+                width: "10%",
                 enableCellEdit: false,
                 enableColumnMenu: false,
                 grouping: {
@@ -98,7 +93,7 @@ wineInventory.controller('DesktopViewProducerController',
               {
                 field: 'Wine',
                 displayName: $scope.prompts.columnBottles,
-                cellTemplate: "views/desktop/gridProducerVarietal/bottleColumn.html",
+                cellTemplate: "views/desktop/gridVarietalVintage/bottleColumn.html",
                 enableCellEdit: false,
                 enableColumnMenu: false,
               },
@@ -113,8 +108,8 @@ wineInventory.controller('DesktopViewProducerController',
             ],
             onRegisterApi: function( gridApi ) {
               $scope.gridApi = gridApi;
-              $scope.gridApi.selection.on.rowSelectionChanged($scope,rowSelectCallbck);
-              $scope.gridApi.selection.on.rowFocusChanged($scope,selectChildren);
+              $scope.gridApi.selection.on.rowSelectionChanged($scope, rowSelectCallbck);
+              $scope.gridApi.selection.on.rowFocusChanged($scope, selectChildren);
             }
         };
 
@@ -143,32 +138,31 @@ wineInventory.controller('DesktopViewProducerController',
 
         function filterDuplicate(bottle) {
           return bottle.isDuplicate == false;
-        }
+        };
 
         $scope.toggleRow = function(grid,row){
-          if (row.treeNode.state == "collapsed"){
-            grid.api.treeBase.expandRow(row);
-          } else {
-            grid.api.treeBase.collapseRow(row);
-          }
-        }
+            if (row.treeNode.state == "collapsed"){
+                grid.api.treeBase.expandRow(row);
+            } else {
+                grid.api.treeBase.collapseRow(row);
+            }
+        };
 
         $scope.getCounts = function(fieldName,pattern){
             var obj,searchFor;
             switch (fieldName) {
-                case "producer" :
-                  obj = producerCounts.find(o => o.producer === pattern);
-                  break;
-                case "varietal" :
-                    searchFor = pattern["0"].row.entity.Producer + pattern["0"].row.entity.Varietal;
-                    obj = producerVarietalCounts.find(o => o.name === searchFor);
+                case "readyToDrink" :
+                    obj = readyToDrinkCounts.find(o => o.readyToDrink === pattern);
                     break;
+                case "varietal" :
+                    obj = varietalCounts.find(o => o.varietal === pattern);
+                    break;
+                case "vintage" :
+                    searchFor = pattern["0"].row.entity.Varietal + pattern["0"].row.entity.Vintage;
+                    obj = varietalVintageCounts.find(o => o.name === searchFor);
+
             }
             return "(" + obj.count + ")";
-        }
-
-        $scope.showMeTheBottles = function(row) {
-            modalService.showMeTheBottles(row);
         };
 
         $scope.btnDone = function() {
@@ -176,7 +170,11 @@ wineInventory.controller('DesktopViewProducerController',
           Data.setViewName(txtSideMenu.brandName);
           $scope.actions = "";
           $location.path("/home");
-        }
+        };
+
+        $scope.showMeTheBottles = function(row) {
+            modalService.showMeTheBottles(row);
+        };
 
     }
 ]);

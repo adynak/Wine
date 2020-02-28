@@ -139,6 +139,25 @@ wineInventory.factory("Data",
             return result;
         }
 
+        var countReadyToDrink = function(excelData){
+            let index = { };
+            let result = [ ];
+            excelData.forEach(point => {
+                let key = point.EndConsume ;
+                if (key in index) {
+                    index[key].count++;
+                } else {
+                    if (point.EndConsume == 9999){
+                        point.EndConsume = "unknown";
+                    }
+                    let newEntry = { readyToDrink : point.EndConsume, count: 1 };
+                    index[key] = newEntry;
+                    result.push(newEntry);
+                }
+            });
+            return result;
+        }
+
         var countVintages = function(excelData){
             let index = { };
             let result = [ ];
@@ -284,6 +303,7 @@ wineInventory.factory("Data",
             countVintages: countVintages,
             countProducers: countProducers,
             countProducerVaritals: countProducerVaritals,
+            countReadyToDrink: countReadyToDrink,
             removeDuplicateRows: removeDuplicateRows,
             countVaritalVintages: countVaritalVintages,
             setDeviceType: setDeviceType,
@@ -329,6 +349,13 @@ wineInventory.factory("modalService",
         function($rootScope, $uibModal, Data, $location){
 
             var showMeTheBottles = function(row){
+                var showFixButton;
+
+                if ($location.path().search("viewMissingDrinkByDate") >= 0){
+                    showFixButton = true;
+                } else {
+                    showFixButton = false;
+                }
 
                 var drinkingWindow, displayDrinkingWindow = "inline";
                 var opened = Array();
@@ -341,14 +368,16 @@ wineInventory.factory("modalService",
                     wineType = row.entity.Varietal;
                 }
 
-                if (row.entity.BeginConsume + row.entity.EndConsume == "99999999"){
+                if (row.entity.BeginConsume + row.entity.EndConsume == "unknownunknown"){
                     displayDrinkingWindow = "none";
                 }
 
-                if (row.entity.BeginConsume == "9999" && row.entity.EndConsume !== "9999"){
+                if (row.entity.BeginConsume == "unknown" && row.entity.EndConsume !== "unknown"){
                     drinkingWindow = txtCommon.before + " " + row.entity.EndConsume ;
-                } else if (row.entity.BeginConsume !== "9999" && row.entity.EndConsume !== "9999"){
+                } else if (row.entity.BeginConsume !== "unknown" && row.entity.EndConsume !== "unknown"){
                     drinkingWindow = row.entity.BeginConsume + " - " + row.entity.EndConsume;
+                } else if (row.entity.BeginConsume == "unknown" || row.entity.EndConsume == "unknown"){
+                    displayDrinkingWindow = "none";
                 }
 
                 for (var i = 0; i < row.entity.LocationAsArray.length; i++) {
@@ -369,7 +398,9 @@ wineInventory.factory("modalService",
                         binAsArray:row.entity.BinAsArray,
                         BarcodeAsArray:row.entity.BarcodeAsArray,
                         displayCheckbox: "none",
-                        opened: opened
+                        opened: opened,
+                        showFixButton: showFixButton,
+                        iWine: row.entity.iWine
                     };
                 $uibModal.open({
                     scope: modalScope,
@@ -379,6 +410,13 @@ wineInventory.factory("modalService",
                         $scope.prompts = txtModal;
 
                         $scope.ok = function() {
+                            $uibModalInstance.close();
+                        };
+
+                        $scope.fix = function() {
+                            console.log(modalScope.bottle.iWine);
+                            var url = "https://www.cellartracker.com/editpersonal.asp?iWine=" + modalScope.bottle.iWine;
+                            window.open(url)
                             $uibModalInstance.close();
                         };
 

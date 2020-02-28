@@ -42,7 +42,20 @@
 <br>
 <br>
 
-<div class="modal-footer">
+<div ng-if="bottle.showFixButton" class="modal-footer">
+
+    <button class="btn btn-success active" type="button" ng-click="fix()">
+        &nbsp;&nbsp;{{prompts.btnFix}}&nbsp;&nbsp;
+    </button>
+
+    <button class="btn btn-cancel active" type="button" ng-enter="ok()" ng-click="ok()">
+        {{prompts.btnCancel}}
+    </button>
+
+</div>
+
+<div ng-if="!bottle.showFixButton" class="modal-footer">
+
     <button class="btn btn-success active" type="button" ng-click="drink(bottle)">
         {{prompts.btnDrink}}
     </button>

@@ -54,9 +54,21 @@ wineInventory.controller('HomeController',
                     }
                     break;
 
+                case "viewMissingDrinkByDate":
+                    if(deviceType == "iPhone"){
+                        $location.path("/iphone/viewMissingDrinkByDate/home");
+                    } else {
+                        $location.path("/desktop/viewMissingDrinkByDate");
+                    }
+                    break;
+
                case "viewReconcile" :
                     $location.path("/viewReconcile");
                     break;
+
+               case "viewReadyToDrink" :
+                    $location.path("/desktop/viewReadyToDrink");
+                    break;                    
 
                 case "startOver" :
                     var resetExcel = {

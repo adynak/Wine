@@ -16,6 +16,8 @@ var wineInventory = angular.module('wineInventory',
 wineInventory.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 
     $locationProvider.hashPrefix('');
+        // $locationProvider.html5Mode(true);
+
 
     $routeProvider.
     when('/home', {
@@ -31,6 +33,14 @@ wineInventory.config(['$routeProvider', '$locationProvider', function($routeProv
         templateUrl: 'views/desktop/gridProducerVarietal/viewProducer.html',
         controller: 'DesktopViewProducerController',
     }).
+    when('/desktop/viewReadyToDrink', {
+        templateUrl: 'views/desktop/gridReadyToDrink/viewReadyToDrink.html',
+        controller: 'DesktopViewReadyToDrinkController',
+    }).
+    when('/desktop/viewMissingDrinkByDate', {
+        templateUrl: 'views/desktop/gridProducerVarietal/viewProducer.html',
+        controller: 'DesktopViewProducerController',
+    }).    
     when('/viewReconcile', {
         templateUrl: 'views/desktop/gridReconcileInventory/viewReconcile.html',
         controller: 'DesktopViewReconcileController',

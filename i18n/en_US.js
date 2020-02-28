@@ -26,13 +26,19 @@ var txtSideMenu = {
             name: 'Ready To Drink',
             command: "viewReadyToDrink",
             icon: "glyphicon-glass",
-            color: "icon-pencil"
+            color: "icon-green"
+        },
+        {
+            name: 'Missing Drink By Date',
+            command: "viewMissingDrinkByDate",
+            icon: "glyphicon-question-sign",
+            color: "icon-red"
         },
         {
             name: 'Reconcile Inventory',
             command: "viewReconcile",
             icon: "glyphicon-pencil",
-            color: "icon-cart"
+            color: "icon-pencil"
         },
         {
             name: 'Start Over',
@@ -56,13 +62,16 @@ var txtCommon = {
     columnVarietal: "Varietal",
     columnProducer: "Producer",
     columnVintage: "Vintage",
+    columnReadyToDrink: "Ready To Drink",    
     totalBottles: "Total Bottles: ",
     viewNameReconcileInventory: "Reconcile Inventory From",
     viewNameVarietal: "View By Varietal",
+    viewNameReadyToDrink: "View Ready To Drink",    
     viewNameVarietalIphone: "Varietals",
     viewNameProducerIphone: "Producers",
     viewNameVintageIphone: "Vintages",
     viewNameProducer: "View By Producer",
+    viewNameMissingDrinkByDate: "View Missing Drink By Date",
     plurals: [
         {tag: 'bottle in '},
         {tag: 'bottles in'}
@@ -73,6 +82,7 @@ var txtCommon = {
 var txtModal = {
     bgColor: "#E2E0D7",
     btnOK: "OK",
+    btnFix: "Fix",
     btnDrink : "Drink",
     btnCancel: "Cancel",
     confirm: "Done Already?",

@@ -6,9 +6,10 @@ wineInventory.controller('DesktopViewVarietalController',
         'Data',
         '$filter',
         'AsOfDate',
+        '$routeParams', 
         'uiGridGroupingConstants',
 
-    function($scope, modalService, $location, Data, $filter, AsOfDate) {
+    function($scope, modalService, $location, Data, $filter, AsOfDate, $routeParams) {
 
         $scope.prompts = txtCommon;
 
