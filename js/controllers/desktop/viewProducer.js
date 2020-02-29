@@ -12,7 +12,69 @@ wineInventory.controller('DesktopViewProducerController',
 
         $scope.prompts = txtCommon;
 
-        var row, done,wineType;
+        var producerGridColumns = [
+              {
+                field: 'Producer',
+                displayName: $scope.prompts.columnProducer,
+                cellTemplate: 'views/desktop/gridProducerVarietal/producerColumn.html',
+                width: "20%",
+                enableCellEdit: false,
+                enableColumnMenu: false,
+                grouping: {
+                  groupPriority: 0
+                }
+              },
+              {
+                field: 'Varietal',
+                displayName: $scope.prompts.columnVarietal,
+                cellTemplate: 'views/desktop/gridProducerVarietal/varietalColumn.html',
+                width: "20%",
+                enableCellEdit: false,
+                enableColumnMenu: false,
+                grouping: {
+                    groupPriority: 1
+                }
+              },
+              {
+                field: 'Wine',
+                displayName: $scope.prompts.columnBottles,
+                cellTemplate: "views/desktop/gridProducerVarietal/bottleColumn.html",
+                enableCellEdit: false,
+                enableColumnMenu: false,
+              },
+              {
+                field: "LocationAsArray",
+                displayName: $scope.prompts.columnInStock,
+                enableColumnMenu: false,
+                // cellTemplate: 'views/inStockTemplate.html',
+                headerCellClass: 'text-center',
+                visible: false
+              }
+        ];
+
+        var consumptionGridColumns = [
+              {
+                field: 'Producer',
+                displayName: $scope.prompts.columnProducer,
+                cellTemplate: 'views/desktop/gridProducerVarietal/producerColumn.html',
+                width: "30%",
+                enableCellEdit: false,
+                enableColumnMenu: false,
+                grouping: {
+                  groupPriority: 0
+                }
+              },
+              {
+                field: 'Wine',
+                displayName: $scope.prompts.columnBottles,
+                cellTemplate: "views/desktop/gridProducerVarietal/bottleColumn.html",
+                enableCellEdit: false,
+                enableColumnMenu: false,
+              }
+        ];
+
+
+        var row, done,wineType, gridColumns;
         var spreadsheet = Data.getExcel();
         AsOfDate.setAsOfDate(spreadsheet.dateStamp);
 
@@ -22,9 +84,11 @@ wineInventory.controller('DesktopViewProducerController',
 
         if ($location.path().search("viewMissingDrinkByDate") >= 0){
           var bottles =  _.filter(bottles, { 'EndConsume': "unknown"});
-          Data.setViewName(txtCommon.viewNameMissingDrinkByDate,bottles.length);        
+          Data.setViewName(txtCommon.viewNameMissingDrinkByDate,bottles.length); 
+          gridColumns = consumptionGridColumns;      
         } else {
-          Data.setViewName(txtCommon.viewNameProducer,bottles.length);          
+          Data.setViewName(txtCommon.viewNameProducer,bottles.length);
+          gridColumns = producerGridColumns;
         }
 
         var producerCounts = Data.countProducers(bottles);
@@ -71,46 +135,7 @@ wineInventory.controller('DesktopViewProducerController',
             showTreeRowHeader: false,
             data: gridData,
             // showGridFooter: true,
-            columnDefs:
-            [
-              {
-                field: 'Producer',
-                displayName: $scope.prompts.columnProducer,
-                cellTemplate: 'views/desktop/gridProducerVarietal/producerColumn.html',
-                width: "20%",
-                enableCellEdit: false,
-                enableColumnMenu: false,
-                grouping: {
-                  groupPriority: 0
-                }
-              },
-              {
-                field: 'Varietal',
-                displayName: $scope.prompts.columnVarietal,
-                cellTemplate: 'views/desktop/gridProducerVarietal/varietalColumn.html',
-                width: "20%",
-                enableCellEdit: false,
-                enableColumnMenu: false,
-                grouping: {
-                    groupPriority: 1
-                }
-              },
-              {
-                field: 'Wine',
-                displayName: $scope.prompts.columnBottles,
-                cellTemplate: "views/desktop/gridProducerVarietal/bottleColumn.html",
-                enableCellEdit: false,
-                enableColumnMenu: false,
-              },
-              {
-                field: "LocationAsArray",
-                displayName: $scope.prompts.columnInStock,
-                enableColumnMenu: false,
-                // cellTemplate: 'views/inStockTemplate.html',
-                headerCellClass: 'text-center',
-                visible: false
-              }
-            ],
+            columnDefs: gridColumns,
             onRegisterApi: function( gridApi ) {
               $scope.gridApi = gridApi;
               $scope.gridApi.selection.on.rowSelectionChanged($scope,rowSelectCallbck);
