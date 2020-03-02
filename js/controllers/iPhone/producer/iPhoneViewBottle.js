@@ -64,7 +64,6 @@ wineInventory.controller('iPhoneViewProducerBottleController',
         };
 
         $scope.showMeTheBottles = function(row) {
-            row.isSelected = false;
             modalService.showMeTheBottles(row);
         };
 

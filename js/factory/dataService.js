@@ -351,7 +351,9 @@ wineInventory.factory("modalService",
             var showMeTheBottles = function(row){
                 var showFixButton;
 
-                if ($location.path().search("viewMissingDrinkByDate") >= 0){
+                if ($location.path().search("viewMissingDrinkByDate") >= 0 || 
+                    $location.path().search("fixMissingBottle") >= 0)
+                {
                     showFixButton = true;
                 } else {
                     showFixButton = false;

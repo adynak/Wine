@@ -19,6 +19,14 @@ wineInventory.controller('iPhoneViewProducerController',
         var excelData = spreadsheet.sheets[0];
 
         var bottles = excelData.gridData;
+
+        if ($location.path().search("viewMissingDrinkByDate") >= 0){
+          bottles =  _.filter(bottles, { 'EndConsume': "unknown"});
+          Data.setViewName(txtCommon.viewNameMissingDrinkByDate,bottles.length); 
+        } else {
+          Data.setViewName(txtCommon.viewNameProducer,bottles.length);
+        }
+
         var producerCounts = Data.countProducers(bottles);
         Data.setViewName(txtCommon.viewNameProducerIphone,producerCounts.length);        
 
@@ -69,7 +77,7 @@ wineInventory.controller('iPhoneViewProducerController',
             [
               {
                 field: 'Producer',
-                                headerCellTemplate: '<div></div>',
+                headerCellTemplate: '<div></div>',
                 displayName: $scope.prompts.columnProducer,
                 cellTemplate: 'views/iPhone/gridViewProducerVarietal/producerColumn.html',
                 width: "100%",
@@ -87,12 +95,20 @@ wineInventory.controller('iPhoneViewProducerController',
         }
 
         $scope.toggleRow = function(grid,row){
-            var rowID = Object.keys(row.entity)[0];
-            var filteredData =  _.filter(excelData.gridData, { 'Producer': row.entity[rowID].groupVal});
 
-            Data.setIphoneProducers(filteredData);
+            var rowID = Object.keys(row.entity)[0];
             Data.setViewName(row.entity[rowID].groupVal);
-            $location.path("/iphone/viewProducerVarietal/viewVarietal");
+
+            if ($location.path().search("viewMissingDrinkByDate") >= 0){
+                var filteredData =  _.filter(grid.options.data, { 'Producer': row.entity[rowID].groupVal});
+                Data.setIphoneBottleList(filteredData);
+                $location.path("/iphone/viewProducerVarietal/viewBottles?fixMissingBottle");
+            } else {
+                var filteredData =  _.filter(excelData.gridData, { 'Producer': row.entity[rowID].groupVal});
+                Data.setIphoneProducers(filteredData);
+                $location.path("/iphone/viewProducerVarietal/viewVarietal");
+            }
+           
         }
 
         $scope.getCounts = function(fieldName,pattern){
