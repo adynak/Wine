@@ -9,6 +9,7 @@ var txtSideMenu = {
     brandName: 'Wine Detective',
     menuOpenFile: 'Choose Downloaded Inventory File',
     alwaysMenuOpenFile: 'Choose Downloaded Inventory File',
+    chooseReport: "Choose A Report",
     menuChooseAction: [
         {
             name: 'By Varietal Then Vintage',
