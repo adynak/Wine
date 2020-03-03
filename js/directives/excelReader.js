@@ -78,6 +78,7 @@ wineInventory.directive("filelistBind", ['Data',
                                     if (row.BeginConsume == 9999){
                                         row.BeginConsume = "unknown";
                                     }
+                                    row.EndConsumeVarietal = row.EndConsume + row.Varietal;
 
                                 });
 

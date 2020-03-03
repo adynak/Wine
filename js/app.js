@@ -57,6 +57,20 @@ wineInventory.config(['$routeProvider', '$locationProvider', function($routeProv
         templateUrl: 'views/iPhone/gridViewVarietalVintage/viewVarietal.html',
         controller: 'iPhoneViewVintageController',
     }).
+
+
+    when('/iphone/viewReadyToDrink/home', {
+        templateUrl: 'views/desktop/gridReadyToDrink/viewReadyToDrink.html',
+        controller: 'iPhoneViewReadyToDrinkVintageController',
+    }).
+    when('/iphone/viewReadyToDrink/viewVarietal', {
+        templateUrl: 'views/iPhone/gridViewVarietalVintage/viewVarietal.html',
+        controller: 'iPhoneViewReadyToDrinkVarietalController',
+    }).
+    
+
+
+
     when('/iphone/viewBottles', {
         templateUrl: 'views/iPhone/gridViewProducerVarietal/viewProducer.html',
         controller: 'iPhoneViewBottleController',

@@ -28,7 +28,6 @@ wineInventory.controller('HomeController',
 
             var showFilename = false;
             if (typeof(spreadsheet.filename) != 'undefined'){
-                debugger;
                 $scope.prompts.menuOpenFile = txtSideMenu.chooseReport
                 $scope.excelFilename = spreadsheet.filename;
                 $scope.actions = txtSideMenu.menuChooseAction;
@@ -69,7 +68,12 @@ wineInventory.controller('HomeController',
                     break;
 
                case "viewReadyToDrink" :
-                    $location.path("/desktop/viewReadyToDrink");
+                    if(deviceType == "iPhone"){
+                        $location.path("/iphone/viewReadyToDrink/home");
+                    } else {
+                        $location.path("/desktop/viewReadyToDrink");
+                    }
+
                     break;                    
 
                 case "startOver" :

@@ -206,6 +206,22 @@ wineInventory.factory("Data",
             return result;
         }
 
+        var countEndConsumeVaritals = function(excelData){
+            let index = { };
+            let result = [ ];
+            excelData.forEach(point => {
+                let key = point.EndConsumeVarietal ;
+                if (key in index) {
+                    index[key].count += point.LocationAsArray.length ;
+                } else {
+                    let newEntry = { name: point.EndConsumeVarietal, count: point.LocationAsArray.length };
+                    index[key] = newEntry;
+                    result.push(newEntry);
+                }
+            });
+            return result;
+        }
+
         var countProducers = function(excelData){
             let index = { };
             let result = [ ];
@@ -221,6 +237,14 @@ wineInventory.factory("Data",
             });
             return result;
         };
+
+        var setIphoneReadyToDrinkVarietals = function(varietals){
+            factoryVariables.iPhoneReadyToDrinkVarietals = varietals;
+        }
+
+        var getIphoneReadyToDrinkVarietals = function(){
+            return factoryVariables.iPhoneReadyToDrinkVarietals;
+        }
 
         var setIphoneProducers = function(producers){
             factoryVariables.iPhoneProducers = producers;
@@ -317,7 +341,10 @@ wineInventory.factory("Data",
             getGridHeight: getGridHeight,
             setGridHeight: setGridHeight,
             setIphoneProducers: setIphoneProducers,
-            getIphoneProducers: getIphoneProducers
+            getIphoneProducers: getIphoneProducers,
+            countEndConsumeVaritals: countEndConsumeVaritals,
+            setIphoneReadyToDrinkVarietals: setIphoneReadyToDrinkVarietals,
+            getIphoneReadyToDrinkVarietals: getIphoneReadyToDrinkVarietals
         };
     }
 );
