@@ -72,6 +72,8 @@ wineInventory.directive("filelistBind", ['Data',
                                         row.WineName = row.WineName + " " + row.Vineyard;
                                     }
 
+                                    row.shortWineName = row.Wine.replace(row.Producer,'').trim();
+
                                     if (row.EndConsume == 9999){
                                         row.EndConsume = "unknown";
                                     }

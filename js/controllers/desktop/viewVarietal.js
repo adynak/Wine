@@ -32,8 +32,8 @@ wineInventory.controller('DesktopViewVarietalController',
             if (wine1.Vintage < wine2.Vintage) return -1;
             if (wine1.Vintage > wine2.Vintage) return 1;
 
-            if (wine1.iWine < wine2.iWine) return -1;
-            if (wine1.iWine > wine2.iWine) return 1;
+            if (wine1.Producer < wine2.Producer) return -1;
+            if (wine1.Producer > wine2.Producer) return 1;
 
         });
 

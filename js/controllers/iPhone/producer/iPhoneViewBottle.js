@@ -11,10 +11,17 @@ wineInventory.controller('iPhoneViewProducerBottleController',
     function($scope, modalService, $location, Data, $filter, AsOfDate) {
 
         $scope.prompts = txtCommon;
-
-        var row, done;
+        var row, done, viewName, cellTemplate;
         var bottles = Data.getIphoneBottleList();
-        var viewName = bottles[0].Producer + " " + bottles[0].Varietal;
+
+        if ($location.path().search("fixMissingBottle") >= 0){
+            viewName = bottles[0].Producer;
+            cellTemplate = "views/iPhone/gridViewProducerVarietal/bottleColumn.html";
+        } else {
+            viewName = bottles[0].Producer + " " + bottles[0].Varietal;
+            cellTemplate = "views/iPhone/gridViewVarietalVintage/bottleColumn.html";
+        }
+
         Data.setViewName(viewName,bottles.length);
 
         var gridData  = bottles;
@@ -48,7 +55,7 @@ wineInventory.controller('iPhoneViewProducerBottleController',
                 field: 'WineName',
                 headerCellClass: 'center',
                 displayName: Data.getViewName(),
-                cellTemplate: "views/iPhone/gridViewVarietalVintage/bottleColumn.html",
+                cellTemplate: cellTemplate,
                 enableCellEdit: false,
                 enableColumnMenu: false,
                 visible: true

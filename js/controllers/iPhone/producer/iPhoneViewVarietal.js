@@ -32,7 +32,6 @@ wineInventory.controller('iPhoneViewProducerVarietalController',
         //     $scope.gridOptions.data = $filter('filter')(excelData.gridData , $scope.searchText, undefined);
         // };
 
-
         $scope.gridHeight = Data.getGridHeight();
 
         $scope.gridOptions = {

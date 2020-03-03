@@ -29,7 +29,6 @@ wineInventory.controller('iPhoneViewProducerController',
 
         var producerCounts = Data.countProducers(bottles);
         Data.setViewName(txtCommon.viewNameProducerIphone,producerCounts.length);        
-
 // sort them for this view
         bottles.sort(function(wine1, wine2) {
             if (wine1.Producer > wine2.Producer) return 1;
@@ -38,8 +37,8 @@ wineInventory.controller('iPhoneViewProducerController',
             if (wine1.Varietal < wine2.Varietal) return -1;
             if (wine1.Varietal > wine2.Varietal) return 1;
 
-            if (wine1.iWine < wine2.iWine) return -1;
-            if (wine1.iWine > wine2.iWine) return 1;
+            if (wine1.Vintage < wine2.Vintage) return -1;
+            if (wine1.Vintage > wine2.Vintage) return 1;
 
         });
 
