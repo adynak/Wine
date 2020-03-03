@@ -38,6 +38,7 @@ wineInventory.controller('DesktopViewReadyToDrinkController',
         var readyToDrinkCounts = Data.countReadyToDrink(bottles);
 
         var varietalVintageCounts = Data.countVaritalVintages(bottles);
+        var endConsumeVarietalCounts = Data.countEndConsumeVaritals(bottles);
 
         bottles = Data.removeDuplicateRows(bottles);
         bottles = bottles.filter(filterDuplicate);
@@ -155,7 +156,8 @@ wineInventory.controller('DesktopViewReadyToDrinkController',
                     obj = readyToDrinkCounts.find(o => o.readyToDrink === pattern);
                     break;
                 case "varietal" :
-                    obj = varietalCounts.find(o => o.varietal === pattern);
+                    searchFor = pattern["0"].row.entity.EndConsumeVarietal;
+                    obj = endConsumeVarietalCounts.find(o => o.name === searchFor);
                     break;
                 case "vintage" :
                     searchFor = pattern["0"].row.entity.Varietal + pattern["0"].row.entity.Vintage;

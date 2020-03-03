@@ -82,16 +82,8 @@ wineInventory.controller('iPhoneViewReadyToDrinkVarietalController',
 
         $scope.getCounts = function(fieldName,pattern){
             var obj,searchFor;
-            switch (fieldName) {
-                case "varietal" :
-                    searchFor = pattern["0"].row.entity.EndConsumeVarietal;
-                    obj = endConsumeVarietalCounts.find(o => o.name === searchFor);
-                    break;
-                case "vintage" :
-                    searchFor = pattern["0"].row.entity.Varietal + pattern["0"].row.entity.Vintage
-                    obj = varietalVintageCounts.find(o => o.name === searchFor);
-
-            }
+            searchFor = pattern["0"].row.entity.EndConsumeVarietal;
+            obj = endConsumeVarietalCounts.find(o => o.name === searchFor);
             return "(" + obj.count + ")";
         };
 
