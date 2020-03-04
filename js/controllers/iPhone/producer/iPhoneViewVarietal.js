@@ -83,6 +83,10 @@ wineInventory.controller('iPhoneViewProducerVarietalController',
 
         };
 
+        $scope.decode = function(str){
+            return he.decode(str);
+        }
+
         $scope.getCounts = function(fieldName,pattern){
             var obj,searchFor;
             switch (fieldName) {

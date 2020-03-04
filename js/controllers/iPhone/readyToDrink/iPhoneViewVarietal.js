@@ -21,6 +21,10 @@ wineInventory.controller('iPhoneViewReadyToDrinkVarietalController',
 
         var gridData  = bottles;
 
+        gridData.forEach(function(bottle) {
+            bottle.Varietal = he.decode(bottle.Varietal);
+        });
+
         // $scope.searchGrid = function() {
         //     $scope.gridOptions.data = $filter('filter')(excelData.gridData , $scope.searchText, undefined);
         // };

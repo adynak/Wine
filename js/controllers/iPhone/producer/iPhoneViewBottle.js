@@ -18,13 +18,17 @@ wineInventory.controller('iPhoneViewProducerBottleController',
             viewName = bottles[0].Producer;
             cellTemplate = "views/iPhone/gridViewProducerVarietal/bottleColumn.html";
         } else {
-            viewName = bottles[0].Producer + " " + bottles[0].Varietal;
+            viewName = bottles[0].Producer + " " + he.decode(bottles[0].Varietal);
             cellTemplate = "views/iPhone/gridViewVarietalVintage/bottleColumn.html";
         }
 
         Data.setViewName(viewName,bottles.length);
 
         var gridData  = bottles;
+
+        gridData.forEach(function(bottle) {
+            bottle.WineName = he.decode(bottle.WineName);
+        });
 
         // $scope.searchGrid = function() {
         //     $scope.gridOptions.data = $filter('filter')(excelData.gridData , $scope.searchText, undefined);
