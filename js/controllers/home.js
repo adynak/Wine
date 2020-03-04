@@ -32,6 +32,10 @@ wineInventory.controller('HomeController',
                 $scope.excelFilename = spreadsheet.filename;
                 $scope.actions = txtSideMenu.menuChooseAction;
                 showFilename = true;
+            } else {
+                $scope.prompts.menuOpenFile = txtSideMenu.alwaysMenuOpenFile;
+                AsOfDate.setAsOfDate("");
+
             }
             return showFilename;
         }

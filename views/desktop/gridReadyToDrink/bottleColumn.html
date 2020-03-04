@@ -2,6 +2,6 @@
 	<div ng-if="row.entity.LocationAsArray.length>0"
 		class="ui-grid-cell-contents"
 		ng-click="grid.appScope.showMeTheBottles(row)">
-		{{row.entity.Vintage}} {{row.entity.Wine}} ({{row.entity.LocationAsArray.length}})
+		{{row.entity.Vintage}} {{grid.appScope.decode(row.entity.Wine)}} ({{row.entity.LocationAsArray.length}})
 	</div>
 </div>

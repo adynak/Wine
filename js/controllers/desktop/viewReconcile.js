@@ -24,8 +24,11 @@ wineInventory.controller('DesktopViewReconcileController',
 
         var gridData  = excelData.gridData;
 
-        $scope.sheetName = excelData.sheetName;
+        gridData.forEach(function(bottle) {
+          bottle.Wine = he.decode(bottle.Wine);
+        });
 
+        $scope.sheetName = excelData.sheetName;
 
 // sort them for this view
         gridData.sort(function(wine1, wine2) {
@@ -105,7 +108,7 @@ wineInventory.controller('DesktopViewReconcileController',
               {
                 field: 'Wine',
                 displayName: $scope.prompts.columnBottles,
-                cellTemplate: '<span>{{row.entity.Vintage}} {{row.entity.Wine}}</span>',
+                cellTemplate: 'views/desktop/gridReconcileInventory/bottleColumn.html',
                 width: "50%",
                 enableCellEdit: false,
                 enableColumnMenu: false,

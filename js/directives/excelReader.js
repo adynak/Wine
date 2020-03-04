@@ -55,6 +55,11 @@ wineInventory.directive("filelistBind", ['Data',
                                     if (row.Vintage == 1001) row.Vintage = "NV";
                                     row.LocationAsArray = [row.Location];
                                     row.BinAsArray = [row.Bin];
+
+                                    row.Varietal = he.encode(row.Varietal).replace("&#xEF;&#xBF;&#xBD;","&#233;");
+                                    row.Designation = he.encode(row.Designation).replace("&#xEF;&#xBF;&#xBD;","&#233");
+                                    row.Wine = he.encode(row.Wine).replace("&#xEF;&#xBF;&#xBD;","&#233");
+
                                     row.ProducerVarietal = row.Producer + row.Varietal;
                                     row.VarietalVintage = row.Varietal + row.Vintage;
                                     row.BarcodeAsArray = [row.Barcode];
@@ -81,7 +86,6 @@ wineInventory.directive("filelistBind", ['Data',
                                         row.BeginConsume = "unknown";
                                     }
                                     row.EndConsumeVarietal = row.EndConsume + row.Varietal;
-
                                 });
 
                                 sheets.push({

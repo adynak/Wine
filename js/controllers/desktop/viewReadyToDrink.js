@@ -149,6 +149,10 @@ wineInventory.controller('DesktopViewReadyToDrinkController',
             }
         };
 
+        $scope.decode = function(str){
+            return he.decode(str);
+        }
+
         $scope.getCounts = function(fieldName,pattern){
             var obj,searchFor;
             switch (fieldName) {
