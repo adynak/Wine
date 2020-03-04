@@ -85,16 +85,18 @@ wineInventory.controller('DesktopViewProducerController',
         if ($location.path().search("viewMissingDrinkByDate") >= 0){
           var bottles =  _.filter(bottles, { 'EndConsume': "unknown"});
           Data.setViewName(txtCommon.viewNameMissingDrinkByDate,bottles.length); 
-          gridColumns = consumptionGridColumns;      
+          gridColumns = consumptionGridColumns;
+          bottles.sort(function(wine1, wine2) {
+            if (wine1.Producer > wine2.Producer) return 1;
+            if (wine1.Producer < wine2.Producer) return -1;
+
+            if (wine1.Vintage > wine2.Vintage) return 1;
+            if (wine1.Vintage < wine2.Vintage) return -1;
+          });          
         } else {
           Data.setViewName(txtCommon.viewNameProducer,bottles.length);
           gridColumns = producerGridColumns;
-        }
-
-        var producerCounts = Data.countProducers(bottles);
-
-// sort them for this view
-        bottles.sort(function(wine1, wine2) {
+          bottles.sort(function(wine1, wine2) {
             if (wine1.Producer > wine2.Producer) return 1;
             if (wine1.Producer < wine2.Producer) return -1;
 
@@ -104,8 +106,10 @@ wineInventory.controller('DesktopViewProducerController',
             if (wine1.Vintage < wine2.Vintage) return -1;
             if (wine1.Vintage > wine2.Vintage) return 1;
 
-        });
+          });
+        }
 
+        var producerCounts = Data.countProducers(bottles);
         var producerVarietalCounts = Data.countProducerVaritals(bottles);
 
         bottles = Data.removeDuplicateRows(bottles);

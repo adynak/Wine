@@ -94,7 +94,7 @@ wineInventory.controller('DesktopViewReadyToDrinkController',
               {
                 field: 'Wine',
                 displayName: $scope.prompts.columnBottles,
-                cellTemplate: "views/desktop/gridVarietalVintage/bottleColumn.html",
+                cellTemplate: "views/desktop/gridReadyToDrink/bottleColumn.html",
                 enableCellEdit: false,
                 enableColumnMenu: false,
               },
