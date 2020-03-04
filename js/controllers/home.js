@@ -68,7 +68,11 @@ wineInventory.controller('HomeController',
                     break;
 
                case "viewReconcile" :
-                    $location.path("/viewReconcile");
+                    if(deviceType == "iPhone"){
+                        $location.path("/iPhone/viewReconcile/home");
+                    } else {
+                        $location.path("/viewReconcile");
+                    }
                     break;
 
                case "viewReadyToDrink" :

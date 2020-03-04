@@ -45,6 +45,18 @@ wineInventory.config(['$routeProvider', '$locationProvider', function($routeProv
         templateUrl: 'views/desktop/gridReconcileInventory/viewReconcile.html',
         controller: 'DesktopViewReconcileController',
     }).
+    when('/iPhone/viewReconcile/home', {
+        templateUrl: 'views/iPhone/gridReconcileInventory/viewReconcile.html',
+        controller: 'iPhoneViewReconcileController',
+    }). 
+    when('/iPhone/viewReconcile/bins', {
+        templateUrl: 'views/iPhone/gridReconcileInventory/viewReconcile.html',
+        controller: 'iPhoneViewReconcileBinsController',
+    }).
+    when('/iPhone/viewReconcile/bottles', {
+        templateUrl: 'views/iPhone/gridReconcileInventory/viewReconcile.html',
+        controller: 'iPhoneViewReconcileBottleController',
+    }).    
     when('/viewMissingInventory', {
         templateUrl: 'views/desktop/gridMissingInventory/viewMissingInventory.html',
         controller: 'DesktopViewMissingInventoryController',
@@ -57,8 +69,6 @@ wineInventory.config(['$routeProvider', '$locationProvider', function($routeProv
         templateUrl: 'views/iPhone/gridViewVarietalVintage/viewVarietal.html',
         controller: 'iPhoneViewVintageController',
     }).
-
-
     when('/iphone/viewReadyToDrink/home', {
         templateUrl: 'views/desktop/gridReadyToDrink/viewReadyToDrink.html',
         controller: 'iPhoneViewReadyToDrinkVintageController',
@@ -67,10 +77,6 @@ wineInventory.config(['$routeProvider', '$locationProvider', function($routeProv
         templateUrl: 'views/iPhone/gridViewVarietalVintage/viewVarietal.html',
         controller: 'iPhoneViewReadyToDrinkVarietalController',
     }).
-    
-
-
-
     when('/iphone/viewBottles', {
         templateUrl: 'views/iPhone/gridViewProducerVarietal/viewProducer.html',
         controller: 'iPhoneViewBottleController',

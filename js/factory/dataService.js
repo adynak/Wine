@@ -278,6 +278,22 @@ wineInventory.factory("Data",
             return factoryVariables.bottleList;
         }
 
+        var setIphoneReconcileBins = function(bottleList){
+            factoryVariables.reconcileBins = bottleList;
+        }
+
+        var getIphoneReconcileBins = function(){
+            return factoryVariables.reconcileBins;
+        }
+
+        var setIphoneReconcileBottles = function(bottleList){
+            factoryVariables.reconcileBottles = bottleList;
+        }
+
+        var getIphoneReconcileBottles = function(){
+            return factoryVariables.reconcileBottles;
+        }
+
         var removeDuplicateRows = function(bottles){
             // reset these arrays to a single value
             for (i=0; i < bottles.length; ++i) {
@@ -344,7 +360,11 @@ wineInventory.factory("Data",
             getIphoneProducers: getIphoneProducers,
             countEndConsumeVaritals: countEndConsumeVaritals,
             setIphoneReadyToDrinkVarietals: setIphoneReadyToDrinkVarietals,
-            getIphoneReadyToDrinkVarietals: getIphoneReadyToDrinkVarietals
+            getIphoneReadyToDrinkVarietals: getIphoneReadyToDrinkVarietals,
+            setIphoneReconcileBins: setIphoneReconcileBins,
+            getIphoneReconcileBins: getIphoneReconcileBins,
+            setIphoneReconcileBottles: setIphoneReconcileBottles,
+            getIphoneReconcileBottles: getIphoneReconcileBottles
         };
     }
 );

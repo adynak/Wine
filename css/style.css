@@ -440,6 +440,11 @@ button:hover {
   font-weight: bold;
 }
 
+.header-center {
+  position: relative;
+  text-align:center;
+}
+
 .text-center:before {
   position: absolute;
 }
