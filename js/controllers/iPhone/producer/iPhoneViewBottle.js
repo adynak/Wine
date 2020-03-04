@@ -28,6 +28,7 @@ wineInventory.controller('iPhoneViewProducerBottleController',
 
         gridData.forEach(function(bottle) {
             bottle.WineName = he.decode(bottle.WineName);
+            bottle.shortWineName = he.decode(bottle.shortWineName);
         });
 
         // $scope.searchGrid = function() {
