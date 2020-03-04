@@ -11,7 +11,6 @@ wineInventory.controller('iPhoneViewVarietalController',
     function($scope, modalService, $location, Data, $filter, AsOfDate) {
 
         $scope.prompts = txtCommon;
-
         var row, done;
         var spreadsheet = Data.getExcel();
         // AsOfDate.setAsOfDate(spreadsheet.dateStamp);
@@ -91,12 +90,15 @@ wineInventory.controller('iPhoneViewVarietalController',
         $scope.toggleRow = function(grid,row){
             var rowID = Object.keys(row.entity)[0];
             var filteredData =  _.filter(excelData.gridData, { 'Varietal': row.entity[rowID].groupVal});
-
             Data.setIphoneVarietals(filteredData);
-            Data.setViewName(row.entity[rowID].groupVal);
+            Data.setViewName(he.decode(row.entity[rowID].groupVal));
             $location.path("/iphone/viewVarietalVintage/viewVintage");
 
         };
+
+        $scope.decode = function(str){
+            return he.decode(str);
+        }
 
         $scope.getCounts = function(fieldName,pattern){
             var obj,searchFor;

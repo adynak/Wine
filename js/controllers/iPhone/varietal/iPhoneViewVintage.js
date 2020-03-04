@@ -16,7 +16,7 @@ wineInventory.controller('iPhoneViewVintageController',
         var spreadsheet = Data.getExcel();
         var excelData = spreadsheet.sheets[0];
         var bottles = Data.getIphoneVarietals();
-        var viewName = bottles[0].Varietal + " " + txtCommon.viewNameVintageIphone;
+        var viewName = he.decode(bottles[0].Varietal) + " " + txtCommon.viewNameVintageIphone;
         Data.setViewName(viewName,bottles.length);
 
         var varietalCounts = Data.countVarietals(bottles);
@@ -86,7 +86,7 @@ wineInventory.controller('iPhoneViewVintageController',
             var filteredData =  _.filter(grid.options.data, { 'Vintage': row.entity[rowID].groupVal});
 
             Data.setIphoneBottleList(filteredData);
-            var viewName = filteredData[0].Vintage + " " + filteredData[0].Varietal + " (" + countFilteredBottles(filteredData) + ")";
+            var viewName = filteredData[0].Vintage + " " + he.decode(filteredData[0].Varietal) + " (" + countFilteredBottles(filteredData) + ")";
             Data.setViewName(viewName);
             $location.path("/iphone/viewBottles");            
 
