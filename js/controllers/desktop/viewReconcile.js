@@ -79,6 +79,8 @@ wineInventory.controller('DesktopViewReconcileController',
             exporterMenuCsv: false,
             showGridFooter: false,
             gridFooterTemplate: 'views/viewReconcileFooter.html',
+            treeRowHeaderAlwaysVisible: false,
+            showTreeRowHeader: false,            
             data: gridData,
             // showGridFooter: true,
             columnDefs:
@@ -118,7 +120,7 @@ wineInventory.controller('DesktopViewReconcileController',
                 displayName: $scope.prompts.columnInStock,
                 enableColumnMenu: false,
                 cellTemplate: 'views/desktop/gridReconcileInventory/inStockTemplate.html',
-                headerCellClass: 'text-center'
+                headerCellClass: 'header-center'
               }
             ],
             onRegisterApi: function( gridApi ) {

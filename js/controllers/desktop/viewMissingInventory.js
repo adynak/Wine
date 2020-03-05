@@ -36,29 +36,32 @@ wineInventory.controller('DesktopViewMissingInventoryController',
                 multiSelect: false,
                 exporterMenuPdf: false,
                 exporterMenuCsv: false,
+                treeRowHeaderAlwaysVisible: false,
+                showTreeRowHeader: false,
                 data: missingBottles,
-                columnDefs: [{
-                        name: 'Location',
-                        field: 'location',
-                        width: "15%",
-                        enableCellEdit: false,
-                        enableColumnMenu: false,
-                        grouping: {
-                            groupPriority: 0
-                        },
-                        cellTemplate: 'views/desktop/gridMissingInventory/hideGridDetailRowTemplate.html'
-                    },
-                    {
-                        name: 'Bins',
-                        field: 'bin',
-                        width: "15%",
-                        enableCellEdit: false,
-                        enableColumnMenu: false,
-                        grouping: {
-                            groupPriority: 1
-                        },
-                        cellTemplate: 'views/desktop/gridMissingInventory/hideGridDetailRowTemplate.html'
-                    },
+                columnDefs: [
+                    // {
+                    //     name: 'Location',
+                    //     field: 'location',
+                    //     width: "15%",
+                    //     enableCellEdit: false,
+                    //     enableColumnMenu: false,
+                    //     grouping: {
+                    //         groupPriority: 0
+                    //     },
+                    //     cellTemplate: 'views/desktop/gridMissingInventory/hideGridDetailRowTemplate.html'
+                    // },
+                    // {
+                    //     name: 'Bins',
+                    //     field: 'bin',
+                    //     width: "15%",
+                    //     enableCellEdit: false,
+                    //     enableColumnMenu: false,
+                    //     grouping: {
+                    //         groupPriority: 1
+                    //     },
+                    //     cellTemplate: 'views/desktop/gridMissingInventory/hideGridDetailRowTemplate.html'
+                    // },
                     {
                         name: 'Bottles',
                         field: 'bottle',
