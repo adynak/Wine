@@ -1,4 +1,4 @@
-wineInventory.factory("Data",
+wineDetective.factory("Data",
     function($http, $q, $rootScope) {
 
         var factoryVariables = {
@@ -369,7 +369,7 @@ wineInventory.factory("Data",
     }
 );
 
-wineInventory.factory("AsOfDate", function(){
+wineDetective.factory("AsOfDate", function(){
   var asOfDate = "";
 
   var getAsOfDate = function(){
@@ -386,7 +386,7 @@ wineInventory.factory("AsOfDate", function(){
   };
 });
 
-wineInventory.factory("modalService", 
+wineDetective.factory("modalService", 
     [
         "$rootScope",
         "$uibModal",

@@ -1,4 +1,4 @@
-wineInventory.controller('DesktopViewProducerController',
+wineDetective.controller('DesktopViewProducerController',
     [
         '$scope',
         'modalService',

@@ -1,4 +1,4 @@
-wineInventory.controller('iPhoneViewProducerController',
+wineDetective.controller('iPhoneViewProducerController',
     [
         '$scope',
         'modalService',

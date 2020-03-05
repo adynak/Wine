@@ -1,4 +1,4 @@
-wineInventory.controller('DesktopViewReconcileController',
+wineDetective.controller('DesktopViewReconcileController',
     [
         '$scope',
         '$uibModal',

@@ -1,4 +1,4 @@
-var wineInventory = angular.module('wineInventory',
+var wineDetective = angular.module('wineDetective',
         [
             'ngRoute',
             'ngAnimate',
@@ -13,7 +13,7 @@ var wineInventory = angular.module('wineInventory',
             'ui.grid.autoResize'
         ]);
 
-wineInventory.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+wineDetective.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 
     $locationProvider.hashPrefix('');
         // $locationProvider.html5Mode(true);

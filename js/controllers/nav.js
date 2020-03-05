@@ -1,4 +1,4 @@
-wineInventory.controller('NavigationController',
+wineDetective.controller('NavigationController',
     [
         '$scope',
         'Data',

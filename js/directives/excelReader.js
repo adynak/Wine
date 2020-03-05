@@ -1,4 +1,4 @@
-wineInventory.directive("filelistBind", ['Data',
+wineDetective.directive("filelistBind", ['Data',
     function(Data) {
         return {
             link: function($scope, $elm, $attrs) {
@@ -114,7 +114,7 @@ wineInventory.directive("filelistBind", ['Data',
     }
 ]);
 
-wineInventory.directive('ngEnter', function($document) {
+wineDetective.directive('ngEnter', function($document) {
     return {
         scope: {
             ngEnter: "&"

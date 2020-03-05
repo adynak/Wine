@@ -1,7 +1,7 @@
 {
-  "name": "wineInventory",
+  "name": "wineDetective",
   "version": "1.0.0",
-  "description": "Cellar Tracker Wine Inventory Assistant",
+  "description": "Wine Detective",
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

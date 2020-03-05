@@ -1,4 +1,4 @@
-wineInventory.controller('iPhoneViewReconcileController',
+wineDetective.controller('iPhoneViewReconcileController',
     [
         '$scope',
         '$uibModal',

@@ -1,4 +1,4 @@
-wineInventory.controller('DesktopViewMissingInventoryController',
+wineDetective.controller('DesktopViewMissingInventoryController',
     [
         '$scope',
         '$location',

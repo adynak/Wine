@@ -1,4 +1,4 @@
-wineInventory.controller('HomeController', 
+wineDetective.controller('HomeController', 
     [
         '$scope', 
         '$http', 
