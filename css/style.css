@@ -445,6 +445,12 @@ button:hover {
   text-align:center;
 }
 
+.inStock-header {
+  position: relative;
+  text-align:center;
+  margin-top: 6px;
+}
+
 .text-center:before {
   position: absolute;
 }

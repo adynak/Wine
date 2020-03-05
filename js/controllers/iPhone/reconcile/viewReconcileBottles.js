@@ -93,8 +93,9 @@ wineInventory.controller('iPhoneViewReconcileBottleController',
                 // displayName: $scope.prompts.columnInStock,
                 displayName: "",
                 enableColumnMenu: false,
-                cellTemplate: 'views/desktop/gridReconcileInventory/inStockTemplate.html',
-                headerCellClass: 'header-center'
+                cellTemplate: 'views/iPhone/gridReconcileInventory/inStockTemplate.html',
+                headerCellClass: 'header-center',
+                headerCellTemplate: 'views/iPhone/gridReconcileInventory/inStockHeader.html'
               }
             ],
             onRegisterApi: function( gridApi ) {
@@ -103,6 +104,15 @@ wineInventory.controller('iPhoneViewReconcileBottleController',
               $scope.gridApi.selection.on.rowFocusChanged($scope,selectChildren);
             }
         };
+
+        $scope.callbackFunction = function(row,col){
+          if (typeof(row) == "undefined"){
+            bottles = col.grid.options.data;
+            bottles.forEach(function(bottle) {
+                  bottle.inStock = !bottle.inStock;
+            });
+          }
+        }
 
         function selectChildren(row,col){
           var bottles;

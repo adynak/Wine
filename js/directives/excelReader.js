@@ -99,6 +99,7 @@ wineInventory.directive("filelistBind", ['Data',
                             excel.sheetNames = workbook.SheetNames;
                             excel.sheets = sheets;
                             excel.dateStamp = moment(excelDateStamp).format("MMMM DD, YYYY h:mm:ss A");
+                            excel.unixDate = excelDateStamp;
                             Data.setExcel(excel);
                             $elm.val(null);
                         });
