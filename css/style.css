@@ -446,13 +446,17 @@ button:hover {
 }
 
 .inStock-header {
-  position: relative;
+  /*position: relative;*/
   text-align:center;
   margin-top: 6px;
 }
 
 .text-center:before {
   position: absolute;
+}
+
+.my .glyphicon {
+  pointer-events: all;
 }
 
 /*
