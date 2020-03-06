@@ -201,6 +201,10 @@ section{
   color: #FF0000;
 }
 
+.icon-search {
+  color: #000000;
+}
+
 .ingredientList {
   list-style-type:none;
   position: relative;
@@ -225,6 +229,10 @@ section{
 
 .moveUp {
   margin-top : -10px;
+}
+
+.moveGlyphUp {
+  margin-top : -5px;
 }
 
 body  {
@@ -459,6 +467,11 @@ button:hover {
   pointer-events: all;
 }
 
+.search-center {
+    display: inline-block;
+
+}
+
 /*
 .ui-grid-row:nth-child(odd) .ui-grid-cell {
   background-color: #e895e8;
@@ -468,3 +481,22 @@ button:hover {
   background-color: #f3f3f3;
 }
 */
+
+
+* {
+  box-sizing: border-box;
+}
+
+/* Create three equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 33.33%;
+  padding: 10px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}

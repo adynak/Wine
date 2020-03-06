@@ -82,6 +82,15 @@ wineDetective.controller('HomeController',
                         $location.path("/desktop/viewReadyToDrink");
                     }
 
+                    break;
+
+                case "viewSearch" :
+                    if(deviceType == "iPhone"){
+                        $location.path("/iphone/viewReadyToDrink/home");
+                    } else {
+                        $location.path("/desktop/viewSearch");
+                    }
+
                     break;                    
 
                 case "startOver" :

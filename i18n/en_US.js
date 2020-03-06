@@ -42,6 +42,12 @@ var txtSideMenu = {
             color: "icon-pencil"
         },
         {
+            name: 'Search',
+            command: "viewSearch",
+            icon: "glyphicon-search",
+            color: "icon-search"
+        },
+        {
             name: 'Start Over',
             command: "startOver",
             icon: "glyphicon-refresh",
@@ -51,6 +57,9 @@ var txtSideMenu = {
 };
 
 var txtCommon = {
+    brandName: 'Wine Detective',
+    bgColor: "#F8F8F8",
+    fontColor: "#196A90",
     btnViewMissingBottles: 'View Missing Bottles',
     btnDone: "Done",
     sheetName: 'Worksheet',

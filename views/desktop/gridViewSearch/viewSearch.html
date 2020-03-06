@@ -1,0 +1,50 @@
+<nav class="navbar navbar-inverse" style="background-color: {{prompts.bgColor}}" ng-cloak="">
+    <div class="container-fluid">
+
+        <div class="row" style="background-color: {{prompts.bgColor}}; height: 70px;">
+         <div class="column" style="background-color: {{prompts.bgColor}}">
+            <span ng-click="startOver()">
+                <img src="resources/images/wineDetective4.png">
+                <span style="font-weight:bold; color: {{prompts.fontColor}};">
+                    {{prompts.brandName}}
+                </span>
+            </span>
+          </div>
+
+            <div class="column">
+                <div class="has-feedback">
+                    <div class="input-group-sm moveGlyphUp">
+                        <input type="text" class="form-control" ng-change="searchGrid()" placeholder="search" ng-model="searchText" />
+                        <i class="form-control-feedback moveGlyphUp moveLeft glyphicon glyphicon-search"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="column">
+                <div class="pull-right" style="font-weight:bold;">
+                    <span class="navbar-brand moveUp" style="color: {{prompts.fontColor}};">
+            {{Data.getViewName()}}
+      </span>
+                </div>
+                <br>
+                <br>
+                <div class="pull-right" style="font-weight:bold;">
+                    <span class="navbar-brand" style="margin-top : -25px; color: {{prompts.fontColor}};">
+            {{AsOfDate.getAsOfDate()}}
+      </span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</nav>
+<br>
+
+<div>
+    <div class="grid" ui-grid-edit ui-grid-selection ui-grid-grouping ui-grid-resize-columns ui-grid-auto-resize style="height: {{gridHeight}}; background-color:white;" ui-grid="gridOptions" ui-grid-exporter>
+    </div>
+</div>
+<br>
+<br>
+<button class="btn btn-lg btn-primary btn-block" type="button" ng-click="btnDone();">{{prompts.btnDone}}
+</button>

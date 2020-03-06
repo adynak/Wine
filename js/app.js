@@ -97,6 +97,10 @@ wineDetective.config(['$routeProvider', '$locationProvider', function($routeProv
         templateUrl: 'views/iPhone/gridViewProducerVarietal/viewProducer.html',
         controller: 'iPhoneViewProducerBottleController',
     }).
+    when('/desktop/viewSearch', {
+        templateUrl: 'views/desktop/gridViewSearch/viewSearch.html',
+        controller: 'desktopSearchController',
+    }).
     otherwise({
         redirectTo: '/home'
     });
