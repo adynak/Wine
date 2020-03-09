@@ -1,0 +1,23 @@
+<div class="modal-header" style="background-color: {{prompts.bgColor}}">
+    <h3>{{prompts.importErrorTitle}}</h3>
+    <div>
+        <class="item" ng-repeat="txt in prompts.importErrorCause">
+            <strong>{{ txt }}</strong><br>
+    </div>
+</div>
+
+<div class="modal-body">
+    <ul>
+        <li class="item" ng-repeat="txt in error.columns">
+            <strong>{{ txt.columnName }}</strong>
+        </li>
+    </ul>
+</div>
+
+<div class="modal-footer">
+
+    <button class="btn btn-success active" type="button" ng-click="ok()">
+        &nbsp;&nbsp;{{prompts.btnOK}}&nbsp;&nbsp;
+    </button>
+
+</div>

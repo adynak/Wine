@@ -1,5 +1,5 @@
-wineDetective.directive("filelistBind", ['Data',
-    function(Data) {
+wineDetective.directive("filelistBind", ['Data', 'modalService',
+    function(Data, modalService) {
         return {
             link: function($scope, $elm, $attrs) {
 
@@ -31,6 +31,7 @@ wineDetective.directive("filelistBind", ['Data',
                                 columns = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[eX]], {
                                     header: 1
                                 })[0];
+                                var columnCheck = Data.checkRequiredColumns(columns);
                                 sheetColumns = [];
                                 columns.forEach(function(row1) {
                                     if (row1 == "Location") {
@@ -100,8 +101,12 @@ wineDetective.directive("filelistBind", ['Data',
                             excel.sheets = sheets;
                             excel.dateStamp = moment(excelDateStamp).format("MMMM DD, YYYY h:mm:ss A");
                             excel.unixDate = excelDateStamp;
+                            excel.columnCheck = columnCheck;
                             Data.setExcel(excel);
                             $elm.val(null);
+                            if (columnCheck.length > 0){
+                                modalService.importColumnError(columnCheck);
+                            }
                         });
 
                     };

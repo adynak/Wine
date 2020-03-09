@@ -294,29 +294,29 @@ wineDetective.factory("Data",
             return factoryVariables.reconcileBottles;
         }
 
-        var removeDuplicateRows = function(bottles){
+        var removeDuplicateRows = function(bottles) {
             // reset these arrays to a single value
-            for (i=0; i < bottles.length; ++i) {
+            for (i = 0; i < bottles.length; ++i) {
                 bottles[i].LocationAsArray = [bottles[i].Location];
                 bottles[i].BinAsArray = [bottles[i].Bin];
                 bottles[i].BarcodeAsArray = [bottles[i].Barcode];
             }
 
-            for (i=1; i < bottles.length; ++i) {
-                if (bottles[i].iWine == bottles[i-1].iWine){
+            for (i = 1; i < bottles.length; ++i) {
+                if (bottles[i].iWine == bottles[i - 1].iWine) {
                     bottles[i].isDuplicate = true;
 
-// find the previous row that is NOT a duplicate
+                    // find the previous row that is NOT a duplicate
                     row = 0;
                     done = false;
                     do {
                         row++;
-                        if (bottles[i-row].isDuplicate){
+                        if (bottles[i - row].isDuplicate) {
 
                         } else {
-                            bottles[i-row].LocationAsArray.push(bottles[i].Location);
-                            bottles[i-row].BinAsArray.push(bottles[i].Bin);
-                            bottles[i-row].BarcodeAsArray.push(bottles[i].Barcode);
+                            bottles[i - row].LocationAsArray.push(bottles[i].Location);
+                            bottles[i - row].BinAsArray.push(bottles[i].Bin);
+                            bottles[i - row].BarcodeAsArray.push(bottles[i].Barcode);
                             done = true
                         }
                     }
@@ -326,9 +326,41 @@ wineDetective.factory("Data",
                     bottles[i].isDuplicate = false;
                 }
             }
-            return bottles;            
+            return bottles;
 
         };
+
+        var checkRequiredColumns = function(columns){
+            var columnCheck = Array();
+            var requiredColumns = Array();
+            var isHere, columnMissing;
+            
+            requiredColumns.push("Barcode");
+            requiredColumns.push("iWine");
+            requiredColumns.push("Type");
+            requiredColumns.push("Vintage");
+            requiredColumns.push("Wine");
+            requiredColumns.push("Producer");
+            requiredColumns.push("Varietal");
+            requiredColumns.push("Designation");
+            requiredColumns.push("Vineyard");
+            requiredColumns.push("Appellation");
+            requiredColumns.push("Location");
+            requiredColumns.push("Bin");
+            requiredColumns.push("BeginConsume");
+            requiredColumns.push("EndConsume");
+            requiredColumns.push("WindowSource");
+
+            requiredColumns.forEach(function(columnName){
+                isHere = columns.includes(columnName);
+                if (!isHere){
+                    columnMissing = {columnName:columnName,message:'missing'};
+                    columnCheck.push(columnMissing);
+                }
+            });
+
+            return columnCheck;
+        }
 
         return {
             setExcel:setExcel,
@@ -364,7 +396,8 @@ wineDetective.factory("Data",
             setIphoneReconcileBins: setIphoneReconcileBins,
             getIphoneReconcileBins: getIphoneReconcileBins,
             setIphoneReconcileBottles: setIphoneReconcileBottles,
-            getIphoneReconcileBottles: getIphoneReconcileBottles
+            getIphoneReconcileBottles: getIphoneReconcileBottles,
+            checkRequiredColumns: checkRequiredColumns
         };
     }
 );
@@ -386,21 +419,20 @@ wineDetective.factory("AsOfDate", function(){
   };
 });
 
-wineDetective.factory("modalService", 
+wineDetective.factory("modalService",
     [
         "$rootScope",
         "$uibModal",
         "Data",
         "$location",
 
-        function($rootScope, $uibModal, Data, $location){
+        function($rootScope, $uibModal, Data, $location) {
 
-            var showMeTheBottles = function(row){
+            var showMeTheBottles = function(row) {
                 var showFixButton;
 
-                if ($location.path().search("viewMissingDrinkByDate") >= 0 || 
-                    $location.path().search("fixMissingBottle") >= 0)
-                {
+                if ($location.path().search("viewMissingDrinkByDate") >= 0 ||
+                    $location.path().search("fixMissingBottle") >= 0) {
                     showFixButton = true;
                 } else {
                     showFixButton = false;
@@ -411,21 +443,21 @@ wineDetective.factory("modalService",
 
                 var locationBin = Data.locationBin(row);
 
-                if (row.entity.Wine.indexOf(row.entity.Varietal) >= 0){
+                if (row.entity.Wine.indexOf(row.entity.Varietal) >= 0) {
                     wineType = "";
                 } else {
                     wineType = row.entity.Varietal;
                 }
 
-                if (row.entity.BeginConsume + row.entity.EndConsume == "unknownunknown"){
+                if (row.entity.BeginConsume + row.entity.EndConsume == "unknownunknown") {
                     displayDrinkingWindow = "none";
                 }
 
-                if (row.entity.BeginConsume == "unknown" && row.entity.EndConsume !== "unknown"){
-                    drinkingWindow = txtCommon.before + " " + row.entity.EndConsume ;
-                } else if (row.entity.BeginConsume !== "unknown" && row.entity.EndConsume !== "unknown"){
+                if (row.entity.BeginConsume == "unknown" && row.entity.EndConsume !== "unknown") {
+                    drinkingWindow = txtCommon.before + " " + row.entity.EndConsume;
+                } else if (row.entity.BeginConsume !== "unknown" && row.entity.EndConsume !== "unknown") {
                     drinkingWindow = row.entity.BeginConsume + " - " + row.entity.EndConsume;
-                } else if (row.entity.BeginConsume == "unknown" || row.entity.EndConsume == "unknown"){
+                } else if (row.entity.BeginConsume == "unknown" || row.entity.EndConsume == "unknown") {
                     displayDrinkingWindow = "none";
                 }
 
@@ -435,22 +467,22 @@ wineDetective.factory("modalService",
 
                 var modalScope = $rootScope.$new();
                 modalScope.bottle = {
-                        bottleCount: row.entity.Location.length,
-                        vintage: he.decode(row.entity.Vintage),
-                        wine: he.decode(row.entity.Wine),
-                        location: locationBin,
-                        plurals: txtCommon.plurals,
-                        drinkingWindow: drinkingWindow,
-                        displayDrinkingWindow: displayDrinkingWindow,
-                        wineType: he.decode(wineType),
-                        locationsAsArray:row.entity.LocationAsArray,
-                        binAsArray:row.entity.BinAsArray,
-                        BarcodeAsArray:row.entity.BarcodeAsArray,
-                        displayCheckbox: "none",
-                        opened: opened,
-                        showFixButton: showFixButton,
-                        iWine: row.entity.iWine
-                    };
+                    bottleCount: row.entity.Location.length,
+                    vintage: he.decode(row.entity.Vintage),
+                    wine: he.decode(row.entity.Wine),
+                    location: locationBin,
+                    plurals: txtCommon.plurals,
+                    drinkingWindow: drinkingWindow,
+                    displayDrinkingWindow: displayDrinkingWindow,
+                    wineType: he.decode(wineType),
+                    locationsAsArray: row.entity.LocationAsArray,
+                    binAsArray: row.entity.BinAsArray,
+                    BarcodeAsArray: row.entity.BarcodeAsArray,
+                    displayCheckbox: "none",
+                    opened: opened,
+                    showFixButton: showFixButton,
+                    iWine: row.entity.iWine
+                };
                 $uibModal.open({
                     scope: modalScope,
                     animation: true,
@@ -463,20 +495,19 @@ wineDetective.factory("modalService",
                         };
 
                         $scope.fix = function() {
-                            console.log(modalScope.bottle.iWine);
                             var url = "https://www.cellartracker.com/editpersonal.asp?iWine=" + modalScope.bottle.iWine;
                             window.open(url)
                             $uibModalInstance.close();
                         };
 
                         $scope.drink = function(bottle) {
-                            if (bottle.displayCheckbox == "inline"){
-                                for (var i = 0 ; i < bottle.locationsAsArray.length; i ++){
-                                    if (bottle.opened[i]){
-                                        console.log(bottle.locationsAsArray[i], bottle.binAsArray[i] ,bottle.BarcodeAsArray[i] )
+                            if (bottle.displayCheckbox == "inline") {
+                                for (var i = 0; i < bottle.locationsAsArray.length; i++) {
+                                    if (bottle.opened[i]) {
+                                        console.log(bottle.locationsAsArray[i], bottle.binAsArray[i], bottle.BarcodeAsArray[i])
                                     }
                                 }
-                                $uibModalInstance.close();    
+                                $uibModalInstance.close();
                             }
                             bottle.displayCheckbox = "inline";
                         };
@@ -488,7 +519,7 @@ wineDetective.factory("modalService",
 
             };
 
-            var startOver = function(){
+            var startOver = function() {
                 $uibModal.open({
                     templateUrl: "views/modal.html",
                     controller: function($scope, $uibModalInstance) {
@@ -515,9 +546,32 @@ wineDetective.factory("modalService",
 
             };
 
+            var importColumnError = function(missingColumns){
+                var modalScope = $rootScope.$new();
+                modalScope.error = {
+                    title: "aergaefg",
+                    columns: missingColumns
+                };
+
+                $uibModal.open({
+                    scope: modalScope,
+                    animation: true,
+                    templateUrl: "views/importErrorModal.html",
+                    controller: function($scope, $uibModalInstance) {
+                        $scope.prompts = txtErrors;
+
+                        $scope.ok = function() {
+                            $uibModalInstance.close();
+                        };
+                    }
+
+                });
+            }
+
             return {
-                showMeTheBottles:showMeTheBottles,
-                startOver: startOver
+                showMeTheBottles: showMeTheBottles,
+                startOver: startOver,
+                importColumnError: importColumnError
 
             };
         }

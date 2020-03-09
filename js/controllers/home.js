@@ -24,9 +24,15 @@ wineDetective.controller('HomeController',
         }
 
         $scope.menuShowFilename = function() {
+            var showFilename = false;
             var spreadsheet = Data.getExcel();
 
-            var showFilename = false;
+            if (typeof(spreadsheet.columnCheck) != 'undefined'){
+                if (spreadsheet.columnCheck.length > 0){
+                    return showFilename;
+                }
+            }
+
             if (typeof(spreadsheet.filename) != 'undefined'){
                 $scope.prompts.menuOpenFile = txtSideMenu.chooseReport
                 $scope.excelFilename = spreadsheet.filename;

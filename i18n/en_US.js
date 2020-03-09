@@ -103,4 +103,12 @@ var txtModal = {
     whichWine: "Which bottle(s) are you opening?",
     messageBody: ["Choose OK to begin with a new download.",
         "Choose Cancel to continue with the current download."]
+};
+
+var txtErrors = {
+    bgColor: "#E2E0D7",
+    importErrorTitle: "Errors on Download",
+    importErrorCause: ["These columns are required by Wine Detective.",
+        "Fix the download from Cellar Tracker to include these columns:"],
+    btnOK: "OK"
 }
