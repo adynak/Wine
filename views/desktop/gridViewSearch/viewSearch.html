@@ -1,47 +1,56 @@
-<nav class="navbar navbar-inverse" style="background-color: {{prompts.bgColor}}" ng-cloak="">
+<div class="navbar navbar-inverse">
+  <div style="background-color: {{prompts.bgColor}}">
     <div class="container-fluid">
-
-        <div class="row" style="background-color: {{prompts.bgColor}}; height: 70px;">
-         <div class="column" style="background-color: {{prompts.bgColor}}">
-            <span ng-click="startOver()">
+      <!-- col1 -->
+      <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 green">
+         <div class="navbar-brand" style="margin-top: -10px;">
+            <span class="pullLeft" ng-click="startOver()">
                 <img src="resources/images/wineDetective4.png">
                 <span style="font-weight:bold; color: {{prompts.fontColor}};">
                     {{prompts.brandName}}
                 </span>
             </span>
           </div>
+      </div>
+      <!-- col1 -->
 
-            <div class="column">
-                <div class="has-feedback">
-                    <div class="input-group-sm moveGlyphUp">
-                        <input type="text" class="form-control" ng-change="searchGrid()" placeholder="search" ng-model="searchText" />
-                        <i class="form-control-feedback moveGlyphUp moveLeft glyphicon glyphicon-search"></i>
-                    </div>
-                </div>
-            </div>
-
-            <div class="column">
-                <div class="pull-right" style="font-weight:bold;">
-                    <span class="navbar-brand moveUp" style="color: {{prompts.fontColor}};">
-            {{Data.getViewName()}}
-      </span>
-                </div>
-                <br>
-                <br>
-                <div class="pull-right" style="font-weight:bold;">
-                    <span class="navbar-brand" style="margin-top : -25px; color: {{prompts.fontColor}};">
-            {{AsOfDate.getAsOfDate()}}
-      </span>
-                </div>
-            </div>
-
+      <!-- col2 -->
+      <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 green">
+        <div class="input-group-sm" style="padding-top:20px;">
+            <input type="text" class="form-control" ng-change="searchGrid()" placeholder="search" ng-model="searchText" />
+            <i class="form-control-feedback moveGlyph glyphicon glyphicon-search"></i>
         </div>
+      </div>
+      <!-- col2 -->
+
+      <!-- col3 -->
+      <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 green">
+        <div class="pullRight" style="font-weight:bold;">
+            <span class="navbar-brand moveUp" style="color: {{prompts.fontColor}};">
+                {{Data.getViewName()}}
+            </span>
+        </div>
+        <div class="pullRight" style="font-weight:bold;">
+            <span class="navbar-brand" style="margin-top : -25px; color: {{prompts.fontColor}};">
+                {{AsOfDate.getAsOfDate()}}
+            </span>
+        </div>
+      </div>
+      <!-- col3 -->
+
     </div>
-</nav>
-<br>
+  </div>
+</div>
 
 <div>
-    <div class="grid" ui-grid-edit ui-grid-selection ui-grid-grouping ui-grid-resize-columns ui-grid-auto-resize style="height: {{gridHeight}}; background-color:white;" ui-grid="gridOptions" ui-grid-exporter>
+    <div class="gridByVarietal" 
+         ui-grid-edit 
+         ui-grid-selection 
+         ui-grid-grouping 
+         ui-grid-resize-columns 
+         ui-grid-auto-resize style="height: {{gridHeight}}; background-color:white;" 
+         ui-grid="gridOptions" 
+         ui-grid-exporter>
     </div>
 </div>
 <br>

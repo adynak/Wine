@@ -176,6 +176,7 @@ wineDetective.controller('desktopSearchController',
           Data.setViewName(txtSideMenu.brandName);
           $scope.actions = "";
           $location.path("/home");
+          Data.setNavVisibility(true);
         };
 
         $scope.showMeTheBottles = function(row) {

@@ -95,6 +95,7 @@ wineDetective.controller('HomeController',
                         $location.path("/iphone/viewReadyToDrink/home");
                     } else {
                         $location.path("/desktop/viewSearch");
+                        Data.setNavVisibility(false);
                     }
 
                     break;                    

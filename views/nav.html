@@ -1,59 +1,61 @@
-<nav ng-if="!isIphone()"
-     class="navbar navbar-inverse"
-     style="background-color: {{prompts.bgColor}}"
-     ng-cloak="">
-  <div class="container-fluid">
+<div ng-if=Data.getNavVisibility()>
+    <nav ng-if="!isIphone()" 
+         class="navbar navbar-inverse" 
+         style="background-color: {{prompts.bgColor}}" 
+         ng-cloak="">
+        <div class="container-fluid">
 
-    <span class="navbar-brand">
-      <span ng-click="startOver()" class="logo">
-        <img src="resources/images/wineDetective4.png">
-        <span class="moveUp"
-              style="font-weight:bold; color: {{prompts.fontColor}};">
-              {{prompts.brandName}}
-        </span>
-      </span>
-    </span>
+            <span class="navbar-brand">
+                <span ng-click="startOver()" class="logo">
+                    <img src="resources/images/wineDetective4.png">
+                    <span class="moveUp" 
+                          style="font-weight:bold; color: {{prompts.fontColor}};">
+                        {{prompts.brandName}}
+                    </span>
+                </span>
+            </span>
 
-    <div class="pull-right" style="font-weight:bold;">
-      <span class="navbar-brand moveUp" 
-            style="color: {{prompts.fontColor}};">
-            {{Data.getViewName()}}
-      </span>
-    </div>
-    <br><br>
-    <div class="pull-right" style="font-weight:bold;">
-      <span class="navbar-brand" 
-            style="margin-top : -25px; color: {{prompts.fontColor}};">
-            {{AsOfDate.getAsOfDate()}}
-      </span>
-    </div>
+            <div class="pull-right" style="font-weight:bold;">
+                <span class="navbar-brand moveUp" style="color: {{prompts.fontColor}};">
+                    {{Data.getViewName()}}
+                </span>
+            </div>
+            <br>
+            <br>
+            <div class="pull-right" style="font-weight:bold;">
+                <span class="navbar-brand" style="margin-top : -25px; color: {{prompts.fontColor}};">
+                    {{AsOfDate.getAsOfDate()}}
+                </span>
+            </div>
 
-  </div>
-</nav>
+        </div>
+    </nav>
 
-<nav ng-if="isIphone() && isHomePage()"
-     class="navbarIphone navbar-inverse"
-     style="background-color: {{prompts.bgColor}}"
-     ng-cloak="">
+    <nav ng-if="isIphone() && isHomePage()" 
+         class="navbarIphone navbar-inverse" 
+         style="background-color: {{prompts.bgColor}}" 
+         ng-cloak="">
 
-      <div class="grid-align-center">
-        {{Data.getViewName()}}
-      </div>
+            <div class="grid-align-center">
+                {{Data.getViewName()}}
+            </div>
 
-</nav>
+    </nav>
 
-<nav ng-if="isIphone() && !isHomePage()"
-     class="navbarIphone navbar-inverse"
-     style="background-color: {{prompts.bgColor}}"
-     ng-cloak="">
+    <nav ng-if="isIphone() && !isHomePage()" 
+         class="navbarIphone navbar-inverse" 
+         style="background-color: {{prompts.bgColor}}" 
+         ng-cloak="">
 
-  <div class="text-left">
-    <div ng-click="goBack()" class="text-left">
-      <span class="glyphicon glyphicon-circle-arrow-left"></span>
-      <div class="text-center">
-        {{Data.getViewName()}}
-      </div>
-    </div>
-  </div>
+            <div class="text-left">
+                <div ng-click="goBack()" class="text-left">
+                    <span class="glyphicon glyphicon-circle-arrow-left">
+                    </span>
+                    <div class="text-center">
+                        {{Data.getViewName()}}
+                    </div>
+                </div>
+            </div>
 
-</nav>
+    </nav>
+</div>
