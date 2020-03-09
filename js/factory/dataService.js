@@ -549,7 +549,6 @@ wineDetective.factory("modalService",
             var importColumnError = function(missingColumns){
                 var modalScope = $rootScope.$new();
                 modalScope.error = {
-                    title: "aergaefg",
                     columns: missingColumns
                 };
 
