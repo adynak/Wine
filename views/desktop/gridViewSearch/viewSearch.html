@@ -1,48 +1,15 @@
-<div class="navbar navbar-inverse">
+<div class="navbar navbar-inverse gridSearch">
   <div style="background-color: {{prompts.bgColor}}">
     <div class="container-fluid">
-      <!-- col1 -->
-      <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 green">
-         <div class="navbar-brand" style="margin-top: -10px;">
-            <span class="pullLeft" ng-click="startOver()">
-                <img src="resources/images/wineDetective4.png">
-                <span style="font-weight:bold; color: {{prompts.fontColor}};">
-                    {{prompts.brandName}}
-                </span>
-            </span>
-          </div>
-      </div>
-      <!-- col1 -->
-
-      <!-- col2 -->
-      <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 green">
-        <div class="input-group-sm" style="padding-top:20px;">
+        <div class="input-group-sm" style="padding:5px;">
             <input type="text" class="form-control" ng-change="searchGrid()" placeholder="search" ng-model="searchText" />
             <i class="form-control-feedback moveGlyph glyphicon glyphicon-search"></i>
         </div>
-      </div>
-      <!-- col2 -->
-
-      <!-- col3 -->
-      <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 green">
-        <div class="pullRight" style="font-weight:bold;">
-            <span class="navbar-brand moveUp" style="color: {{prompts.fontColor}};">
-                {{Data.getViewName()}}
-            </span>
-        </div>
-        <div class="pullRight" style="font-weight:bold;">
-            <span class="navbar-brand" style="margin-top : -25px; color: {{prompts.fontColor}};">
-                {{AsOfDate.getAsOfDate()}}
-            </span>
-        </div>
-      </div>
-      <!-- col3 -->
-
     </div>
   </div>
 </div>
 
-<div>
+<div style="margin-top: -30px;">
     <div class="gridByVarietal" 
          ui-grid-edit 
          ui-grid-selection 
@@ -53,7 +20,6 @@
          ui-grid-exporter>
     </div>
 </div>
-<br>
 <br>
 <button class="btn btn-lg btn-primary btn-block" type="button" ng-click="btnDone();">{{prompts.btnDone}}
 </button>

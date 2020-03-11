@@ -367,6 +367,13 @@ body  {
   margin-left: auto;
 }
 
+.gridSearch {
+  width: 80.35%;
+  /*height: auto !important;*/
+  margin-right: auto;
+  margin-left: auto;
+}
+
 
 .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
     background-color: #E2E0D7 !important;
@@ -502,8 +509,8 @@ button:hover {
 }
 
 .moveGlyph {
-    margin-top : 18px;
-    padding-right: 20px;
+    margin-top : 3px;
+    padding-right: 40px;
 }
 
 .pullLeft {

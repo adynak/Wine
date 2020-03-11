@@ -10,15 +10,37 @@ wineDetective.factory("Data",
             sheetNames: null,
             missingBottles: [],
             spreadsheet: {},
-            navVisibility: true
+            navVisibility: true,
+            viewName: ""
         };
 
         var getGridHeight = function(){
+            var factor, deviceType;
+
+            deviceType = getDeviceType().toLowerCase();
+            switch (deviceType) {
+                case "iphone":
+                    factor = 0.382922;
+                    break
+                default:
+                    factor = 0.30;
+                    break;
+            }
+
+            var ratio = window.devicePixelRatio || 1;
+            var w = screen.width * ratio;
+            var height = screen.height * ratio;
+
+            if (factoryVariables.viewName.includes("Search")){
+                height -= 100;
+            }
+            factoryVariables.gridHeight = Math.round(height * factor) + "px";
+
             return factoryVariables.gridHeight;
         }
 
         var setGridHeight = function(){
-            var factor;
+            var factor,view;
             var deviceType = getDeviceType().toLowerCase();
             switch (deviceType) {
                 case "iphone":
