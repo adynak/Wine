@@ -13,13 +13,14 @@ wineDetective.controller('desktopSearchController',
 
         $scope.prompts = txtCommon;
         
-        var row, done;
+        var row, done,searchViewName;
         var spreadsheet = Data.getExcel();
         AsOfDate.setAsOfDate(spreadsheet.dateStamp);
 
         var excelData = spreadsheet.sheets[0];
 
         var bottles = excelData.gridData;
+        debugger;
         Data.setViewName(txtCommon.viewNameSearch,bottles.length);
 
         var varietalCounts = Data.countVarietals(bottles);
@@ -47,6 +48,13 @@ wineDetective.controller('desktopSearchController',
         $scope.searchGrid = function() {
             //TODO exclude cat columns from filter
             bottles = $filter('filter')(excelData.gridData , $scope.searchText, undefined);
+            debugger;
+            if ($scope.searchText.length == 0){
+                searchViewName = txtCommon.viewNameSearch;
+            } else {
+                searchViewName = txtCommon.viewNameSearchFor + ' "' + $scope.searchText + '"';
+            }
+            Data.setViewName(searchViewName,bottles.length);
             bottles = Data.removeDuplicateRows(bottles);
             bottles = bottles.filter(filterDuplicate);
             $scope.gridOptions.data = bottles;
@@ -94,7 +102,7 @@ wineDetective.controller('desktopSearchController',
                 width: "15%",
                 enableCellEdit: false,
                 enableColumnMenu: false,
-                visible: false
+                visible: true
               },
 
               {

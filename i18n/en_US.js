@@ -80,6 +80,7 @@ var txtCommon = {
     viewNameReconcileInventoryIphone: "Inventory",
     viewNameVarietal: "View By Varietal",
     viewNameSearch: "Search",
+    viewNameSearchFor: "Search For",
     viewNameReadyToDrink: "View Ready To Drink",    
     viewNameVarietalIphone: "Varietals",
     viewNameProducerIphone: "Producers",
