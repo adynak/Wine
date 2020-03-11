@@ -10,7 +10,6 @@ wineDetective.factory("Data",
             sheetNames: null,
             missingBottles: [],
             spreadsheet: {},
-            navVisibility: true,
             viewName: ""
         };
 
@@ -317,14 +316,6 @@ wineDetective.factory("Data",
             return factoryVariables.reconcileBottles;
         }
 
-        var setNavVisibility = function(visibility){
-            factoryVariables.navVisibility = visibility;
-        }
-
-        var getNavVisibility = function(){
-            return factoryVariables.navVisibility;
-        }
-
         var removeDuplicateRows = function(bottles) {
             // reset these arrays to a single value
             for (i = 0; i < bottles.length; ++i) {
@@ -429,8 +420,6 @@ wineDetective.factory("Data",
             setIphoneReconcileBottles: setIphoneReconcileBottles,
             getIphoneReconcileBottles: getIphoneReconcileBottles,
             checkRequiredColumns: checkRequiredColumns,
-            setNavVisibility: setNavVisibility,
-            getNavVisibility: getNavVisibility
         };
     }
 );

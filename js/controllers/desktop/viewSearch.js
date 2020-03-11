@@ -13,7 +13,7 @@ wineDetective.controller('desktopSearchController',
 
         $scope.prompts = txtCommon;
         
-        var row, done,searchViewName;
+        var row, done, searchViewName, showHideColumn;
         var spreadsheet = Data.getExcel();
         AsOfDate.setAsOfDate(spreadsheet.dateStamp);
 
@@ -37,6 +37,13 @@ wineDetective.controller('desktopSearchController',
             if (wine1.Producer > wine2.Producer) return 1;
 
         });
+
+        var deviceType = Data.getDeviceType();
+        if (deviceType == "iPhone"){
+            showHideColumn = false;
+        } else {
+            showHideColumn = true;
+        }
 
         var varietalVintageCounts = Data.countVaritalVintages(bottles);
 
@@ -87,6 +94,7 @@ wineDetective.controller('desktopSearchController',
                 width: "20%",
                 enableCellEdit: false,
                 enableColumnMenu: false,
+                visible: showHideColumn
               },
               {
                 field: 'Vintage',
@@ -95,6 +103,7 @@ wineDetective.controller('desktopSearchController',
                 width: "7%",
                 enableCellEdit: false,
                 enableColumnMenu: false,
+                visible: showHideColumn
               },
               {
                 field: 'Appellation',
@@ -102,7 +111,7 @@ wineDetective.controller('desktopSearchController',
                 width: "15%",
                 enableCellEdit: false,
                 enableColumnMenu: false,
-                visible: true
+                visible: showHideColumn
               },
 
               {
@@ -186,7 +195,6 @@ wineDetective.controller('desktopSearchController',
           Data.setViewName(txtSideMenu.brandName);
           $scope.actions = "";
           $location.path("/home");
-          Data.setNavVisibility(true);
         };
 
         $scope.showMeTheBottles = function(row) {
