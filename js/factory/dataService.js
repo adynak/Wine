@@ -14,27 +14,6 @@ wineDetective.factory("Data",
         };
 
         var getGridHeight = function(){
-            var factor, deviceType;
-
-            deviceType = getDeviceType().toLowerCase();
-            switch (deviceType) {
-                case "iphone":
-                    factor = 0.382922;
-                    break
-                default:
-                    factor = 0.30;
-                    break;
-            }
-
-            var ratio = window.devicePixelRatio || 1;
-            var w = screen.width * ratio;
-            var height = screen.height * ratio;
-
-            if (factoryVariables.viewName.includes("Search")){
-                height -= 100;
-            }
-            factoryVariables.gridHeight = Math.round(height * factor) + "px";
-
             return factoryVariables.gridHeight;
         }
 
@@ -52,7 +31,12 @@ wineDetective.factory("Data",
             var ratio = window.devicePixelRatio || 1;
             var w = screen.width * ratio;
             var height = screen.height * ratio;
-            factoryVariables.gridHeight = Math.round(height * factor) + "px";
+            factoryVariables.gridHeight = {
+                gridHeight: Math.round(height * factor) + "px",
+                iPhoneSearchGridHeight: Math.round((height - 100) * factor) + "px",
+                rowHeight: 35,
+                iPhoneSearchRowHeight: 60
+            }
         }
 
         var setExcel= function(rawData){

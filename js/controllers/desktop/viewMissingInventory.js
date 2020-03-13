@@ -26,7 +26,7 @@ wineDetective.controller('DesktopViewMissingInventoryController',
                 missingBottles.push(nothingHere);
             }
             
-            $scope.gridHeight = Data.getGridHeight();            
+            $scope.gridHeight = Data.getGridHeight().gridHeight;
 
             $scope.gridMissingBottles = {
                 enableGridMenu: false,

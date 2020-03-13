@@ -121,8 +121,8 @@ wineDetective.controller('DesktopViewProducerController',
         //     $scope.gridOptions.data = $filter('filter')(excelData.gridData , $scope.searchText, undefined);
         // };
 
-        $scope.gridHeight = Data.getGridHeight();
-
+        $scope.gridHeight = Data.getGridHeight().gridHeight;
+        
         $scope.gridOptions = {
             enableGridMenu: false,
             enableSorting : false,

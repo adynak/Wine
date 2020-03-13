@@ -91,7 +91,11 @@ var txtCommon = {
         {tag: 'bottle in '},
         {tag: 'bottles in'}
     ],
-    before: "before"
+    before: "before",
+    searchPlurals:  [
+        {tag: 'bottle'},
+        {tag: 'bottles'}
+    ],
 };
 
 var txtModal = {

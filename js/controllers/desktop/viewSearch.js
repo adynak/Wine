@@ -13,14 +13,13 @@ wineDetective.controller('desktopSearchController',
 
         $scope.prompts = txtCommon;
         
-        var row, done, searchViewName, showHideColumn;
+        var row, done, searchViewName, showHideColumn, bottleColumn;
         var spreadsheet = Data.getExcel();
         AsOfDate.setAsOfDate(spreadsheet.dateStamp);
 
         var excelData = spreadsheet.sheets[0];
 
         var bottles = excelData.gridData;
-        debugger;
         Data.setViewName(txtCommon.viewNameSearch,bottles.length);
 
         var varietalCounts = Data.countVarietals(bottles);
@@ -39,10 +38,15 @@ wineDetective.controller('desktopSearchController',
         });
 
         var deviceType = Data.getDeviceType();
+
         if (deviceType == "iPhone"){
             showHideColumn = false;
+            bottleColumn = "views/iphone/gridViewSearch/bottleColumn.html";
+            $scope.gridHeight = Data.getGridHeight().iPhoneSearchGridHeight;
         } else {
             showHideColumn = true;
+            bottleColumn = "views/desktop/gridViewSearch/bottleColumn.html";
+            $scope.gridHeight = Data.getGridHeight().gridHeight;
         }
 
         var varietalVintageCounts = Data.countVaritalVintages(bottles);
@@ -52,10 +56,12 @@ wineDetective.controller('desktopSearchController',
 
         var gridData  = bottles;
 
-        $scope.searchGrid = function() {
+        $scope.searchGrid = function(param) {
+            if (param == "clear"){
+                $scope.searchText = "";
+            }
             //TODO exclude cat columns from filter
             bottles = $filter('filter')(excelData.gridData , $scope.searchText, undefined);
-            debugger;
             if ($scope.searchText.length == 0){
                 searchViewName = txtCommon.viewNameSearch;
             } else {
@@ -66,8 +72,6 @@ wineDetective.controller('desktopSearchController',
             bottles = bottles.filter(filterDuplicate);
             $scope.gridOptions.data = bottles;
         };
-
-        $scope.gridHeight = Data.getGridHeight();
 
         $scope.gridOptions = {
             enableGridMenu: false,
@@ -117,9 +121,14 @@ wineDetective.controller('desktopSearchController',
               {
                 field: 'Wine',
                 displayName: $scope.prompts.columnBottles,
-                cellTemplate: "views/desktop/gridVarietalVintage/bottleColumn.html",
+                cellTemplate: bottleColumn,
                 enableCellEdit: false,
                 enableColumnMenu: false,
+                cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
+                    if (deviceType == "iPhone") {
+                        return 'ui-grid-cell-contents-iPhone';
+                }
+      }
               },
               {
                 field: "LocationAsArray",

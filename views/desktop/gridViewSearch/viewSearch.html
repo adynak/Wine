@@ -1,24 +1,24 @@
-<div class="navbar navbar-inverse gridSearch">
-  <div style="background-color: {{prompts.bgColor}}">
-    <div class="container-fluid">
-        <div class="input-group-sm" style="padding:5px;">
-            <input type="text" class="form-control" ng-change="searchGrid()" placeholder="search" ng-model="searchText" />
-            <i class="form-control-feedback moveGlyph glyphicon glyphicon-search"></i>
-        </div>
-    </div>
+<div class="navbar gridSearch">
+  <div class="input-group add-on">
+    <input type="text" style="height:30px;" class="form-control" ng-change="searchGrid(true)" placeholder="search" ng-model="searchText" />      
+    <span class="input-group-addon">
+      <a data-toggle="tooltipz" data-placement="left" title="Clear Search"> 
+        <i ng-click="searchGrid('clear');" class='glyphicon glyphicon-remove-circle'></i>
+      </a>
+    </span>
   </div>
 </div>
 
-<div style="margin-top: -30px;">
-    <div class="gridByVarietal" 
-         ui-grid-edit 
-         ui-grid-selection 
-         ui-grid-grouping 
-         ui-grid-resize-columns 
-         ui-grid-auto-resize style="height: {{gridHeight}}; background-color:white;" 
-         ui-grid="gridOptions" 
-         ui-grid-exporter>
-    </div>
+<div style="margin-top: -40px;">
+   <div class="gridByVarietal" 
+      ui-grid-edit 
+      ui-grid-selection 
+      ui-grid-grouping 
+      ui-grid-resize-columns 
+      ui-grid-auto-resize style="height: {{gridHeight}}; background-color:white;" 
+      ui-grid="gridOptions" 
+      ui-grid-exporter>
+   </div>
 </div>
 <br>
 <button class="btn btn-lg btn-primary btn-block" type="button" ng-click="btnDone();">{{prompts.btnDone}}

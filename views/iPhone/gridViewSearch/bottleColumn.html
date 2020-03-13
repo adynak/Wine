@@ -1,0 +1,24 @@
+<div>
+	<div class="ui-grid-cell-contents-iPhone"
+		ng-click="grid.appScope.showMeTheBottles(row)">
+		<span>{{row.entity.Vintage}} {{row.entity.Producer}}</span>
+		<p class="searchIphoneOne">
+			<span>{{row.entity.Varietal}} ({{row.entity.LocationAsArray.length}})</span>
+		</p>
+		<p class="searchIphoneTwo">
+			<span>{{row.entity.Appellation}}</span>
+		</p>
+<!-- 		
+		<p class="searchIphoneTwo">
+			<strong>{{row.entity.LocationAsArray.length}}
+                <ng-pluralize count="{{row.entity.LocationAsArray.length}}"
+                    when="{
+                            '1':     '{{grid.appScope.prompts.searchPlurals[0].tag}}',
+                            'other': '{{grid.appScope.prompts.searchPlurals[1].tag}}'
+                    }">
+                </ng-pluralize>
+            </strong>
+    	</p>
+
+ -->	</div>
+</div>
