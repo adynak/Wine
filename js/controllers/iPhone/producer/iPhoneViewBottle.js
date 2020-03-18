@@ -1,6 +1,7 @@
 wineDetective.controller('iPhoneViewProducerBottleController',
     [
         '$scope',
+        '$rootScope',
         'modalService',
         '$location',
         'Data',
@@ -8,7 +9,7 @@ wineDetective.controller('iPhoneViewProducerBottleController',
         'AsOfDate',
         'uiGridGroupingConstants',
 
-    function($scope, modalService, $location, Data, $filter, AsOfDate) {
+    function($scope, $rootScope, modalService, $location, Data, $filter, AsOfDate) {
 
         $scope.prompts = txtCommon;
         var row, done, viewName, cellTemplate;
@@ -65,7 +66,13 @@ wineDetective.controller('iPhoneViewProducerBottleController',
                 enableColumnMenu: false,
                 visible: true
               }
-            ]
+            ],
+            onRegisterApi: function( gridApi) {
+                $rootScope.$on('orientationchange', function () {
+                    Data.setGridHeight(window.screen);
+                    $scope.gridHeight = Data.getGridHeight().gridHeight;
+                })
+            }            
         };
 
         $scope.btnDone = function() {

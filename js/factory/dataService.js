@@ -17,23 +17,60 @@ wineDetective.factory("Data",
             return factoryVariables.gridHeight;
         }
 
-        var setGridHeight = function(){
-            var factor,view;
+        var getOrientation = function(screen){
+            if (screen == ""){
+                if (window.matchMedia("(orientation: portrait)").matches) {
+                    return "portrait";
+                }
+
+                if (window.matchMedia("(orientation: landscape)").matches) {
+                    return "landscape";
+                }
+            } else {
+                if (screen.orientation.type.includes("portrait")) {
+                    return "portrait";
+                }
+
+                if (screen.orientation.type.includes("landscape")) {
+                    return "landscape";
+                }
+            }
+        }
+
+        var setGridHeight = function(screen){
+
+            var orientation,height;
+            orientation = getOrientation(screen);
+
             var deviceType = getDeviceType().toLowerCase();
-            switch (deviceType) {
-                case "iphone":
-                    factor = 0.382922;
-                    break
+            switch (deviceType+orientation) {
+                case "iphoneportrait":
+                    height = "92vh";
+                    searchHeight = "85vh";
+                    break;
+                case "iphonelandscape":
+                    height = "84vh";
+                    searchHeight = "75vh";
+                    break;                    
+                case "ipadportrait":
+                    height = "94vh";
+                    searchHeight = "92vh";
+                    break;
+                case "ipadlandscape":
+                    height = "92vh";
+                    searchHeight = "88vh";
+                    break;
                 default:
-                    factor = 0.30;
+                    height = "100vh";
+                    searchHeight = "73vh";
                     break;
             }
-            var ratio = window.devicePixelRatio || 1;
-            var w = screen.width * ratio;
-            var height = screen.height * ratio;
+            // var ratio = window.devicePixelRatio || 1;
+            // var w = screen.width * ratio;
+            // var height = screen.height * ratio;
             factoryVariables.gridHeight = {
-                gridHeight: Math.round(height * factor) + "px",
-                iPhoneSearchGridHeight: Math.round((height - 100) * factor) + "px",
+                gridHeight: height,
+                searchGridHeight: searchHeight,
                 rowHeight: 35,
                 iPhoneSearchRowHeight: 60
             }

@@ -1,6 +1,7 @@
 wineDetective.controller('desktopSearchController',
     [
         '$scope',
+        '$rootScope',
         'modalService',
         '$location',
         'Data',
@@ -9,7 +10,7 @@ wineDetective.controller('desktopSearchController',
         '$routeParams', 
         'uiGridGroupingConstants',
 
-    function($scope, modalService, $location, Data, $filter, AsOfDate, $routeParams) {
+    function($scope, $rootScope, modalService, $location, Data, $filter, AsOfDate, $routeParams) {
 
         $scope.prompts = txtCommon;
         
@@ -20,6 +21,11 @@ wineDetective.controller('desktopSearchController',
         var excelData = spreadsheet.sheets[0];
 
         var bottles = excelData.gridData;
+
+        bottles.forEach(function(bottle) {
+            bottle.Varietal = he.decode(bottle.Varietal);
+        });
+
         Data.setViewName(txtCommon.viewNameSearch,bottles.length);
 
         var varietalCounts = Data.countVarietals(bottles);
@@ -72,6 +78,9 @@ wineDetective.controller('desktopSearchController',
             bottles = bottles.filter(filterDuplicate);
             $scope.gridOptions.data = bottles;
         };
+
+        $scope.gridHeight = Data.getGridHeight().searchGridHeight;
+        debugger;
 
         $scope.gridOptions = {
             enableGridMenu: false,
@@ -127,8 +136,8 @@ wineDetective.controller('desktopSearchController',
                 cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
                     if (deviceType == "iPhone") {
                         return 'ui-grid-cell-contents-iPhone';
+                    }
                 }
-      }
               },
               {
                 field: "LocationAsArray",
@@ -143,6 +152,19 @@ wineDetective.controller('desktopSearchController',
               $scope.gridApi = gridApi;
               $scope.gridApi.selection.on.rowSelectionChanged($scope, rowSelectCallbck);
               $scope.gridApi.selection.on.rowFocusChanged($scope, selectChildren);
+              $rootScope.$on('orientationchange', function () {
+                    Data.setGridHeight(window.screen);
+                    $scope.gridHeight = Data.getGridHeight().gridHeight;
+              })
+            }
+        };
+
+        $scope.isIphone = function(){
+            var deviceType = Data.getDeviceType();
+            if (deviceType == "iPhone" || deviceType == "iPad"){
+                return true;
+            } else {
+                return false;
             }
         };
 

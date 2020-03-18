@@ -1,6 +1,7 @@
 wineDetective.controller('iPhoneViewVintageController',
     [
         '$scope',
+        '$rootScope',
         'modalService',
         '$location',
         'Data',
@@ -8,7 +9,7 @@ wineDetective.controller('iPhoneViewVintageController',
         'AsOfDate',
         'uiGridGroupingConstants',
 
-    function($scope, modalService, $location, Data, $filter, AsOfDate) {
+    function($scope, $rootScope, modalService, $location, Data, $filter, AsOfDate) {
 
         $scope.prompts = txtCommon;
 
@@ -31,7 +32,7 @@ wineDetective.controller('iPhoneViewVintageController',
         //     $scope.gridOptions.data = $filter('filter')(excelData.gridData , $scope.searchText, undefined);
         // };
 
-        $scope.gridHeight = Data.getGridHeight();
+        $scope.gridHeight = Data.getGridHeight().gridHeight;
         
         $scope.gridOptions = {
             showHeader: false,
@@ -66,7 +67,13 @@ wineDetective.controller('iPhoneViewVintageController',
                 },
                 visible: true
               }
-            ]
+            ],
+            onRegisterApi: function( gridApi) {
+                $rootScope.$on('orientationchange', function () {
+                    Data.setGridHeight(window.screen);
+                    $scope.gridHeight = Data.getGridHeight().gridHeight;
+                })
+            }            
         };
 
         function filterDuplicate(bottle) {

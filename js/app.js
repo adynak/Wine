@@ -16,8 +16,7 @@ var wineDetective = angular.module('wineDetective',
 wineDetective.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 
     $locationProvider.hashPrefix('');
-        // $locationProvider.html5Mode(true);
-
+    // $locationProvider.html5Mode(true);
 
     $routeProvider.
     when('/home', {
@@ -109,7 +108,13 @@ wineDetective.config(['$routeProvider', '$locationProvider', function($routeProv
 }]).run(function($rootScope, $location, Data,$templateCache) {
 
     Data.setDeviceType(navigator.userAgent);
-    Data.setGridHeight();
+    Data.setGridHeight("");    
+
+    window.addEventListener("orientationchange", function() {
+        $rootScope.$broadcast('orientationchange');
+        Data.setGridHeight(screen);
+    }, false);
+
 
     $templateCache.put('ui-grid/ui-grid-no-header',"<div></div>");
     $rootScope.$on("$routeChangeStart", function(event, next, current) {

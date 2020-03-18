@@ -28,12 +28,13 @@ wineDetective.controller('NavigationController',
             };
 
             $scope.isIphone = function(){
-                if (Data.getDeviceType() == "iPhone"){
+                var deviceType = Data.getDeviceType();
+                if (deviceType == "iPhone" || deviceType == "iPad"){
                     return true;
                 } else {
                     return false;
                 }
-            }
+            };
 
             $scope.isHomePage = function(){
                 if (Data.getViewName() == txtNavigation.brandName){
