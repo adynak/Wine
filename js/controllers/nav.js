@@ -4,7 +4,8 @@ wineDetective.controller('NavigationController',
         'Data',
         'AsOfDate',
         'modalService',
-        function($scope, Data, AsOfDate, modalService) {
+        '$location',
+        function($scope, Data, AsOfDate, modalService, $location) {
 
             $scope.prompts = txtNavigation;
 
@@ -19,6 +20,11 @@ wineDetective.controller('NavigationController',
             $scope.goBack = function() {
                 window.history.go(-1); 
                 return false;
+            };
+
+            $scope.btnDone = function() {
+                Data.setViewName(txtSideMenu.brandName);
+                $location.path("/home");
             };
 
             $scope.isIphone = function(){

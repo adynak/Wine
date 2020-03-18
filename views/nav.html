@@ -46,14 +46,15 @@
          style="background-color: {{prompts.bgColor}}" 
          ng-cloak="">
 
-            <div class="text-left">
-                <div ng-click="goBack()" class="text-left">
-                    <span class="glyphicon glyphicon-circle-arrow-left">
-                    </span>
-                    <div class="text-center">
-                        {{Data.getViewName()}}
-                    </div>
-                </div>
+        <div ng-click="goBack()" class="text-left">
+            <span class="glyphicon glyphicon-circle-arrow-left">
+            </span>
+            <div class="text-center">
+                {{Data.getViewName()}}
+                <span ng-click="btnDone()" 
+                      class="glyphicon glyphicon-menu-hamburger pull-right">
+                </span>
             </div>
+        </div>
 
     </nav>
