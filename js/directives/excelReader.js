@@ -3,6 +3,17 @@ wineDetective.directive("filelistBind", ['Data', 'modalService',
         return {
             link: function($scope, $elm, $attrs) {
 
+                var applyWineType = function(bottle){
+                    if (bottle.Type.includes("Rosé")){
+                        if (!bottle.Varietal.includes("Rosé")){
+                            bottle.Varietal = "Rosé" + txtCommon.of + bottle.Varietal;
+                        }
+                        if (!bottle.Wine.includes("Rosé")){
+                            bottle.Wine = bottle.Wine + " Rosé";
+                        }
+                    }
+                }
+
                 $elm.on('change', function(changeEvent) {
 
                     var reader = new FileReader();
@@ -56,6 +67,8 @@ wineDetective.directive("filelistBind", ['Data', 'modalService',
                                     if (row.Vintage == 1001) row.Vintage = "NV";
                                     row.LocationAsArray = [row.Location];
                                     row.BinAsArray = [row.Bin];
+
+                                    applyWineType(row);
 
                                     row.Varietal = he.encode(row.Varietal).replace("&#xEF;&#xBF;&#xBD;","&#233;");
                                     row.Designation = he.encode(row.Designation).replace("&#xEF;&#xBF;&#xBD;","&#233");

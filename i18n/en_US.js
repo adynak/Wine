@@ -96,6 +96,7 @@ var txtCommon = {
         {tag: 'bottle'},
         {tag: 'bottles'}
     ],
+    of: " of "
 };
 
 var txtModal = {
