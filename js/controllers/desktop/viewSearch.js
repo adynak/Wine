@@ -80,7 +80,6 @@ wineDetective.controller('desktopSearchController',
         };
 
         $scope.gridHeight = Data.getGridHeight().searchGridHeight;
-        debugger;
 
         $scope.gridOptions = {
             enableGridMenu: false,
@@ -154,7 +153,7 @@ wineDetective.controller('desktopSearchController',
               $scope.gridApi.selection.on.rowFocusChanged($scope, selectChildren);
               $rootScope.$on('orientationchange', function () {
                     Data.setGridHeight(window.screen);
-                    $scope.gridHeight = Data.getGridHeight().gridHeight;
+                    $scope.gridHeight = Data.getGridHeight().searchGridHeight;
               })
             }
         };

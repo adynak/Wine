@@ -70,7 +70,6 @@ wineDetective.factory("Data",
                     var height = vh + "vh";
                     searchHeight = vh-3 + "vh";
                     reconcileHeight = "88vh";
-                    debugger;
                     break;
             }
             // var ratio = window.devicePixelRatio || 1;

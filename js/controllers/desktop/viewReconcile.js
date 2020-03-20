@@ -63,8 +63,6 @@ wineDetective.controller('DesktopViewReconcileController',
         }
 
         $scope.gridHeight = Data.getGridHeight().reconcileHeight;
-        debugger;
-
 
         $scope.gridOptions = {
             enableGridMenu: false,

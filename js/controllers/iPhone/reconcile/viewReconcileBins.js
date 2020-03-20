@@ -56,7 +56,6 @@ wineDetective.controller('iPhoneViewReconcileBinsController',
         }
 
         $scope.gridHeight = Data.getGridHeight().reconcileHeight;
-        debugger;
 
         $scope.gridOptions = {
             enableGridMenu: false,
@@ -95,7 +94,6 @@ wineDetective.controller('iPhoneViewReconcileBinsController',
               $rootScope.$on('orientationchange', function () {
                 Data.setGridHeight(window.screen);
                 $scope.gridHeight = Data.getGridHeight().reconcileHeight;
-                debugger;
               });
             }
         };
