@@ -78,9 +78,7 @@ wineDetective.factory("Data",
             factoryVariables.gridHeight = {
                 gridHeight: height,
                 searchGridHeight: searchHeight,
-                reconcileHeight: reconcileHeight,
-                rowHeight: 35,
-                iPhoneSearchRowHeight: 60
+                reconcileHeight: reconcileHeight
             }
         }
 

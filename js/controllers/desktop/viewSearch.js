@@ -45,14 +45,14 @@ wineDetective.controller('desktopSearchController',
 
         var deviceType = Data.getDeviceType();
 
-        if (deviceType == "iPhone"){
+        if (deviceType == "iPhone" || deviceType == "iPad"){
             showHideColumn = false;
             bottleColumn = "views/iphone/gridViewSearch/bottleColumn.html";
-            $scope.gridHeight = Data.getGridHeight().iPhoneSearchGridHeight;
+            // $scope.gridHeight = Data.getGridHeight().iPhoneSearchGridHeight;
         } else {
             showHideColumn = true;
             bottleColumn = "views/desktop/gridViewSearch/bottleColumn.html";
-            $scope.gridHeight = Data.getGridHeight().gridHeight;
+            // $scope.gridHeight = Data.getGridHeight().searchGridHeight;
         }
 
         var varietalVintageCounts = Data.countVaritalVintages(bottles);
@@ -133,7 +133,7 @@ wineDetective.controller('desktopSearchController',
                 enableCellEdit: false,
                 enableColumnMenu: false,
                 cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
-                    if (deviceType == "iPhone") {
+                    if (deviceType == "iPhone" || deviceType == "iPad") {
                         return 'ui-grid-cell-contents-iPhone';
                     }
                 }

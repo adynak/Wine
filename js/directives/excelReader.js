@@ -100,6 +100,21 @@ wineDetective.directive("filelistBind", ['Data', 'modalService',
                                         row.BeginConsume = "unknown";
                                     }
                                     row.EndConsumeVarietal = row.EndConsume + row.Varietal;
+
+                                    if (row.BeginConsume + row.EndConsume == "unknownunknown") {
+                                        drinkingWindow = txtCommon.guess;
+                                    }
+                                    if (row.BeginConsume == "unknown" && row.EndConsume !== "unknown") {
+                                        drinkingWindow = txtCommon.before + " " + row.EndConsume;
+                                    } else if (row.BeginConsume !== "unknown" && row.EndConsume !== "unknown") {
+                                        drinkingWindow = row.BeginConsume + " - " + row.EndConsume;
+                                    } else if (row.BeginConsume !== "unknown" && row.EndConsume == "unknown") {
+                                        drinkingWindow = row.BeginConsume;
+                                    }
+
+                                    row.drinkingWindow = drinkingWindow;
+
+
                                 });
 
                                 sheets.push({

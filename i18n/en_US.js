@@ -96,7 +96,8 @@ var txtCommon = {
         {tag: 'bottle'},
         {tag: 'bottles'}
     ],
-    of: " of "
+    of: " of ",
+    guess: "Call"
 };
 
 var txtModal = {
