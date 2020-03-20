@@ -111,6 +111,14 @@ wineDetective.factory("Data",
             if (userAgent.indexOf("ipad") != -1){
                 deviceType = "iPad";
             }
+
+            if (deviceType == "desktop"){
+                var pixels = window.screen.width * window.screen.height;
+                if (pixels == 786432){
+                    deviceType = "iPad";
+                }
+            }
+
             factoryVariables.deviceType = deviceType;
         }
 
@@ -449,7 +457,7 @@ wineDetective.factory("Data",
             getIphoneReconcileBins: getIphoneReconcileBins,
             setIphoneReconcileBottles: setIphoneReconcileBottles,
             getIphoneReconcileBottles: getIphoneReconcileBottles,
-            checkRequiredColumns: checkRequiredColumns,
+            checkRequiredColumns: checkRequiredColumns
         };
     }
 );
