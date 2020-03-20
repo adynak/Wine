@@ -41,28 +41,36 @@ wineDetective.factory("Data",
 
             var orientation,height;
             orientation = getOrientation(screen);
-
+0.098032806
             var deviceType = getDeviceType().toLowerCase();
             switch (deviceType+orientation) {
                 case "iphoneportrait":
                     height = "92vh";
                     searchHeight = "85vh";
+                    reconcileHeight = "80vh";
                     break;
                 case "iphonelandscape":
                     height = "84vh";
                     searchHeight = "75vh";
+                    reconcileHeight = "50vh";
                     break;                    
                 case "ipadportrait":
                     height = "94vh";
                     searchHeight = "92vh";
+                    reconcileHeight = "88vh";
                     break;
                 case "ipadlandscape":
                     height = "92vh";
                     searchHeight = "88vh";
+                    reconcileHeight = "88vh";
                     break;
                 default:
-                    height = "100vh";
-                    searchHeight = "73vh";
+                    var ratio = 0.098032806;
+                    var vh = window.innerHeight/window.outerHeight*window.screen.availHeight*ratio;
+                    var height = vh + "vh";
+                    searchHeight = vh-3 + "vh";
+                    reconcileHeight = "88vh";
+                    debugger;
                     break;
             }
             // var ratio = window.devicePixelRatio || 1;
@@ -71,6 +79,7 @@ wineDetective.factory("Data",
             factoryVariables.gridHeight = {
                 gridHeight: height,
                 searchGridHeight: searchHeight,
+                reconcileHeight: reconcileHeight,
                 rowHeight: 35,
                 iPhoneSearchRowHeight: 60
             }
@@ -131,8 +140,11 @@ wineDetective.factory("Data",
         }
 
         var getViewName = function(){
+            var deviceType;
+            deviceType = getDeviceType();
+
           if (factoryVariables.viewName == "Wine Detective"){
-            if (getDeviceType() == "iPhone"){
+            if (deviceType == "iPhone" || deviceType == 'iPad'){
                 return factoryVariables.viewName;
             } else {
                 return "";

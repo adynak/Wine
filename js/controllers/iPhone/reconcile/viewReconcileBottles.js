@@ -1,6 +1,7 @@
 wineDetective.controller('iPhoneViewReconcileBottleController',
     [
         '$scope',
+        '$rootScope',
         '$uibModal',
         '$location',
         'Data',
@@ -10,7 +11,7 @@ wineDetective.controller('iPhoneViewReconcileBottleController',
         'AsOfDate',
         'uiGridGroupingConstants',
 
-    function($scope, $uibModal, $location, Data, $window, $routeParams, $filter, AsOfDate) {
+    function($scope, $rootScope, $uibModal, $location, Data, $window, $routeParams, $filter, AsOfDate) {
 
         $scope.prompts = txtCommon;
 
@@ -61,7 +62,8 @@ wineDetective.controller('iPhoneViewReconcileBottleController',
         //     $scope.gridOptions.data = $filter('filter')(excelData.gridData , $scope.searchText, undefined);
         // };
 
-        $scope.gridHeight = Data.getGridHeight();
+        $scope.gridHeight = Data.getGridHeight().reconcileHeight;
+        console.log($scope.gridHeight);
 
         $scope.gridOptions = {
             enableGridMenu: false,
@@ -102,6 +104,11 @@ wineDetective.controller('iPhoneViewReconcileBottleController',
               $scope.gridApi = gridApi;
               $scope.gridApi.selection.on.rowSelectionChanged($scope,rowSelectCallbck);
               $scope.gridApi.selection.on.rowFocusChanged($scope,selectChildren);
+              $rootScope.$on('orientationchange', function () {
+                Data.setGridHeight(window.screen);
+                $scope.gridHeight = Data.getGridHeight().reconcileHeight;
+                console.log($scope.gridHeight);
+              });
             }
         };
 

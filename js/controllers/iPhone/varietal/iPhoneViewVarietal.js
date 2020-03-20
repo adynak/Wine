@@ -85,7 +85,7 @@ wineDetective.controller('iPhoneViewVarietalController',
                 $rootScope.$on('orientationchange', function () {
                     Data.setGridHeight(window.screen);
                     $scope.gridHeight = Data.getGridHeight().gridHeight;
-                })
+                });
             }
         };
 

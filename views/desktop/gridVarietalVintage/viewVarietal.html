@@ -10,7 +10,8 @@
 
   <br>
 
-  <button class="btn btn-lg btn-primary btn-block" 
+  <button ng-if="!isIphone()" 
+          class="btn btn-lg btn-primary btn-block" 
           type="button" 
           ng-click="btnDone();">{{prompts.btnDone}}
   </button>
