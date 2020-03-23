@@ -38,11 +38,11 @@ wineDetective.controller('DesktopViewReadyToDrinkController',
         var readyToDrinkCounts = Data.countReadyToDrink(bottles);
 
         var varietalVintageCounts = Data.countVaritalVintages(bottles);
-        var endConsumeVarietalCounts = Data.countEndConsumeVaritals(bottles);
 
         bottles = Data.removeDuplicateRows(bottles);
         bottles = bottles.filter(filterDuplicate);
 
+        var endConsumeVarietalCounts = Data.countEndConsumeVaritals(bottles);
         var gridData  = bottles;
 
         // $scope.searchGrid = function() {

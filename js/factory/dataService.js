@@ -41,7 +41,6 @@ wineDetective.factory("Data",
 
             var orientation,height;
             orientation = getOrientation(screen);
-0.098032806
             var deviceType = getDeviceType().toLowerCase();
             switch (deviceType+orientation) {
                 case "iphoneportrait":
