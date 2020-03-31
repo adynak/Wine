@@ -87,7 +87,6 @@ wineDetective.controller('HomeController',
                     } else {
                         $location.path("/desktop/viewReadyToDrink");
                     }
-
                     break;
 
                 case "viewSearch" :
@@ -96,7 +95,6 @@ wineDetective.controller('HomeController',
                     } else {
                         $location.path("/desktop/viewSearch");
                     }
-
                     break;                    
 
                 case "startOver" :
@@ -110,7 +108,7 @@ wineDetective.controller('HomeController',
                     Data.setViewName(txtSideMenu.brandName);
                     AsOfDate.setAsOfDate("");
                     $scope.actions = "";
-                    $location.path("/home");
+                    $location.path("/login");
                     break;
 
             }

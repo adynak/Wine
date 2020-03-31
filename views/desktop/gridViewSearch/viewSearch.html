@@ -1,10 +1,25 @@
+<script type="text/ng-template" id="searchTooltipTemplate.html">
+  <div style="color:black; width:100px;">
+      <span>{{prompts.clearSearch}}</span>
+  </div>
+</script>
+
+
 <div class="navbar gridSearch">
   <div class="input-group add-on">
     <input type="text" style="height:30px;" class="form-control" ng-change="searchGrid(true)" placeholder="search" ng-model="searchText" />      
     <span class="input-group-addon">
-      <a data-toggle="tooltipz" data-placement="left" title="Clear Search"> 
-        <i ng-click="searchGrid('clear');" class='glyphicon glyphicon-remove-circle'></i>
-      </a>
+
+              <i 
+                tooltip-placement="top" 
+                tooltip-class="tooltip-class"
+                uib-tooltip-template="'searchTooltipTemplate.html'"
+                tooltip-popup-close-delay='500'
+                ng-click="searchGrid('clear');" 
+                class='glyphicon glyphicon-remove-circle'
+                style="pointer-events: initial;">
+              </i>
+
     </span>
   </div>
 </div>

@@ -20,8 +20,6 @@ wineDetective.controller('DesktopViewReadyToDrinkController',
 
         var bottles = excelData.gridData;
         Data.setViewName(txtCommon.viewNameReadyToDrink,bottles.length);
-        debugger;
-
 
 // sort them for this view
         bottles.sort(function(wine1, wine2) {

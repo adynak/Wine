@@ -10,8 +10,20 @@ wineDetective.factory("Data",
             sheetNames: null,
             missingBottles: [],
             spreadsheet: {},
-            viewName: ""
+            viewName: "",
+            securityInfo : {
+                account: null
+            }            
         };
+
+        var setSecurityInfo = function(credentials){
+            localStorage.setItem('goofyLuvin', credentials.account);
+            factoryVariables.securityInfo = securityInfo;
+        }
+
+        var getSecurityInfo = function(){
+            return factoryVariables.securityInfo;
+        }
 
         var getInventory = function(credentials){
             var qObject = $q.defer();
@@ -516,7 +528,9 @@ wineDetective.factory("Data",
             getIphoneReconcileBottles: getIphoneReconcileBottles,
             checkRequiredColumns: checkRequiredColumns,
             getInventory: getInventory,
-            csvJSON: csvJSON
+            csvJSON: csvJSON,
+            setSecurityInfo: setSecurityInfo,
+            getSecurityInfo: getSecurityInfo
         };
     }
 );

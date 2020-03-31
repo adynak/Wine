@@ -12,6 +12,7 @@ wineDetective.controller('LoginController',
         $scope.prompts    = txtLogin;
         $scope.prompts.visibility = txtLogin.visibilityShow;
         $scope.required   = true;
+        Data.setViewName(txtLogin.btnLogin);
 
         $scope.toggleVisiblity = function(){
             var temp = document.getElementById("password"); 

@@ -545,7 +545,7 @@ button:hover {
     color: white;
     background-color: white;
     border-radius:5px;
-    width: 150px;
+    /*width: 150px;*/
 }
 
 .tooltip .tooltip-arrow { 
@@ -560,4 +560,32 @@ button:hover {
   background-color:white; 
   padding:10px; 
   border-radius:5px;
+}
+
+.btn-login, .btn-login:visited {
+  background-image: -webkit-linear-gradient(top, #337ab7 0%, #265a88 100%);
+  background-image: -o-linear-gradient(top, #337ab7 0%, #265a88 100%);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#337ab7), to(#265a88));
+  background-image: linear-gradient(to bottom, #337ab7 0%, #265a88 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff337ab7', endColorstr='#ff265a88', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  background-repeat: repeat-x;
+  border-color: #245580;
+  color: white;
+  font-weight: bold;
+}
+
+.btn-login:hover,
+.btn-login:focus {
+  background-color: #265a88;
+  background-position: 0 -15px;
+  color: white;
+  font-weight: bold;  
+}
+.btn-login:active,
+.btn-login.active {
+  background-color: #265a88;
+  border-color: #245580;
+  color: white;
+  font-weight: bold;
 }

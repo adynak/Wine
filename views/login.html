@@ -1,14 +1,18 @@
-<script type="text/ng-template" id="myTooltipTemplate.html">
-  <div style="color:black;">
+<script type="text/ng-template" id="visibilityTooltipTemplate.html">
+  <div style="color:black; width:140px;">
       <span>{{prompts.visibility}}</span>
   </div>
 </script>
 
 
 <div class="container">
-  <div class="row">
+  <div class="rowz">
     <div class="col-md-4 col-md-offset-4">
-      <form name="myform" class="form-login" novalidate="" ng-submit="login()">
+      <form name="myform" 
+            class="form-login" 
+            novalidate="" 
+            autocomplete="off"
+            ng-submit="login()">
         <h4 class="text-info">{{prompts.logIn}}</h4>
         <p class="alert alert-danger" ng-show="invalidMessage">{{invalidMessage}}</p>
         
@@ -30,9 +34,9 @@
           <div class="inner-addon right-addon">
             <span> 
               <i 
-                tooltip-placement="right" 
+                tooltip-placement="top" 
                 tooltip-class="tooltip-class"
-                uib-tooltip-template="'myTooltipTemplate.html'"
+                uib-tooltip-template="'visibilityTooltipTemplate.html'"
                 tooltip-popup-close-delay='500'
                 ng-click="toggleVisiblity();" 
                 class='glyphicon glyphicon-eye-open'
@@ -52,24 +56,26 @@
              ng-show="myform.password.$invalid && 
                       myform.password.$touched">{{prompts.errPasswordRequired}}</p> 
         </div>
-
+<!-- 
         <div style="text-align:center; padding-bottom:10px;">
           <input type="checkbox" name="rememberMe" id="jrememberMe" value="1">
           <label for="jevattend_id">&nbsp;{{prompts.rememberMe}}</label>
         </div>
-
+ -->
         <button type="submit" 
-                class="btn btn-lg btn-primary btn-block" 
+                class="btn btn-lg btn-login btn-block" 
                 ng-disabled="myform.$invalid">{{prompts.btnLogin}}
         </button>
 
-<!--         <p ng-hide="authenticated">
+<!--         
+        <p ng-hide="authenticated">
           or <a ng-href="#/register">{{prompts.btnRegister}}</a>
         </p>
-  
-        <p ng-hide="authenticated" class="passwordHelp" onclick="alert(' Finely chop an onion, some garlic and a chilli, and saute on a little oil until the onion is brown.');">{{prompts.btnPasswordHelp}}
-                  </p>
--->
+-->  
+
+<!--     <p ng-hide="authenticated" class="passwordHelp" onclick="alert(' Finely chop an onion, some garlic and a chilli, and saute on a little oil until the onion is brown.');">{{prompts.btnPasswordHelp}}
+         </p>
+ -->
 
       </form>
     </div>

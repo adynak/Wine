@@ -37,7 +37,8 @@ wineDetective.controller('NavigationController',
             };
 
             $scope.isHomePage = function(){
-                if (Data.getViewName() == txtNavigation.brandName){
+                var viewName = Data.getViewName();
+                if (viewName == txtNavigation.brandName || viewName == txtLogin.btnLogin){
                     action = true;
                 } else {
                     action = false;
