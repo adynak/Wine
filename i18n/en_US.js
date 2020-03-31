@@ -120,3 +120,32 @@ var txtErrors = {
         "Fix the download from Cellar Tracker to include these columns:"],
     btnOK: "OK"
 }
+
+
+var txtLogin = {
+    onlineID: 'Online ID',
+    account: 'CellarTracker account name',
+    logIn: '',
+    logOut: 'Logged out successfully',
+    password: 'Password',
+    passwordConfirm: 'Confirm Password',
+    errOnlineID: 'OnlineID is required',
+    errAccount: 'Account is required',
+    errPasswordRequired: 'Password is required',
+    errPasswordDifferent: 'Passwords Do Not Match!',
+    errPasswordInvalid: 'Minimum length is 5 characters.',
+    errPassword: 'Minimum length is 55 characters.',
+    btnLogin: 'Login',
+    btnRegister: 'Register',
+    btnLogout: 'Logout',
+    btnPasswordHelp: 'Need Login Help?',
+    credentialsValid: 'You are now logged in.',
+    credentialsInvalid: 'The email or password you have entered is invalid.',
+    registrationSuccess: 'Your request has been received.  Look for email confirmation soon.',
+    registrationSent: 'Processing your request',
+    registerPageTitle: 'Register',
+    image: 'resources/images/drinks.jpeg',
+    visibilityShow: "Click to Show Password",
+    visibilityHide: "Click to Hide Password",
+    rememberMe: "Remember Me on this Device"
+};

@@ -19,6 +19,10 @@ wineDetective.config(['$routeProvider', '$locationProvider', function($routeProv
     // $locationProvider.html5Mode(true);
 
     $routeProvider.
+    when('/login', {
+        templateUrl: 'views/login.html',
+        controller: 'LoginController'
+    }).
     when('/home', {
         templateUrl: 'views/home.html',
         controller: 'HomeController',
@@ -101,22 +105,22 @@ wineDetective.config(['$routeProvider', '$locationProvider', function($routeProv
         controller: 'desktopSearchController',
     }).
     otherwise({
-        redirectTo: '/home'
+        redirectTo: '/login'
     });
 
 
 }]).run(function($rootScope, $location, Data,$templateCache) {
 
     Data.setDeviceType(navigator.userAgent);
-    Data.setGridHeight("");    
+    Data.setGridHeight("");   
 
     window.addEventListener("orientationchange", function() {
         $rootScope.$broadcast('orientationchange');
         Data.setGridHeight(screen);
     }, false);
 
-
     $templateCache.put('ui-grid/ui-grid-no-header',"<div></div>");
+    
     $rootScope.$on("$routeChangeStart", function(event, next, current) {
         // the back button eventually will take us here without changing the viewName correctly
         if (next.templateUrl == "views/home.html"){

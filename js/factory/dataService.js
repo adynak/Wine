@@ -1,4 +1,4 @@
-wineDetective.factory("Data",
+wineDetective.factory("Data", 
     function($http, $q, $rootScope) {
 
         var factoryVariables = {
@@ -12,6 +12,64 @@ wineDetective.factory("Data",
             spreadsheet: {},
             viewName: ""
         };
+
+        var getInventory = function(credentials){
+            var qObject = $q.defer();
+            var params = {
+                User: credentials.account,
+                Password: credentials.password,
+                Format: 'csv',
+                Table: 'Inventory',
+                Location: 1
+            };
+
+            var url = 'https://www.cellartracker.com/xlquery.asp';
+
+            // var url = 'https://www.cellartracker.com/xlquery.asp?'+ 
+            //            "User=" +     params.User + "&" + 
+            //            "Password=" + params.Password + "&" + 
+            //            "Format=" +   params.Format + "&" + 
+            //            "Table=" +    params.Table + "&" + 
+            //            "Location=" + params.Location;
+            $http({
+                method: 'POST',
+                url: url,
+                params: params,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            }).then(function(success) {
+                qObject.resolve(success.data);
+            }, function(err) {
+                console.log(err);
+            });
+            return qObject.promise;            
+        }
+
+
+        var csvJSON = function(csv){
+
+            var lines=csv.split("\n");
+
+            var result = [];
+            var headers=lines[0].split(",");
+
+            for(var i=1;i<lines.length;i++){
+                var obj = {};
+                var currentline=lines[i].split(",");
+
+                for(var j=0;j<headers.length;j++){
+                    if (typeof(currentline[j]) !== "undefined"){
+                        obj[headers[j]] = currentline[j].replace(/['"]+/g, '');
+                    } else {
+                        obj[headers[j]] = currentline[j];
+                    }
+                }
+                result.push(obj);
+            }
+            return result
+            // return JSON.stringify(result); //JSON
+        }
 
         var getGridHeight = function(){
             return factoryVariables.gridHeight;
@@ -408,7 +466,7 @@ wineDetective.factory("Data",
             requiredColumns.push("Bin");
             requiredColumns.push("BeginConsume");
             requiredColumns.push("EndConsume");
-            requiredColumns.push("WindowSource");
+            // requiredColumns.push("WindowSource");
 
             requiredColumns.forEach(function(columnName){
                 isHere = columns.includes(columnName);
@@ -456,10 +514,157 @@ wineDetective.factory("Data",
             getIphoneReconcileBins: getIphoneReconcileBins,
             setIphoneReconcileBottles: setIphoneReconcileBottles,
             getIphoneReconcileBottles: getIphoneReconcileBottles,
-            checkRequiredColumns: checkRequiredColumns
+            checkRequiredColumns: checkRequiredColumns,
+            getInventory: getInventory,
+            csvJSON: csvJSON
         };
     }
 );
+
+
+wineDetective.factory("ParseDownload", 
+    [
+        'Data',
+        function(Data  ){
+
+        var wineData;
+
+        var applyWineType = function(bottle){
+            if (bottle.Type.includes("Rosé")){
+                if (!bottle.Varietal.includes("Rosé")){
+                    bottle.Varietal = "Rosé" + txtCommon.of + bottle.Varietal;
+                }
+                if (!bottle.Wine.includes("Rosé")){
+                    bottle.Wine = bottle.Wine + " Rosé";
+                }
+            }
+        }
+
+        var setWineData = function(results){
+            var excel = {};
+            var sheets = [],
+                sheetName, sheetData, sheetColumns = [];
+            var excelSheetCount, ex;
+            var columns;
+            var sheetNumber = 1;        
+            var workbook = XLSX.read(results, {
+                        type: 'binary'
+            }); 
+            excelSheetCount = workbook.SheetNames.length;
+            var excelDateStamp = Date.now();
+
+
+            for (var eX = 0; eX < excelSheetCount; eX++) {
+                sheetName = workbook.SheetNames[eX];
+                sheetData = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[eX]]);
+                columns = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[eX]], {
+                    header: 1
+                })[0];
+                var columnCheck = Data.checkRequiredColumns(columns);
+                sheetColumns = [];
+                columns.forEach(function(row1) {
+                    if (row1 == "Location") {
+                        sheetColumns.push({
+                            field: row1,
+                            enableColumnMenu: false,
+                            grouping: {
+                                groupPriority: 0
+                            }
+                        });
+                    } else {
+                        sheetColumns.push({
+                            field: row1,
+                            enableColumnMenu: false
+                        });
+                    }
+                });
+
+                sheetData.forEach(function(row) {
+                    row.inStock = true;
+                    row.isDuplicate = false;
+                    if (row.Vintage == 1001) row.Vintage = "NV";
+                    row.LocationAsArray = [row.Location];
+                    row.BinAsArray = [row.Bin];
+
+                    applyWineType(row);
+
+                    row.Varietal = he.encode(row.Varietal).replace("&#xEF;&#xBF;&#xBD;","&#233;");
+                    row.Designation = he.encode(row.Designation).replace("&#xEF;&#xBF;&#xBD;","&#233");
+                    row.Wine = he.encode(row.Wine).replace("&#xEF;&#xBF;&#xBD;","&#233");
+
+                    row.ProducerVarietal = row.Producer + row.Varietal;
+                    row.VarietalVintage = row.Varietal + row.Vintage;
+                    row.BarcodeAsArray = [row.Barcode];
+                    row.Designation = row.Designation.replace(row.Producer,"");
+
+                    if (row.Designation == "Unknown" || (typeof(row.Designation) == "undefined")){
+                        row.WineName = row.Producer;
+                    } else {
+                        row.WineName = row.Producer + " " + row.Designation;
+                    }
+
+                    if (row.Vineyard == "Unknown" || (typeof(row.Vineyard) == "undefined")){
+
+                    } else {
+                        row.WineName = row.WineName + " " + row.Vineyard;
+                    }
+
+                    row.shortWineName = row.Wine.replace(row.Producer,'').trim();
+
+                    if (row.EndConsume == 9999 || (typeof(row.EndConsume)== 'undefined')){
+                        row.EndConsume = "unknown";
+                    }
+                    if (row.BeginConsume == 9999 || (typeof(row.BeginConsume)== 'undefined')){
+                        row.BeginConsume = "unknown";
+                    }
+                    row.EndConsumeVarietal = row.EndConsume + row.Varietal;
+
+                    if (row.BeginConsume + row.EndConsume == "unknownunknown") {
+                        drinkingWindow = txtCommon.guess;
+                    }
+                    if (row.BeginConsume == "unknown" && row.EndConsume !== "unknown") {
+                        drinkingWindow = txtCommon.before + " " + row.EndConsume;
+                    } else if (row.BeginConsume !== "unknown" && row.EndConsume !== "unknown") {
+                        drinkingWindow = row.BeginConsume + " - " + row.EndConsume;
+                    } else if (row.BeginConsume !== "unknown" && row.EndConsume == "unknown") {
+                        drinkingWindow = row.BeginConsume;
+                    }
+
+                    row.drinkingWindow = drinkingWindow;
+
+                });
+
+                sheets.push({
+                    sheetName: sheetName,
+                    gridData: sheetData,
+                    gridColumns: sheetColumns
+                });
+            }
+
+            excel.filename = 'excelFileName';
+            excel.sheetNames = workbook.SheetNames;
+            excel.sheets = sheets;
+            excel.dateStamp = moment(excelDateStamp).format("MMMM DD, YYYY h:mm:ss A");
+            excel.unixDate = excelDateStamp;
+            excel.columnCheck = columnCheck;
+            Data.setExcel(excel);
+
+            if (columnCheck.length > 0){
+                modalService.importColumnError(columnCheck);
+            }
+        }
+
+        var getWineData = function(){
+            return wineData;
+        }
+
+        return {
+            setWineData: setWineData,
+            getWineData: getWineData
+        }
+
+    }
+]);
 
 wineDetective.factory("AsOfDate", function(){
   var asOfDate = "";
