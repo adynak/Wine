@@ -24,7 +24,7 @@ wineDetective.factory("Data",
                 Format: 'csv',
                 Table: 'Inventory',
                 Location: 1,
-                dontHitServer: dontHitServer
+                hitServer: credentials.hitServer
             };
             $http({
                 method: 'GET',
