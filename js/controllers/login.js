@@ -27,8 +27,8 @@ wineDetective.controller('LoginController',
         }
         
         $scope.login = function() {
-
-            Data.getInventory($scope.credentials).then(function(results) {
+            $scope.credentials.hitServer = false;
+            Data.getInventoryCurl($scope.credentials).then(function(results) {
                 if (results.length < 200){
                     var div = document.createElement("div");
                     div.innerHTML = results;

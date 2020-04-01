@@ -16,6 +16,31 @@ wineDetective.factory("Data",
             }            
         };
 
+        var getInventoryCurl = function(credentials){
+            var qObject = $q.defer();
+            var params = {
+                User: credentials.account,
+                Password: credentials.password,
+                Format: 'csv',
+                Table: 'Inventory',
+                Location: 1,
+                dontHitServer: dontHitServer
+            };
+            $http({
+                method: 'GET',
+                url: 'resources/dataServices/curl.php',
+                params: params,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+            }).then(function(success) {
+                qObject.resolve(success.data);
+            }, function(err) {
+                console.log(err);
+            });
+            return qObject.promise;            
+        }
+
         var setSecurityInfo = function(credentials){
             localStorage.setItem('goofyLuvin', credentials.account);
             factoryVariables.securityInfo = securityInfo;
@@ -37,12 +62,12 @@ wineDetective.factory("Data",
 
             var url = 'https://www.cellartracker.com/xlquery.asp';
 
-            // var url = 'https://www.cellartracker.com/xlquery.asp?'+ 
-            //            "User=" +     params.User + "&" + 
-            //            "Password=" + params.Password + "&" + 
-            //            "Format=" +   params.Format + "&" + 
-            //            "Table=" +    params.Table + "&" + 
-            //            "Location=" + params.Location;
+            var url = 'https://www.cellartracker.com/xlquery.asp?'+ 
+                       "User=" +     params.User + "&" + 
+                       "Password=" + params.Password + "&" + 
+                       "Format=" +   params.Format + "&" + 
+                       "Table=" +    params.Table + "&" + 
+                       "Location=" + params.Location;
             $http({
                 method: 'POST',
                 url: url,
@@ -528,9 +553,10 @@ wineDetective.factory("Data",
             getIphoneReconcileBottles: getIphoneReconcileBottles,
             checkRequiredColumns: checkRequiredColumns,
             getInventory: getInventory,
+            getInventoryCurl: getInventoryCurl,
             csvJSON: csvJSON,
             setSecurityInfo: setSecurityInfo,
-            getSecurityInfo: getSecurityInfo
+            getSecurityInfo: getSecurityInfo,
         };
     }
 );
@@ -544,11 +570,11 @@ wineDetective.factory("ParseDownload",
         var wineData;
 
         var applyWineType = function(bottle){
-            if (bottle.Type.includes("Rosé")){
-                if (!bottle.Varietal.includes("Rosé")){
+            if (he.decode(bottle.Type).includes("Rosé")){
+                if (!he.decode(bottle.Varietal).includes("Rosé")){
                     bottle.Varietal = "Rosé" + txtCommon.of + bottle.Varietal;
                 }
-                if (!bottle.Wine.includes("Rosé")){
+                if (!he.decode(bottle.Wine).includes("Rosé")){
                     bottle.Wine = bottle.Wine + " Rosé";
                 }
             }
@@ -594,6 +620,11 @@ wineDetective.factory("ParseDownload",
                 });
 
                 sheetData.forEach(function(row) {
+
+                    Object.keys(row).forEach(function (item) {
+                      row[item] = he.encode(row[item]).replace(/&#xEF|&#xBF|&#xBD|&#xFFFD/gi,function(x){ return "&#233";});
+                    });
+
                     row.inStock = true;
                     row.isDuplicate = false;
                     if (row.Vintage == 1001) row.Vintage = "NV";
@@ -601,10 +632,6 @@ wineDetective.factory("ParseDownload",
                     row.BinAsArray = [row.Bin];
 
                     applyWineType(row);
-
-                    row.Varietal = he.encode(row.Varietal).replace("&#xEF;&#xBF;&#xBD;","&#233;");
-                    row.Designation = he.encode(row.Designation).replace("&#xEF;&#xBF;&#xBD;","&#233");
-                    row.Wine = he.encode(row.Wine).replace("&#xEF;&#xBF;&#xBD;","&#233");
 
                     row.ProducerVarietal = row.Producer + row.Varietal;
                     row.VarietalVintage = row.Varietal + row.Vintage;
@@ -747,6 +774,7 @@ wineDetective.factory("modalService",
                 modalScope.bottle = {
                     bottleCount: row.entity.Location.length,
                     vintage: he.decode(row.entity.Vintage),
+                    wine: he.decode(row.entity.Wine),
                     wine: he.decode(row.entity.Wine),
                     location: locationBin,
                     plurals: txtCommon.plurals,
