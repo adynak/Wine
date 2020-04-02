@@ -148,5 +148,6 @@ var txtLogin = {
     image: 'resources/images/drinks.jpeg',
     visibilityShow: "Click to Show Password",
     visibilityHide: "Click to Hide Password",
-    rememberMe: "Remember Me on this Device"
+    rememberMe: "Remember Me on this Device",
+    localStorage: "Read/Write On This Device"
 };

@@ -25,6 +25,8 @@ wineDetective.controller('desktopSearchController',
         bottles.forEach(function(bottle) {
             bottle.Varietal = he.decode(bottle.Varietal);
             bottle.Wine = he.decode(bottle.Wine);
+            bottle.Producer = he.decode(bottle.Producer);
+            bottle.Appellation = he.decode(bottle.Appellation);
         });
 
         Data.setViewName(txtCommon.viewNameSearch,bottles.length);
