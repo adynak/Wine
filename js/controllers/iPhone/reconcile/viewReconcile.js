@@ -16,7 +16,7 @@ wineDetective.controller('iPhoneViewReconcileController',
         $scope.prompts = txtCommon;
 
         var spreadsheet = Data.getExcel();
-        var inventoryDate = moment(spreadsheet.unixDate).format("MM/DD/YYYY h:mm:ss A");
+        var inventoryDate = localStorage.getItem("downloadDate");
         Data.setViewName(txtCommon.viewNameReconcileInventoryIphone + " " + inventoryDate);
 
 

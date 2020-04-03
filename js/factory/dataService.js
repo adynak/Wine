@@ -24,7 +24,7 @@ wineDetective.factory("Data",
                 Format: 'csv',
                 Table: 'Inventory',
                 Location: 1,
-                hitServer: credentials.hitServer
+                localStorage: credentials.localStorage
             };
             $http({
                 method: 'GET',
@@ -83,7 +83,6 @@ wineDetective.factory("Data",
             return qObject.promise;            
         }
 
-
         var csvJSON = function(csv){
 
             var lines=csv.split("\n");
@@ -106,6 +105,25 @@ wineDetective.factory("Data",
             }
             return result
             // return JSON.stringify(result); //JSON
+        }
+
+        var getFormattedDate = function(){
+
+            var date = new Date();
+
+            var formatter = new Intl.DateTimeFormat('en-US',
+                {
+                    month: 'long',
+                    day: 'numeric',
+                    year: 'numeric',
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    second: 'numeric',
+                    hour12: true
+                }
+            );
+
+            return formatter.format(date);        
         }
 
         var getGridHeight = function(){
@@ -557,6 +575,7 @@ wineDetective.factory("Data",
             csvJSON: csvJSON,
             setSecurityInfo: setSecurityInfo,
             getSecurityInfo: getSecurityInfo,
+            getFormattedDate: getFormattedDate
         };
     }
 );
@@ -591,7 +610,7 @@ wineDetective.factory("ParseDownload",
                         type: 'binary'
             }); 
             excelSheetCount = workbook.SheetNames.length;
-            var excelDateStamp = Date.now();
+            var excelDateStamp = localStorage.getItem("downloadDate");
 
 
             for (var eX = 0; eX < excelSheetCount; eX++) {
@@ -685,8 +704,7 @@ wineDetective.factory("ParseDownload",
             excel.filename = 'excelFileName';
             excel.sheetNames = workbook.SheetNames;
             excel.sheets = sheets;
-            excel.dateStamp = moment(excelDateStamp).format("MMMM DD, YYYY h:mm:ss A");
-            excel.unixDate = excelDateStamp;
+            excel.dateStamp = localStorage.getItem("downloadDate");
             excel.columnCheck = columnCheck;
             Data.setExcel(excel);
 

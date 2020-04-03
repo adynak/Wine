@@ -589,3 +589,10 @@ button:hover {
   color: white;
   font-weight: bold;
 }
+
+.glyphicon-question-sign {
+  margin-top: 5px;
+  color:blue; 
+  font-size: 18px; 
+  padding-left:30px;
+}

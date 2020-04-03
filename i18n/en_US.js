@@ -32,7 +32,7 @@ var txtSideMenu = {
         {
             name: 'Missing Drink By Date',
             command: "viewMissingDrinkByDate",
-            icon: "glyphicon-question-sign",
+            icon: "glyphicon-time",
             color: "icon-red"
         },
         {
@@ -128,7 +128,7 @@ var txtLogin = {
     account: 'CellarTracker account name',
     logIn: '',
     logOut: 'Logged out successfully',
-    password: 'Password',
+    password: 'CellarTracker password',
     passwordConfirm: 'Confirm Password',
     errOnlineID: 'OnlineID is required',
     errAccount: 'Account is required',
@@ -149,5 +149,6 @@ var txtLogin = {
     visibilityShow: "Click to Show Password",
     visibilityHide: "Click to Hide Password",
     rememberMe: "Remember Me on this Device",
-    localStorage: "Read/Write On This Device"
+    localStorage: "Read/Write On This Device",
+    localStorageTooltip: "Use the wines stored in this device instead of the wines from CellarTracker."
 };

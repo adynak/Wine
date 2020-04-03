@@ -127,8 +127,7 @@ wineDetective.directive("filelistBind", ['Data', 'modalService',
                             excel.filename = excelFileName;
                             excel.sheetNames = workbook.SheetNames;
                             excel.sheets = sheets;
-                            excel.dateStamp = moment(excelDateStamp).format("MMMM DD, YYYY h:mm:ss A");
-                            excel.unixDate = excelDateStamp;
+                            excel.dateStamp = localStorage.getItem("downloadDate");
                             excel.columnCheck = columnCheck;
                             Data.setExcel(excel);
                             $elm.val(null);

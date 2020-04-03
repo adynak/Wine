@@ -7,6 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Dynak",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/adynak/Wine.git"
+  },
   "license": "ISC",
   "dependencies": {
     "@angular/cli": "^9.0.7",
@@ -25,11 +29,9 @@
     "he": "^1.2.0",
     "jquery": "^3.2.1",
     "lodash": "^4.17.15",
-    "moment": "^2.24.0",
     "ods": "^1.1.7",
     "pdfmake": "^0.1.65",
     "rxjs": "^5.5.12",
-    "typescript": "^3.8.3",
     "xlsx": "^0.11.19",
     "zone.js": "^0.8.29"
   }

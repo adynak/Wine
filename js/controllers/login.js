@@ -13,6 +13,11 @@ wineDetective.controller('LoginController',
         $scope.prompts.visibility = txtLogin.visibilityShow;
         $scope.required   = true;
         Data.setViewName(txtLogin.btnLogin);
+        $scope.credentials = {
+            account:"",
+            password:"",
+            localStorage: false
+        }
 
         $scope.toggleVisiblity = function(){
             var temp = document.getElementById("password"); 
@@ -27,20 +32,50 @@ wineDetective.controller('LoginController',
         }
         
         $scope.login = function() {
-            $scope.credentials.hitServer = true;
-            Data.getInventoryCurl($scope.credentials).then(function(results) {
-                if (results.length < 200){
-                    var div = document.createElement("div");
-                    div.innerHTML = results;
-                    var text = div.textContent || div.innerText || "";
-                    $scope.invalidMessage = text;
+            var results;
+            
+            if ($scope.credentials.localStorage){
+                results = localStorage.getItem("bottles");
+                if (results === null){
+
+                    Data.getInventoryCurl($scope.credentials).then(function(results) {
+                        if (results.length < 200){
+                            var div = document.createElement("div");
+                            div.innerHTML = results;
+                            var text = div.textContent || div.innerText || "";
+                            $scope.invalidMessage = text;
+                        } else {
+                            localStorage.setItem("bottles", results);
+                            localStorage.setItem("downloadDate", Data.getFormattedDate());
+                            ParseDownload.setWineData(results);
+                            $location.path('/home');
+                        }
+                    }, function(err) {
+                        $scope.invalidMessage= err;
+                    });                    
+
                 } else {
                     ParseDownload.setWineData(results);
                     $location.path('/home');
                 }
-            }, function(err) {
-                $scope.invalidMessage= err;
-            });
+            } else {
+
+                Data.getInventoryCurl($scope.credentials).then(function(results) {
+                    if (results.length < 200){
+                        var div = document.createElement("div");
+                        div.innerHTML = results;
+                        var text = div.textContent || div.innerText || "";
+                        $scope.invalidMessage = text;
+                    } else {
+                        localStorage.setItem("bottles", results);
+                        localStorage.setItem("downloadDate", Data.getFormattedDate());
+                        ParseDownload.setWineData(results);
+                        $location.path('/home');
+                    }
+                }, function(err) {
+                    $scope.invalidMessage= err;
+                });
+            }
 
         };
 
