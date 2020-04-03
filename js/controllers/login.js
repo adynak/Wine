@@ -16,7 +16,7 @@ wineDetective.controller('LoginController',
         $scope.credentials = {
             account:"",
             password:"",
-            localStorage: false
+            localStorage: true
         }
 
         $scope.toggleVisiblity = function(){
