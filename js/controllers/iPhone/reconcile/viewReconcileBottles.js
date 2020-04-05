@@ -63,7 +63,6 @@ wineDetective.controller('iPhoneViewReconcileBottleController',
         // };
 
         $scope.gridHeight = Data.getGridHeight().reconcileHeight;
-        console.log($scope.gridHeight);
 
         $scope.gridOptions = {
             enableGridMenu: false,

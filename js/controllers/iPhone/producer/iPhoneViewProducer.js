@@ -21,6 +21,13 @@ wineDetective.controller('iPhoneViewProducerController',
 
         var bottles = excelData.gridData;
 
+        bottles.forEach(function(bottle) {
+            bottle.WineName = he.decode(bottle.WineName);
+            bottle.Designation = he.decode(bottle.Designation);
+            bottle.Wine = he.decode(bottle.Wine);
+            bottle.Producer = he.decode(bottle.Producer);
+        });
+
         if ($location.path().search("viewMissingDrinkByDate") >= 0){
           bottles =  _.filter(bottles, { 'EndConsume': "unknown"});
           Data.setViewName(txtCommon.viewNameMissingDrinkByDate,bottles.length); 

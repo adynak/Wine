@@ -694,6 +694,8 @@ wineDetective.factory("ParseDownload",
 
                 });
 
+                sheetData.sort((a, b) => (a.iWine > b.iWine) ? 1 : -1);
+
                 sheets.push({
                     sheetName: sheetName,
                     gridData: sheetData,
@@ -828,7 +830,9 @@ wineDetective.factory("modalService",
                             if (bottle.displayCheckbox == "inline") {
                                 for (var i = 0; i < bottle.locationsAsArray.length; i++) {
                                     if (bottle.opened[i]) {
-                                        console.log(bottle.locationsAsArray[i], bottle.binAsArray[i], bottle.BarcodeAsArray[i])
+                                        var url = "https://www.cellartracker.com/barcode.asp?iWine=" + bottle.iWine;
+                                        window.open(url)
+                                        $uibModalInstance.close();
                                     }
                                 }
                                 $uibModalInstance.close();
