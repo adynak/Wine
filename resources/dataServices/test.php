@@ -1,5 +1,7 @@
 <?php
 
+$totalRows =  $_GET["rows"];
+
 $appArray['producers'];
 
 $json = '{"producers":[{"name":"Zerba","isExpanded":false,"wines":[{"vintage":"2014","varietal":"Syrah","designation":"Estate","ava":"Walla Walla","storageBins":[{"binName":"A","bottleCount":1},{"binName":"B","bottleCount":2}]},{"vintage":"2013","varietal":"Grenache","designation":"The Rocks","ava":"Walla Walla","storageBins":[{"binName":"A","bottleCount":3},{"binName":"B","bottleCount":4}]},{"vintage":"2012","varietal":"Grenache","designation":"Estate","ava":"Red Hills","storageBins":[{"binName":"A","bottleCount":5},{"binName":"B","bottleCount":6}]}]},{"name":"Del Rio","isExpanded":false,"wines":[{"vintage":"2011","varietal":"Syrah","designation":"Estate","ava":"Umpqua Valley","storageBins":[{"binName":"A","bottleCount":7},{"binName":"B","bottleCount":8}]},{"vintage":"2010","varietal":"Grenache","designation":"Lot 24","ava":"Umpqua Valley","storageBins":[{"binName":"A","bottleCount":9},{"binName":"B","bottleCount":10},{"binName":"Offsite","bottleCount":12}]}]}]}';
@@ -9,12 +11,15 @@ $json = '{"producers":[{"name":"Zerba","isExpanded":false,"wines":[{"vintage":"2
     $index = -1;
     $producers = array();
     $iWines = array();
+    $index = -1;
 
-    $url = '/Library/WebServer/Documents/Wine/resources/data/bottles1.csv';
+    $url = '/Library/WebServer/Documents/Wine/resources/data/bottles.csv';
     $csv = csvDecode($url);
     $csv = sortWines($csv);
     
     foreach ($csv as $key => $value) {
+        if($key == $totalRows) break;
+        // echo $value['Producer'];
 
         if (!in_array($value["Producer"], $producers)){
             // new ["Producer"]
@@ -52,9 +57,9 @@ $json = '{"producers":[{"name":"Zerba","isExpanded":false,"wines":[{"vintage":"2
                             "storageBins"     => $storageBin); 
 
 
-            $foundAt = -1;
+            $foundProducer = -1;
             foreach ($appArray["producers"] as $key => $item) {
-                $foundAt ++;
+                $foundProducer ++;
                 if ($item['name'] == $producer){
                     break;
                 }
@@ -65,20 +70,29 @@ $json = '{"producers":[{"name":"Zerba","isExpanded":false,"wines":[{"vintage":"2
             if (!in_array($value["iWine"], $iWines)){
                 // append a new wine for this producer
                 $temp = array();
-                $previousWines = $appArray['producers'][$foundAt]['wines'];
+                $previousWines = $appArray['producers'][$foundProducer]['wines'];
                 array_push($temp, $previousWines);
                 array_push($temp, $bottle);
-                unset($appArray['producers'][$foundAt]['wines']);
-                $appArray['producers'][$foundAt]['wines'][] = $temp;
+                unset($appArray['producers'][$foundProducer]['wines']);
+                $appArray['producers'][$foundProducer]['wines'] = $temp;
+
                 array_push($iWines, $value["iWine"]);
             } else {
                 // append a new storage location for this wine
+                $foundiWine = -1;
+                foreach ($appArray["producers"][$foundProducer]['wines'] as $wine => $bottle) {
+                    $foundiWine ++;
+                    if ($bottle['iWine'] == $value['iWine']){
+                        break;
+                    }
+                }
+
                 $temp = array();
-                $previousbins = $appArray['producers'][$foundAt]['wines']['storageBins'];
+                $previousbins = $appArray['producers'][$foundProducer]['wines'][$foundiWine]['storageBins'];
                 array_push($temp, $previousbins);
                 array_push($temp, $storageBin);
-                unset($appArray['producers'][$foundAt]['wines']['storageBins']);
-                $appArray['producers'][$foundAt]['wines']['storageBins'] = $temp;
+                unset($appArray['producers'][$foundProducer]['wines'][$foundiWine]['storageBins']);
+                $appArray['producers'][$foundProducer]['wines'][$foundiWine]['storageBins'] = $temp;
             }
 
        }
