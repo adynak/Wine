@@ -1,5 +1,35 @@
 <?php
 
+class Storage {
+    public $location;
+    public $binName;
+    public $bottleCount;
+
+    function setStorageBin($location, $bin, $bottleCount){
+        $this->location = $location;
+        $this->binName = $bin;
+        $this->bottleCount = $bottleCount;        
+    }
+}
+
+class Bottle {
+    public $iWine;
+    public $vintage;
+    public $varietal;
+    public $designation;
+    public $ava;
+    public $storageBins;
+
+    function setBottle($iWine, $vintage, $varietal, $designation, $ava, $storageBin){
+        $this->iWine = $iWine;
+        $this->vintage = $vintage;
+        $this->varietal = html_entity_decode($varietal);
+        $this->designation = html_entity_decode($designation);
+        $this->ava = html_entity_decode($ava);
+        $this->storageBins = $storageBin;
+    }
+}
+
 $totalRows =  $_GET["rows"];
 
 $appArray['producers'];
@@ -13,30 +43,33 @@ $json = '{"producers":[{"name":"Zerba","isExpanded":false,"wines":[{"vintage":"2
     $iWines = array();
     $index = -1;
 
-    $url = '/Library/WebServer/Documents/Wine/resources/data/bottles.csv';
+    $url = '/Library/WebServer/Documents/angular/git/Wine/resources/data/bottles.csv';
     $csv = csvDecode($url);
     $csv = sortWines($csv);
-    
+
     foreach ($csv as $key => $value) {
         if($key == $totalRows) break;
         // echo $value['Producer'];
 
         if (!in_array($value["Producer"], $producers)){
             // new ["Producer"]
-            $storageBin = array("location"    => $value['Location'],
-                                "bin"         => $value['Bin'],
-                                "bottleCount" => "1");
 
-            $bottle = array("iWine"           => $value['iWine'],
-                            "vintage"         => $value['Vintage'],
-                            "varietal"        => $value['Varietal'],
-                            "designation"     => $value['Designation'],
-                            "ava"             => $value['Appellation'],
-                            "storageBins"     => $storageBin);
+            $storageBin = new Storage;
+            $storageBin->setStorageBin($value['Location'],
+                         $value['Bin'],
+                         1);
+
+            $bottle = new Bottle;
+            $bottle->setBottle($value['iWine'],
+                               $value['Vintage'],
+                               $value['Varietal'],
+                               $value['Designation'],
+                               $value['Appellation'],
+                               array($storageBin));
             
             $appArray['producers'][] = array("name"       => $value['Producer'], 
                                              "isExpanded" => false,
-                                             "wines"      => $bottle);
+                                             "wines"      => array($bottle));
 
             array_push($producers, $value["Producer"]);
             array_push($iWines, $value["iWine"]);
@@ -45,17 +78,18 @@ $json = '{"producers":[{"name":"Zerba","isExpanded":false,"wines":[{"vintage":"2
             // existing ["Producer"]
             $producer = $value['Producer'];
 
-            $storageBin = array("location"    => $value['Location'],
-                                "bin"         => $value['Bin'],
-                                "bottleCount" => "1");
+            $storageBin = new Storage;
+            $storageBin->setStorageBin($value['Location'],
+                                       $value['Bin'],
+                                       1);
 
-            $bottle = array("iWine"           => $value['iWine'],
-                            "vintage"         => $value['Vintage'],
-                            "varietal"        => $value['Varietal'],
-                            "designation"     => $value['Designation'],
-                            "ava"             => $value['Appellation'],
-                            "storageBins"     => $storageBin); 
-
+            $bottle = new Bottle;
+            $bottle->setBottle($value['iWine'],
+                               $value['Vintage'],
+                               $value['Varietal'],
+                               $value['Designation'],
+                               $value['Appellation'],
+                               array($storageBin));
 
             $foundProducer = -1;
             foreach ($appArray["producers"] as $key => $item) {
@@ -65,34 +99,28 @@ $json = '{"producers":[{"name":"Zerba","isExpanded":false,"wines":[{"vintage":"2
                 }
             }
 
-            // echo $appArray['producers'][$foundAt]['wines']['iWine'];
-
             if (!in_array($value["iWine"], $iWines)){
                 // append a new wine for this producer
-                $temp = array();
-                $previousWines = $appArray['producers'][$foundProducer]['wines'];
-                array_push($temp, $previousWines);
-                array_push($temp, $bottle);
-                unset($appArray['producers'][$foundProducer]['wines']);
-                $appArray['producers'][$foundProducer]['wines'] = $temp;
+                array_push($appArray['producers']
+                                    [$foundProducer]
+                                    ['wines'],
+                                    $bottle);
 
                 array_push($iWines, $value["iWine"]);
             } else {
                 // append a new storage location for this wine
                 $foundiWine = -1;
-                foreach ($appArray["producers"][$foundProducer]['wines'] as $wine => $bottle) {
+                foreach ($appArray["producers"][$foundProducer]['wines'] as $wine => $item) {
                     $foundiWine ++;
-                    if ($bottle['iWine'] == $value['iWine']){
+                    if ($item->iWine == $value['iWine']){
                         break;
                     }
                 }
-
-                $temp = array();
-                $previousbins = $appArray['producers'][$foundProducer]['wines'][$foundiWine]['storageBins'];
-                array_push($temp, $previousbins);
-                array_push($temp, $storageBin);
-                unset($appArray['producers'][$foundProducer]['wines'][$foundiWine]['storageBins']);
-                $appArray['producers'][$foundProducer]['wines'][$foundiWine]['storageBins'] = $temp;
+                array_push($appArray['producers']
+                                    [$foundProducer]
+                                    ['wines']
+                                    [$foundiWine]->storageBins,
+                                    $storageBin);
             }
 
        }
@@ -100,6 +128,8 @@ $json = '{"producers":[{"name":"Zerba","isExpanded":false,"wines":[{"vintage":"2
     }
 
     $json = json_encode($appArray);
+    $json =  str_replace("\u00e9","é",$json);
+
     echo $json;
     die();
 
@@ -125,10 +155,8 @@ function sortWines($data){
     $producer[$key]     = $row['Producer'];
     $varietal[$key]     = $row['Varietal'];
   }
-
   array_multisort($producer, SORT_ASC, $varietal, SORT_ASC, $vintage, SORT_DESC, $data );
   return $data;
-
 }
 
 
@@ -174,15 +202,12 @@ function csvDecode($url) {
     
     $rows = array_map('str_getcsv', file($url));
     $header = array_shift($rows);
-    
     foreach ($rows as $row) {
-        // foreach ($row as $key=>$value){
-        //     $row[$key] = utf8_encode($value);
-        //     $row[$key] = utf8_decode($value);
-        // }
+        foreach ($row as $key=>$value){            
+            $row[$key] = utf8_encode($value);
+        }
         $csv[] = array_combine($header, $row);
     }
-
     return $csv;
 }
  
