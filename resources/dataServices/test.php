@@ -44,6 +44,7 @@ $json = '{"producers":[{"name":"Zerba","isExpanded":false,"wines":[{"vintage":"2
     $index = -1;
 
     $url = '/Library/WebServer/Documents/angular/git/Wine/resources/data/bottles.csv';
+    $url = '/Library/WebServer/Documents/Wine/resources/data/bottles1.csv';
     $csv = csvDecode($url);
     $csv = sortWines($csv);
 
@@ -109,6 +110,8 @@ $json = '{"producers":[{"name":"Zerba","isExpanded":false,"wines":[{"vintage":"2
                 array_push($iWines, $value["iWine"]);
             } else {
                 // append a new storage location for this wine
+                $newLocationBin = $value['Location'] . $value['Bin'];
+                echo $newLocationBin . $br;
                 $foundiWine = -1;
                 foreach ($appArray["producers"][$foundProducer]['wines'] as $wine => $item) {
                     $foundiWine ++;
@@ -116,6 +119,26 @@ $json = '{"producers":[{"name":"Zerba","isExpanded":false,"wines":[{"vintage":"2
                         break;
                     }
                 }
+
+                print_r($appArray['producers']
+                                    [$foundProducer]
+                                    ['wines']
+                                    [$foundiWine]->storageBins);
+                echo "xxx" . $br;
+
+                $zz = $appArray['producers']
+                                    [$foundProducer]
+                                    ['wines']
+                                    [$foundiWine]->storageBins;
+
+                                    print_r($zz->Storage);
+
+
+                foreach ($zz->Storage as $x => $y){
+                    echo "efgadfgb" . $y['location'];
+                    echo "ccc" . $br;
+                }
+
                 array_push($appArray['producers']
                                     [$foundProducer]
                                     ['wines']
