@@ -16,7 +16,7 @@
     "@angular/cli": "^9.0.7",
     "@angular/common": "^4.4.7",
     "@angular/compiler": "^4.4.7",
-    "@angular/core": "^4.4.7",
+    "@angular/core": "^11.0.5",
     "angular": "^1.7.9",
     "angular-animate": "^1.7.9",
     "angular-location-update": "0.0.2",
